@@ -1,0 +1,8 @@
+0 - Definire classe grafo
+1 - Metodo che crea grafo da input prof
+2 - Tradurre pseudocodice ER per creare grafi non orientati
+3 - Tradurre pseudocodice DPA per creare grafi non orientati
+4 - Metodo distruggi n nodi casuali, dato un grafo
+5 - Metodo distruggi nodi con grado maggiore
+6 - Analisi resilienze varie con grafici
+
