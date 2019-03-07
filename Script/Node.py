@@ -6,8 +6,9 @@ class Graph:
         self.dict[node] = []
 
     def addArc(self, node, node2):
-        self.dict[node].append(node2)
-        self.dict[node2].append(node)
+        if node != node2 and self.dict[node].count(node2) == 0:
+            self.dict[node].append(node2)
+            self.dict[node2].append(node)
 
     def countNodes(self):
         count = 0
@@ -23,14 +24,18 @@ class Graph:
         print('numero di archi', count)
         return count
 
+    def getNodeDegree(self,n):
+        print('grado di n:', len(self.dict.get(n)))
+        return len(self.dict.get(n))
 
-xD = []
-xD.append(5)
-print('finto: ', len(xD))
-myGraph = Graph()
-myGraph.addNode(1)
-myGraph.addNode(2)
-myGraph.addNode(3)
-myGraph.addArc(1, 3)
-print(myGraph.dict)
+    def getGraphDegree(self):
+        max = 0
+        for i in self.dict:
+            iDegree = len(self.dict.get(i))
+            if iDegree > max:
+                max = iDegree
+        print('grado del grafo: ', max)
+        return max
+
+
 
