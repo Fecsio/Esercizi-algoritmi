@@ -16,7 +16,7 @@ class Graph:
         count = 0
         for i in self.dict:
             count = count + 1
-        print('numero di nodi', count)
+        print('numero di nodi:', count)
         return count
 
     def countArcs(self):
@@ -39,8 +39,6 @@ class Graph:
         print('grado del grafo: ', max)
         return max
 
-g=Graph(5)
-print(g.dict)
 
 
 
