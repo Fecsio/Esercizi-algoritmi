@@ -1,6 +1,8 @@
 class Graph:
-    def __init__(self):
+    def __init__(self,num):
         self.dict = {}
+        for i in range(1, num):
+            self.addNode(i)
 
     def addNode(self, node):
         self.dict[node] = []
@@ -36,6 +38,9 @@ class Graph:
                 max = iDegree
         print('grado del grafo: ', max)
         return max
+
+g=Graph(5)
+print(g.dict)
 
 
 
