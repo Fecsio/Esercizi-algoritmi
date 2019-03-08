@@ -39,6 +39,7 @@ class Graph:
         print('grado del grafo: ', max)
         return max
 
-
+    def __str__(self):
+        return self.dict.__str__()
 
 

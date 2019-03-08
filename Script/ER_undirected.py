@@ -14,7 +14,7 @@ def er_undirected(nodes, probability):
                 a = random.uniform(0, 1)
                 if a < probability:
                     g.addArc(u, v)
-    return g.dict
+    return g
 
 
 n_nodes = int(input("Insert desired number of nodes: "))
