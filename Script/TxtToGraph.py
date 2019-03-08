@@ -1,10 +1,10 @@
-from Script import Node
+from Script import Graph
 
 
 def txtToGraph():
     f = open('as20000102.txt', 'r')
     #nodeNumber = f.readlines()[-1].split( )[0]
-    myGraph = Node.Graph(0)
+    myGraph = Graph.Graph(0)
     f.readline()
     f.readline()
     f.readline()
@@ -21,4 +21,3 @@ def txtToGraph():
         smt = x.split( )
         myGraph.addArc(int(smt[0]), int(smt[1]))
     return myGraph
-

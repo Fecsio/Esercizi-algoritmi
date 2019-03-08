@@ -10,21 +10,21 @@ class Graph:
     def addArc(self, node, node2):
         if node != node2 and self.dict[node].count(node2) == 0:
             self.dict[node].append(node2)
-            self.dict[node2].append(node)
+            #self.dict[node2].append(node)
 
     def countNodes(self):
         count = 0
         for i in self.dict:
             count = count + 1
-        print('numero di nodi:', count)
+        print('numero di nodi: ', count)
         return count
 
     def countArcs(self):
         count = 0
         for i in self.dict:
             count = count + len(self.dict[i])
-        print('numero di archi', count)
-        return count
+        print('numero di archi: ', int(count/2))
+        return int(count/2)
 
     def getNodeDegree(self,n):
         print('grado di n:', len(self.dict.get(n)))

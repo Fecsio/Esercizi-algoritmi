@@ -1,6 +1,6 @@
 import random
 
-from Script import Node
+from Script import Graph
 
 
 def er_undirected(nodes, probability):
@@ -8,7 +8,7 @@ def er_undirected(nodes, probability):
         probability == 1
     elif probability < 0:
         probability == 0
-    g = Node.Graph(nodes)
+    g = Graph.Graph(nodes)
     for u in range(1, nodes+1):
         for v in range(1, nodes+1):
                 a = random.uniform(0, 1)
