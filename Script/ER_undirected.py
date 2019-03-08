@@ -21,7 +21,7 @@ def er_undirected(nodes, probability):
     return g
 
 
-# con n = 6474 e p = 0.00065 viene un numero di archi simile a quello di as20000012.txt
+# con n = 6474 e p = 0.0006 viene un numero di archi simile a quello di as20000012.txt
 
 n_nodes = int(input("Insert desired number of nodes: "))
 

@@ -2,7 +2,7 @@ from Script import Graph
 
 
 def txtToGraph():
-    f = open('as20000102.txt', 'r')
+    f = open('../File vari/as20000102.txt', 'r')
     #nodeNumber = f.readlines()[-1].split( )[0]
     myGraph = Graph.Graph(0)
     f.readline()
@@ -12,7 +12,7 @@ def txtToGraph():
     for x in f:
         myGraph.addNode(int(x.split( )[0]))
     f.close()
-    r = open('as20000102.txt', 'r')
+    r = open('../File vari/as20000102.txt', 'r')
     r.readline()
     r.readline()
     r.readline()
