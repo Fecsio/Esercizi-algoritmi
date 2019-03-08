@@ -40,7 +40,13 @@ class Graph:
         return max
 
     def getAvarageDegree(self):
-        return self.getGraphDegree()/self.countNodes()
+        degreeSum = 0
+        for v in self.dict:
+            degreeSum = degreeSum + self.getNodeDegree(v)
+        return degreeSum/self.countNodes()
+
+    def getNodeAdj(self,n):
+        return self.dict.get(n)
 
     def __str__(self):
         return self.dict.__str__()

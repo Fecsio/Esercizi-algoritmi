@@ -21,3 +21,5 @@ def txtToGraph():
         smt = x.split( )
         myGraph.addArc(int(smt[0]), int(smt[1]))
     return myGraph
+
+
