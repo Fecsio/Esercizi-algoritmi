@@ -113,3 +113,7 @@ include/
 \.idea/modules\.xml
 
 Script/as20000102\.txt
+
+pip-selfcheck\.json
+
+Script/Prova\.py
