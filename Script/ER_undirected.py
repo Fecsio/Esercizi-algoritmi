@@ -21,9 +21,14 @@ def er_undirected(nodes, probability):
     return g
 
 
+# con n = 6474 e p = 0.00065 viene un numero di archi simile a quello di as20000012.txt
+
 n_nodes = int(input("Insert desired number of nodes: "))
 
 p = float(input("Insert desired probability:"))
 
+created_graph = er_undirected(n_nodes, p)
+
 with open('../File vari/output.txt', 'w') as out:
-    pprint.pprint(er_undirected(n_nodes, p).dict, stream=out)
+    pprint.pprint(created_graph.dict, stream=out)
+    out.write("\nNumero di archi = " + str(created_graph.countArcs()) + "\n")
