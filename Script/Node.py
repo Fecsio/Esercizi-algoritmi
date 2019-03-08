@@ -1,7 +1,7 @@
 class Graph:
     def __init__(self,num):
         self.dict = {}
-        for i in range(1, num):
+        for i in range(1, num +1):
             self.addNode(i)
 
     def addNode(self, node):
