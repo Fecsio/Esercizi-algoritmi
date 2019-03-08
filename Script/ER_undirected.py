@@ -7,14 +7,12 @@ from Script import Graph
 
 
 def er_undirected(nodes, probability):
+    g = Graph.Graph(nodes)
     if probability > 1:
         probability = 1
-    elif probability < 0:
-        probability == 0
-    g = Graph.Graph(nodes)
-    """for u in range(1, nodes+1):
-        for v in range(1, nodes+1):"""
-    for i in itertools.combinations(range(1, nodes), 2):
+    elif probability <= 0:
+        return g
+    for i in itertools.combinations(range(1, nodes), 2): # crea tutte le combinazioni di lunghezza 2 senza ripetizioni (es: combinations('1234', 2) --> 12 13 14 23 24 34)
         a = random.uniform(0, 1)
         if a < probability:
             g.addArc(i[0], i[1])
