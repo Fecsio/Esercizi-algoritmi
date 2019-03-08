@@ -34,8 +34,8 @@ def runTrial(init):
 
 graph = Graph.Graph(m)
 createCompleteGraph(m)
-DPAtrial(m)
-for node1 in range(m, n+1):
+DPAtrial(m)  # ok
+for node1 in range(m+1, n+1):
     pulled = runTrial(m)
     numNodes += 1
     graph.addNode(node1)
