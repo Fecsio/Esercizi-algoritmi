@@ -48,5 +48,8 @@ class Graph:
     def getNodeAdj(self,n):
         return self.dict.get(n, [])
 
+    def present(self, n):
+        return n in self.dict
+
     def __str__(self):
         return self.dict.__str__()
