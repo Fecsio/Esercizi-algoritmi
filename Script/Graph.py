@@ -46,7 +46,7 @@ class Graph:
         return degreeSum/self.countNodes()
 
     def getNodeAdj(self,n):
-        return self.dict.get(n)
+        return self.dict.get(n, [])
 
     def __str__(self):
         return self.dict.__str__()
