@@ -5,7 +5,8 @@ class Graph:
             self.addNode(i)
 
     def addNode(self, node):
-        self.dict[node] = []
+        if not node in self.dict:
+            self.dict[node] = []
 
     def addArc(self, node, node2):
         if node != node2 and self.dict[node].count(node2) == 0:
@@ -47,6 +48,9 @@ class Graph:
 
     def getNodeAdj(self,n):
         return self.dict.get(n, [])
+
+    def present(self, n):
+        return n in self.dict
 
     def __str__(self):
         return self.dict.__str__()
