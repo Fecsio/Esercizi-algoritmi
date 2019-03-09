@@ -17,18 +17,15 @@ class Graph:
         count = 0
         for i in self.dict:
             count = count + 1
-        print('numero di nodi: ', count)
         return count
 
     def countArcs(self):
         count = 0
         for i in self.dict:
             count = count + len(self.dict[i])
-        print('numero di archi: ', int(count/2))
         return int(count/2)
 
     def getNodeDegree(self,n):
-        print('grado di n:', len(self.dict.get(n)))
         return len(self.dict.get(n))
 
     def getGraphDegree(self):
@@ -37,7 +34,6 @@ class Graph:
             iDegree = len(self.dict.get(i))
             if iDegree > max:
                 max = iDegree
-        print('grado del grafo: ', max)
         return max
 
     def getAvarageDegree(self):
@@ -46,11 +42,44 @@ class Graph:
             degreeSum = degreeSum + self.getNodeDegree(v)
         return degreeSum/self.countNodes()
 
+    def getMaxDegree(self):
+        g_max = 0
+        for n in self.dict:
+            l_max = self.getNodeDegree(n)
+            if l_max > g_max:
+                g_max = l_max
+        return g_max;
+
+    def getMaxDegreeNode(self):
+        max_n = -1
+        max_g = -1
+        for n in self.dict:
+            local_max_g = self.getNodeDegree(n)
+            if local_max_g > max_g:
+                max_g = local_max_g
+                max_n = n
+        return max_n
+
     def getNodeAdj(self,n):
         return self.dict.get(n, [])
 
     def present(self, n):
         return n in self.dict
+
+    def isEmpty(self):
+        return not self.dict
+
+    def getNodes(self):
+        return self.dict.keys()
+
+    def removeNode(self, n):
+        if self.dict.pop(n, False):
+            self.removeArcToN(n)
+
+    def removeArcToN(self, n):
+        for k in self.dict:
+            if n in self.getNodeAdj(k):
+                self.dict[k].remove(n)
 
     def __str__(self):
         return self.dict.__str__()

@@ -42,6 +42,7 @@ for node1 in range(m, n+1):
     for node2 in range(0, len(pulled)):
         graph.addArc(node1, pulled[node2])
 
-print('Graph: ', graph)
+"""print('Graph: ', graph)
 graph.countNodes()
 graph.countArcs()
+"""
