@@ -1,6 +1,8 @@
 from Script import TxtToGraph
 from Script import DFS
 from Script import Attackers
+from Script import ER_undirected
+from Script import UPA
 import pprint
 from Script import Plot
 """import TxtToGraph
@@ -21,30 +23,20 @@ def main():
     G = TxtToGraph.txtToGraph('../File vari/customInput.txt')
     pprint.pprint(G.dict)
 
-    CC = DFS.ConnectedC(G)
+    #CC = DFS.ConnectedC(G)
 
-    print('normal print:', CC)
+    #pprint.pprint(CC)
 
-    pprint.pprint(CC)
 
-    n = 0
-    """while not G.isEmpty():
-        n += 1
-        print(n)
-        Attackers.maxGradeAttack(G)
-        CC_afterAttack = DFS.ConnectedC(G)
-        pprint.pprint(CC_afterAttack)"""
-    """
-    nodeNumber = G.countNodes()
-    CCNumber = []
-    disabledNodes = []
-    while not G.isEmpty():
-        n += 1
-        print(n)
-        Attackers.randomAttack(G)
-        CC_afterAttack = DFS.ConnectedC(G)
-        pprint.pprint(CC_afterAttack)
-        print('resilience: ', G.getResilience(nodeNumber))"""
-    Plot.randomAttackerPlot(G) # Dato il grafo effettua l'attacco e disegna il grafico
+    txtGraph = TxtToGraph.txtToGraph('../File vari/as20000102.txt')
+    erGraph = ER_undirected.er_undirected(6474, 0.0006)
+    upaGraph = UPA.createUPA(6474, 2)
+    print('ER nodes:', erGraph.countNodes())
+    print('ER arcs', erGraph.countArcs())
+    print('UPA nodes:', upaGraph.countNodes())
+    print('UPA arcs', upaGraph.countArcs())
+    #Plot.plotRandomAttack(txtGraph,erGraph,upaGraph) # Disegna grafico a 3 linee !MI DA RECURSION ERROR: MAXIMUM DEPTH EXCEDED
+
+
 
 main()
