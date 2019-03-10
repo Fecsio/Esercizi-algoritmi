@@ -2,6 +2,7 @@ from Script import TxtToGraph
 from Script import DFS
 from Script import Attackers
 import pprint
+from Script import Plot
 """import TxtToGraph
 import DFS
 import Attackers
@@ -22,6 +23,8 @@ def main():
 
     CC = DFS.ConnectedC(G)
 
+    print('normal print:', CC)
+
     pprint.pprint(CC)
 
     n = 0
@@ -31,13 +34,17 @@ def main():
         Attackers.maxGradeAttack(G)
         CC_afterAttack = DFS.ConnectedC(G)
         pprint.pprint(CC_afterAttack)"""
-
+    """
+    nodeNumber = G.countNodes()
+    CCNumber = []
+    disabledNodes = []
     while not G.isEmpty():
         n += 1
         print(n)
         Attackers.randomAttack(G)
         CC_afterAttack = DFS.ConnectedC(G)
         pprint.pprint(CC_afterAttack)
-
+        print('resilience: ', G.getResilience(nodeNumber))"""
+    Plot.randomAttackerPlot(G) # Dato il grafo effettua l'attacco e disegna il grafico
 
 main()

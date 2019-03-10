@@ -1,3 +1,6 @@
+from Script import DFS
+
+
 class Graph:
     def __init__(self,num):
         self.dict = {}
@@ -83,3 +86,16 @@ class Graph:
 
     def __str__(self):
         return self.dict.__str__()
+
+    def getMaxCC(self):
+        CC = DFS.ConnectedC(self)
+        max = 0
+        for list in CC:
+            if len(list) > max:
+                max = len(list)
+        return max
+
+    def getResilience(self, initialNodeNumber):
+        return self.getMaxCC()/initialNodeNumber
+
+
