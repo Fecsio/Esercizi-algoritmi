@@ -85,7 +85,7 @@ class Graph:
                 self.dict[k].remove(n)
 
     def __str__(self):
-        return self.dict.__str__()
+        return "\n".join("{}: {}".format(k, v) for k, v in self.dict.items())
 
     def getMaxCC(self):
         CC = DFS.ConnectedC(self)

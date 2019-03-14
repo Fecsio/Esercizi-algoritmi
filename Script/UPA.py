@@ -21,9 +21,11 @@ def UPA(n, m):
         for node2 in range(0, len(pulled)):
             graph.addArc(node1, pulled[node2])
 
-    pprint.pprint(graph.dict)
+    return graph
+
+    """pprint.pprint(graph.dict) --- funziona anche così BTW ---
     print(graph.countNodes())
-    print(graph.countArcs())
+    print(graph.countArcs())"""
 
 
 
