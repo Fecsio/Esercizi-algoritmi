@@ -38,9 +38,9 @@ def maxGradeAttackerPlot(G):
 
 
 def plotRandomAttack(txt, ER, UPA):
-    txtCCN, txtDN = randomAttackerPlot(txt)
-    erCCN, erDN = randomAttackerPlot(ER)
-    upaCCN, upaDN = randomAttackerPlot(UPA)
+    txtDN, txtCCN = randomAttackerPlot(txt)
+    erDN, erCCN = randomAttackerPlot(ER)
+    upaDN, upaCCN = randomAttackerPlot(UPA)
     plt.plot(txtCCN, txtDN, label='Grafo di una rete reale')
     plt.plot(erCCN, erDN, label='Grafo creato con ER')
     plt.plot(upaCCN, upaDN, label='Grafo creato con UPA')
@@ -53,9 +53,9 @@ def plotRandomAttack(txt, ER, UPA):
 
 
 def plotMaxGradeAttack(txt, ER, UPA):
-    txtCCN, txtDN = maxGradeAttackerPlot(txt)
-    erCCN, erDN = maxGradeAttackerPlot(ER)
-    upaCCN, upaDN = maxGradeAttackerPlot(UPA)
+    txtDN, txtCCN = maxGradeAttackerPlot(txt)
+    erDN, erCCN = maxGradeAttackerPlot(ER)
+    upaDN, upaCCN = maxGradeAttackerPlot(UPA)
     plt.plot(txtCCN, txtDN, label='Grafo di una rete reale')
     plt.plot(erCCN, erDN, label='Grafo creato con ER')
     plt.plot(upaCCN, upaDN, label='Grafo creato con UPA')
