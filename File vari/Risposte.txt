@@ -1,0 +1,5 @@
+Domanda 2.
+
+Considerate quello che succede quando si rimuove una frazione significativa dei nodi del grafo usando l'attacco con ordine casuale. Diremo che un grafo è resiliente a questo tipo di attacco quando la dimensione della componente connessa più grande è superiore al 75% del numero dei nodi ancora attivi. 
+
+Esaminate l'andamento delle tre curve del grafico ottenuto nella Domanda 1, e dite quali dei tre grafi sono resilienti dopo che l'attacco in ordine casuale ha rimosso il 20% dei nodi della rete.
