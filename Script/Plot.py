@@ -48,10 +48,13 @@ def plotRandomAttack(txt, ER, UPA):
     plt.plot(erDN, erCCN, label='Grafo creato con ER')
     plt.plot(upaDN, upaCCN, label='Grafo creato con UPA')
     plt.plot([0, 1], [0, 1], label='m = 2, p = 0.0006', color='w')
-    plt.plot([1295, 1295], [0, 7000], color='k', linestyle=':')
-    plt.plot(txtDN[1294], txtCCN[1294], 'ro', label='dimensione componente connessa più grande dopo aver rimosso il 20% dei nodi')
-    plt.plot(erDN[1294], erCCN[1294], 'ro')
-    plt.plot(upaDN[1294], upaCCN[1294], 'ro')
+    plt.plot([1295, 1295], [0, 7000], color='k', linestyle=':', label='20% dei nodi disabilitati')
+    plt.plot(txtDN[1294], txtCCN[1294], 'ro',
+             label='rete reale maxCC al 20%: ' + str(txtCCN[1294]))
+    plt.plot(erDN[1294], erCCN[1294], 'bo',
+             label='ER maxCC al 20%: ' + str(erCCN[1294]))
+    plt.plot(upaDN[1294], upaCCN[1294], 'go',
+             label='UPA macCC 20%: ' + str(upaCCN[1294]))
     plt.legend()
     plt.xlabel('numero di nodi disabilitati')
     plt.ylabel('dimensione della componente connessa più grande')
@@ -68,7 +71,13 @@ def plotMaxGradeAttack(txt, ER, UPA):
     plt.plot(erDN, erCCN, label='Grafo creato con ER')
     plt.plot(upaDN, upaCCN, label='Grafo creato con UPA')
     plt.plot([0, 1], [0, 1], label='m = 2, p = 0.0006', color='w')
-    plt.plot([1295, 1295], [0, 7000], color='k', linestyle=':')
+    plt.plot([1295, 1295], [0, 7000], color='k', linestyle=':', label='20% dei nodi disabilitati')
+    plt.plot(txtDN[1294], txtCCN[1294], 'ro',
+             label='rete reale maxCC al 20%: ' + str(txtCCN[1294]))
+    plt.plot(erDN[1294], erCCN[1294], 'bo',
+             label='ER maxCC al 20%: ' + str(erCCN[1294]))
+    plt.plot(upaDN[1294], upaCCN[1294], 'go',
+             label='UPA macCC 20%: ' + str(upaCCN[1294]))
     plt.legend()
     plt.xlabel('numero di nodi disabilitati')
     plt.ylabel('dimensione della componente connessa più grande')

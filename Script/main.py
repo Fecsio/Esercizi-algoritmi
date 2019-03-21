@@ -38,9 +38,9 @@ def main():
     print('UPA nodes:', upaGraph.countNodes())
     print('UPA arcs', upaGraph.countArcs())"""
     # Disegna grafico a 3 linee per l'attacco random sui 3 grafi
-    Plot.plotRandomAttack(txtGraph,erGraph,upaGraph)
+    #Plot.plotRandomAttack(txtGraph,erGraph,upaGraph)
     # Disegna un grafico a 3 linee dell'attacco intlligente sui 3 grafi
-    #Plot.plotMaxGradeAttack(txtGraph, erGraph, upaGraph)
+    Plot.plotMaxGradeAttack(txtGraph, erGraph, upaGraph)
 
 
 main()
