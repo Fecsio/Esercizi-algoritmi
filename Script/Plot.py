@@ -77,7 +77,7 @@ def plotMaxGradeAttack(txt, ER, UPA):
     plt.plot(erDN[1294], erCCN[1294], 'bo',
              label='ER maxCC al 20%: ' + str(erCCN[1294]))
     plt.plot(upaDN[1294], upaCCN[1294], 'go',
-             label='UPA macCC 20%: ' + str(upaCCN[1294]))
+             label='UPA maxCC al 20%: ' + str(upaCCN[1294]))
     plt.legend()
     plt.xlabel('numero di nodi disabilitati')
     plt.ylabel('dimensione della componente connessa più grande')
