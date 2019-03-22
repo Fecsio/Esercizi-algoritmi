@@ -1,8 +1,5 @@
 import matplotlib.pyplot as plt
-from Script import DFS
-from Script import Graph
-from Script import Attackers
-import pprint
+from Lab1.Script import Attackers, DFS
 
 
 #dato un grafo utilizza l'attacco random per ottenere le componenti x e y del grafico

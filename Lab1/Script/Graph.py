@@ -1,4 +1,4 @@
-from Script import DFS
+from Lab1.Script import DFS
 
 
 class Graph:

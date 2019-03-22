@@ -1,6 +1,3 @@
-from Script import Graph
-
-
 def ConnectedC(g):
     #color = ['white'] * g.countNodes() per usare questo bisogna fare delle modifiche agli indici perchè le liste iniziano da 0, mentre i nostri grafi da 1
     color = {}

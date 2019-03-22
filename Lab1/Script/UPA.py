@@ -1,6 +1,5 @@
 import random
-from Script import Graph
-import pprint
+from Lab1.Script import Graph
 
 
 def UPA(n, m):

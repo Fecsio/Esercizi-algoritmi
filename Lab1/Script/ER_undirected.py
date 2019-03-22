@@ -1,9 +1,7 @@
 import random
-import pprint
 import itertools
 
-
-from Script import Graph
+from Lab1.Script import Graph
 
 
 def er_undirected(nodes, probability):

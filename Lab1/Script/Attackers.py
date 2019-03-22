@@ -1,4 +1,3 @@
-from Script import Graph
 import random
 
 

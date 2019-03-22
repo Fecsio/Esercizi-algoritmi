@@ -1,10 +1,4 @@
-from Script import TxtToGraph
-from Script import DFS
-from Script import Attackers
-from Script import ER_undirected
-from Script import UPA
-import pprint
-from Script import Plot
+from Lab1.Script import UPA, Plot, TxtToGraph, ER_undirected
 import sys
 """import TxtToGraph
 import DFS
