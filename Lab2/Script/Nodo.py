@@ -28,9 +28,9 @@ class Graph:
         if id not in self.nodes:
             self.nodes[id] = Node(nome, lng, lat)
 
-    def addEdgeTimes(self, nodo1, nodo2, d_time, a_time):
+    def addEdgeTimes(self, nodo1, nodo2, id, d_time, a_time):
         if (nodo1, nodo2) not in self.edges:
-            self.edges[(nodo1, nodo2)] = Edge()
+            self.edges[(nodo1, nodo2, id)] = Edge()
             self.nodes[nodo1].addAdj(nodo2)
 
         self.edges[(nodo1, nodo2)].addTimes(d_time, a_time)
