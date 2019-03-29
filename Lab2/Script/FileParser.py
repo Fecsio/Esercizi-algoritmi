@@ -2,23 +2,8 @@ import os
 from Lab2.Script import Nodo
 import re
 
-class Node:
-    def __init__(self, name, lat, lng):
-        self.name = name
-        self.lat = lat
-        self.lng = lng
-
-    def __str__(self):
-        return self.name
-
-    def print(self):
-        print(self.name)
-        print(self.lat)
-        print(self.lng, '\n')
-
-
 def FileParser():
-    f = open('../File vari/data/bfkoord', 'r')
+    f = open('../File vari/data/bfkoord', 'r', encoding='ISO-8859-1')
     graph = Nodo.Graph()
     f.readline()
     f.readline()
@@ -42,7 +27,7 @@ def FileParser():
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
         if filename.endswith('.LIN'):
-            f = open('../File vari/data/' + filename, 'r')
+            f = open('../File vari/data/' + filename, 'r', encoding='ISO-8859-1')
             f.readline() #legge la prima riga inutile
             id = ''
             check = False  # Uso questa sentinella per capire quando una corsa sta iniziando o finendo
@@ -79,6 +64,7 @@ def FileParser():
             f.close()
     for e in graph.edges:
         print(e, graph.edges[e].times)
+
     return graph
 
 
