@@ -62,8 +62,8 @@ def FileParser():
                         graph.addEdgeTimes(prev[0], idStazione, id, prev[1], arrivo)
                         prev = [idStazione, partenza]
             f.close()
-    for e in graph.edges:
-        print(e, graph.edges[e].times)
+    for e in graph.nodes:
+        print(e, graph.nodes[e].nome)
 
     return graph
 
