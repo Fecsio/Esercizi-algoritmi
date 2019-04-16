@@ -9,6 +9,7 @@ class Node:
     def addAdj(self, node):
         self.adj.add(node)
 
+
 class Edge:
     def __init__(self):
         self.times = set()

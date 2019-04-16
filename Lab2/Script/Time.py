@@ -23,6 +23,19 @@ class Time:
     def getMinute(self):
         return str(int(self.seconds % 3600 / 60))
 
+    def __lt__(self, other):
+        return self.seconds < other.seconds
+
+    def __gt__(self, other):
+        return self.seconds > other.seconds
+
+    def __eq__(self, other):
+        return self.seconds == other.seconds
+
+    def __str__(self):
+        return self.getTime()
+
+
 
 banana = Time("02535")
 print(banana.getHour(), banana.getMinute(), banana.getTime())
