@@ -35,7 +35,18 @@ class Time:
     def __str__(self):
         return self.getTime()
 
+    def __repr__(self):
+        return self.getTime()
+
+    def __hash__(self):
+        return hash(self.seconds)
+
+    def add_seconds(self, seconds):
+        self.seconds += seconds
 
 
+bananagrossa = Time("00000")
+bananagrossa.seconds = 46800
+print(bananagrossa.getHour(), bananagrossa.getMinute(), bananagrossa.getTime())
 banana = Time("02535")
 print(banana.getHour(), banana.getMinute(), banana.getTime())
