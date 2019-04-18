@@ -2,6 +2,7 @@ import pprint
 from Lab2.Script import FileParser
 from Lab2.Script import BinaryHeap
 from Lab2.Script import Time
+from Lab2.Script.BinaryHeap import FastNode
 
 
 def w(graph, time, s, t):
@@ -31,6 +32,7 @@ def w(graph, time, s, t):
 
     # print(really_suitable_edge)
     if really_suitable_edges_pos:
+        print("POSITIVO")
         return really_suitable_edges_pos[0]
     return really_suitable_edge[0]
 
@@ -45,7 +47,7 @@ def relax(s, t, w, prevs, dists):
     :param dists: list of distances
     :return: nothing
     """
-    dists[t] = w
+    dists[t] = dists[s] + w
     prevs[t] = s
 
 
@@ -69,7 +71,6 @@ def DijkstraSSSP(graph, sourceNodeId, time):
 
     # creating priority queue
     Q = BinaryHeap.BinaryHeap()
-    Q.insertNode(sourceNodeId, 0)
     for id_node in graph.nodes:
         Q.insertNode(id_node, dists[id_node])
     print("~~~~~~~~~~ lunghezza Q:", len(Q.queue))
@@ -79,18 +80,23 @@ def DijkstraSSSP(graph, sourceNodeId, time):
         u = Q.extractMin()
         if dists[u] == float("inf"):  # this means that all remaining nodes are unreachable
             return prevs, dists
-        # print("min=", u)
+        print("min=", u, " con dist:", dists[u])
         new_time = Time.Time("00000")
         new_time.add_seconds(time.seconds + dists[u])
+        print("~~~~ adiacenti:", graph.nodes[u].adj)
         for v in graph.nodes[u].adj:
             print("v=", v)
             if v != sourceNodeId:
                 weight = abs(w(graph, new_time, u, v))
-                print("weight:", weight, " at: ", u, "->", v)
+                print("dist source to v prima: ", dists[v])
+                print("weight + dist:", weight + dists[u], " at: ", u, "->", v)
                 if dists[u] + weight < dists[v]:
+                    print("dist source to u: ", dists[u])
                     #time.add_seconds(dists[u])
                     relax(u, v, weight, prevs, dists)
+                    print("dist source to v: ", dists[v])
                     Q.decreaseKey(v, dists[v])
+                    print(Q.queue[Q.queue.index(FastNode(v, 0))])
             print("\n")
 
     return prevs, dists
@@ -98,9 +104,9 @@ def DijkstraSSSP(graph, sourceNodeId, time):
 
 g = FileParser.FileParser()
 t = Time.Time("00000")
-t.seconds = 24000
+t.seconds = 21600
 print(t)
-p, d = DijkstraSSSP(g, '500000079', t)
+p, d = DijkstraSSSP(g, '200415016', t)
 
 print("Predecessors:\n")
 pprint.pprint(p)

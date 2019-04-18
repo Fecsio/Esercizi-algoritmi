@@ -122,13 +122,15 @@ class BinaryHeap:
         return returnValue.id
 
 
-"""
-PRINT IS THE BEST DEBUGGER
+
+# PRINT IS THE BEST DEBUGGER
 n1 = FastNode(1, 123)
 n2 = FastNode(2, 23)
 n3 = FastNode(3, 13)
 n4 = FastNode(4, 12)
 n5 = FastNode(5, 8)
+n6 = FastNode(6, 13)
+n7 = FastNode(7, 15)
 
 Q = BinaryHeap()
 Q.insertNode(n1.getId(), n1.getDistance())
@@ -136,9 +138,18 @@ Q.insertNode(n2.getId(), n2.getDistance())
 Q.insertNode(n3.getId(), n3.getDistance())
 Q.insertNode(n4.getId(), n4.getDistance())
 Q.insertNode(n5.getId(), n5.getDistance())
+Q.insertNode(n6.getId(), n6.getDistance())
+Q.insertNode(n7.getId(), n7.getDistance())
+print(Q)
+Q.decreaseKey(6, 2)
 Q.decreaseKey(1, 2)
-Q.decreaseKey(2, 1)
+Q.decreaseKey(3, 2)
+Q.decreaseKey(7, 2)
+print(Q)
 print(Q.extractMin())
-print(Q)"""
+print(Q.extractMin())
+print(Q.extractMin())
+print(Q.extractMin())
+print(Q)
 
 
