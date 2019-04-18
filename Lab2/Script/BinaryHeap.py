@@ -16,7 +16,7 @@ class FastNode:
         self.distance = distance
 
     def __eq__(self, other):
-        return self.id == other.id
+        return other != None and self.id == other.id
 
     def __gt__(self, other):
         return self.distance > other.distance
@@ -56,9 +56,13 @@ class BinaryHeap:
         return self.queue[math.floor(index/2)]
 
     def sx(self, index):
+        if index*2 > len(self.queue) - 1:
+            return None
         return self.queue[index*2]
 
     def dx(self, index):
+        if index*2 + 1 > len(self.queue) - 1:
+            return None
         return self.queue[index*2 + 1]
 
     def getNode(self, index):
@@ -85,11 +89,6 @@ class BinaryHeap:
     def decreaseKey(self, id, distance):
         i = 0
         i = self.queue.index(FastNode(id, 0))
-        """        for e in self.queue:
-            if e.getId() == id:
-                i = self.queue.index()
-                e.updateDistance(distance)
-                break"""
         self.queue[i].updateDistance(distance)
         if i > 0:
             while i > 1 and self.parent(i) > self.getNode(i):
@@ -104,7 +103,7 @@ class BinaryHeap:
         returnValue = self.queue.pop(1)
         self.queue.insert(1, self.queue.pop(len(self.queue) - 1))
         i = 1
-        while i < len(self.queue) and (self.getNode(i) > self.sx(i) or self.getNode(i) > self.dx(i)):
+        while i < len(self.queue) and self.sx(i) is not None and self.dx(i) is not None and (self.getNode(i) > self.sx(i) or self.getNode(i) > self.dx(i)):
             sx = self.sx(i)
             dx = self.dx(i)
             if sx < dx:
@@ -113,12 +112,14 @@ class BinaryHeap:
                 self.queue.insert(i, sx)
                 self.queue.pop(sxIndex)
                 self.queue.insert(sxIndex, temp)
+                i = sxIndex
             else:
                 dxIndex = self.getDxIndex(i)
                 temp = self.queue.pop(i)
                 self.queue.insert(i, dx)
                 self.queue.pop(dxIndex)
                 self.queue.insert(dxIndex, temp)
+                i = dxIndex
         return returnValue.id
 
 
@@ -126,8 +127,8 @@ class BinaryHeap:
 # PRINT IS THE BEST DEBUGGER
 n1 = FastNode(1, 123)
 n2 = FastNode(2, 23)
-n3 = FastNode(3, 13)
-n4 = FastNode(4, 12)
+n3 = FastNode(3, 133)
+n4 = FastNode(4, 123)
 n5 = FastNode(5, 8)
 n6 = FastNode(6, 13)
 n7 = FastNode(7, 15)
