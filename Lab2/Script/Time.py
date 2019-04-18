@@ -4,7 +4,7 @@ class Time:
     def __init__(self, time):
         self.seconds = (int(time[1])*10 + int(time[2]))*3600 + (int(time[3])*10 + int(time[4]))*60
 
-    def __init__(self, hour, minutes):
+    def intTime(self, hour, minutes):
         self.seconds = hour*3600 + minutes*60
 
     def getTime(self):
