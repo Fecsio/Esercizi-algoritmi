@@ -27,7 +27,7 @@ def w(graph, time, s, t):
     # filter times in "suitable_edge" selecting only times with departure time greater or equal to param "time" and
     # order them by best time (= journey time + difference between departure time and param "time")
 
-    really_suitable_edges_pos = list(filter(lambda x: x[0].seconds >= time.seconds, really_suitable_edge))
+    really_suitable_edges_pos = list(filter(lambda x: x[0] >= time, really_suitable_edge))
 
     # print(really_suitable_edge)
     if really_suitable_edges_pos:
