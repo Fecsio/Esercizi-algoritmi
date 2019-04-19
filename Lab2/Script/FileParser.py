@@ -63,9 +63,9 @@ def FileParser():
                         prev = [idStazione, partenza]
             f.close()
     """for e in graph.nodes:
-        print(e, graph.nodes[e].nome)"""
-    """for e in graph.edges:
-            print(e, graph.edges[e].times)"""
+        print(e, graph.nodes[e].nome)
+    for e in graph.edges:
+            print(e, graph.edges[e])"""
 
     return graph
 

@@ -16,35 +16,35 @@ def w(graph, time, s, t):
              edge's departure time and param "time"
     """
 
-    suitable_edge = graph.edges[(s, t)]  # find an edge that connects s and t
+    suitable_edge = graph.edges[(s, t)]  # find all edges that connect s and t
 
     real_time = time.getTimeNoDay()  # we need to do this because param "time" could be plus one or more day,
     # so + 86400 seconds * more days;
 
-    suitable_times = sorted({e for e in suitable_edge.times},
-                            key=lambda e: e[0].seconds - real_time.seconds + e[1].seconds - e[0].seconds)
+    suitable_times = sorted({e for e in suitable_edge},
+                            key=lambda e: e.times[0].seconds - real_time.seconds + e.times[1].seconds - e.times[0].seconds)
     # filter times in "suitable_edge" selecting only times with departure time greater or equal to real_time and
     # order them by best time (= journey time + difference between departure time and param "time");
 
-    suitable_times_pos = list(filter(lambda x: x[0] >= real_time, suitable_times))  # selecting
+    suitable_times_pos = list(filter(lambda x: x.times[0] >= real_time, suitable_times))  # selecting
     # departures at time after real_time, that means departures before 23:59 of the same day;
 
     if suitable_times_pos:  # if there are departures before the end of the day and after real_time,
         # the first of them (that will be the best because they have been sorted before)
         # is selected and it's time (journey time + difference between departure time and real_time) is returned;
-        return suitable_times_pos[0][0].seconds - real_time.seconds + suitable_times_pos[0][1].seconds \
-               - suitable_times_pos[0][0].seconds
+        return suitable_times_pos[0].id, suitable_times_pos[0].times, (suitable_times_pos[0].times[0].seconds - real_time.seconds +
+                                       suitable_times_pos[0].times[1].seconds - suitable_times_pos[0].times[0].seconds)
 
     # else, the first suitable time is the day after
-    return (suitable_times[0][0].seconds - real_time.seconds + suitable_times[0][1].seconds -
-            suitable_times[0][0].seconds) + 86400  # we add the number of seconds in a day because the result of the
-    # calculus between parenthesis will be a negative value as result of subtracting real_time (bigger)
-    # to first departure the day after, that will be smaller because it'calculated as it was the same day but
-    # indeed it's in the day after; that first departure won't in fact be bigger than real_time because in
-    # that case we would have selected it the day "before";
+    return suitable_times[0].id, suitable_times[0].times, (suitable_times[0].times[0].seconds - real_time.seconds + suitable_times[0].times[1].seconds -
+                               suitable_times[0].times[0].seconds) + 86400  # we add the number of seconds in a day
+    # because the result of the calculus between parenthesis will be a negative value as result of subtracting
+    # real_time (bigger) to first departure the day after, that will be smaller because it'calculated as it was
+    # the same day but indeed it's in the day after; that first departure won't in fact be bigger than real_time
+    # because in that case we would have selected it the day "before";
 
 
-def relax(s, t, w, prevs, dists):
+def relax(s, t, w, prevs, dists, times, temp_t, temp_l):
     """
 
     :param s: departure node
@@ -52,10 +52,12 @@ def relax(s, t, w, prevs, dists):
     :param w: weight of edge s -> t
     :param prevs: dictonary of previous nodes
     :param dists: dictonary of distances
+    :param temp_t: departure time, arrival time for edge s -> t
     :return: nothing
     """
     dists[t] = dists[s] + w
     prevs[t] = s
+    times[t] = [temp_t, temp_l]
 
 
 def DijkstraSSSP(graph, sourceNodeId, time):
@@ -77,6 +79,8 @@ def DijkstraSSSP(graph, sourceNodeId, time):
     # InitSSSP
     dists = {n: float("inf") for n in graph.nodes}
     prevs = {n: None for n in graph.nodes}
+    times_and_lines = {n: [None, None] for n in graph.nodes}
+
     dists[sourceNodeId] = 0
 
     # creating priority queue
@@ -87,27 +91,32 @@ def DijkstraSSSP(graph, sourceNodeId, time):
     while len(Q.queue) > 0:  # the procedure stops when all nodes in the heap have been analyzed or...
         u = Q.extractMin()
         if dists[u] == float("inf"):  # ...when all remaining nodes are unreachable
-            return prevs, dists
+            return prevs, dists, times_and_lines
         new_time = Time.Time()
         new_time.add_seconds(time.seconds + dists[u])  # new_time = starting time + time required to reach u
         # starting from source node;
         for v in graph.nodes[u].adj:
             if v != sourceNodeId:
-                weight = w(graph, new_time, u, v)
+                temp_line, temp_time, weight = w(graph, new_time, u, v)
                 if dists[u] + weight < dists[v]:
-                    relax(u, v, weight, prevs, dists)
+                    relax(u, v, weight, prevs, dists, times_and_lines, temp_time, temp_line)
                     Q.decreaseKey(v, dists[v])
 
-    return prevs, dists
+    return prevs, dists, times_and_lines
 
 
 g = FileParser.FileParser()
 t = Time.Time()
 t.intTime(13, 0)
 print(t)
-p, d = DijkstraSSSP(g, '500000079', t)
+p, d, tt = DijkstraSSSP(g, '500000079', t)
 
 print("Predecessors:\n")
 pprint.pprint(p)
+print("\n")
 print("Distances:\n")
 pprint.pprint(d)
+print("\n")
+print("Best times (arriving to node from its previous), best line: \n")
+pprint.pprint(tt)
+print("\n")
