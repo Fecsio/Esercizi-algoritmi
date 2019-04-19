@@ -21,21 +21,24 @@ def w(graph, time, s, t):
     suitable_edge = graph.edges[(s, t)]  # find an edge that connects s and t
 
     # def lam(x): x[0].seconds - time.seconds + x[1].seconds - x[0].seconds
-    # print("time:", time)
-    really_suitable_edge = sorted({e[0].seconds - time.seconds + e[1].seconds - e[0].seconds
-                                    for e in suitable_edge.times},
-                                   key=lambda x: x)
+    print("In w, time:", time)
+    really_suitable_edge = sorted({e for e in suitable_edge.times},
+                                   key=lambda e: e[0].seconds - time.seconds + e[1].seconds - e[0].seconds)
     # filter times in "suitable_edge" selecting only times with departure time greater or equal to param "time" and
     # order them by best time (= journey time + difference between departure time and param "time")
 
-    really_suitable_edges_pos = list(filter(lambda x: x > 0, really_suitable_edge))
+    really_suitable_edges_pos = list(filter(lambda x: x[0].seconds >= time.seconds, really_suitable_edge))
 
     # print(really_suitable_edge)
     if really_suitable_edges_pos:
-        print("POSITIVO")
-        return really_suitable_edges_pos[0]
-    return really_suitable_edge[0]
-
+        print("Partenze giorno stesso:", really_suitable_edges_pos)
+        print("Parto alle: ", really_suitable_edges_pos[0][0], "arrivo alle: ", really_suitable_edges_pos[0][1])
+        return really_suitable_edges_pos[0][0].seconds - time.seconds + really_suitable_edges_pos[0][1].seconds \
+               - really_suitable_edges_pos[0][0].seconds
+    print("Partenze:", really_suitable_edge)
+    print("Parto alle: ", really_suitable_edge[0][0], "arrivo alle: ", really_suitable_edge[0][1])
+    return really_suitable_edge[0][0].seconds - time.seconds + really_suitable_edge[0][1].seconds \
+           - really_suitable_edge[0][0].seconds
 
 def relax(s, t, w, prevs, dists):
     """
@@ -65,7 +68,7 @@ def DijkstraSSSP(graph, sourceNodeId, time):
 
     # InitSSSP
     dists = {n: float("inf") for n in graph.nodes}
-    print("~~~~~~~~~~ lunghezza dists:", len(dists))
+    # print("~~~~~~~~~~ lunghezza dists:", len(dists))
     prevs = {n: None for n in graph.nodes}
     dists[sourceNodeId] = 0
 
@@ -73,12 +76,13 @@ def DijkstraSSSP(graph, sourceNodeId, time):
     Q = BinaryHeap.BinaryHeap()
     for id_node in graph.nodes:
         Q.insertNode(id_node, dists[id_node])
-    print("~~~~~~~~~~ lunghezza Q:", len(Q.queue))
+    # print("~~~~~~~~~~ lunghezza Q:", len(Q.queue))
     #print("~~ noice", Q)
 
     while len(Q.queue) > 0:
         u = Q.extractMin()
         if dists[u] == float("inf"):  # this means that all remaining nodes are unreachable
+            print("AAAAA Nodi in coda: ", Q)
             return prevs, dists
         print("min=", u, " con dist:", dists[u])
         new_time = Time.Time("00000")
@@ -96,7 +100,6 @@ def DijkstraSSSP(graph, sourceNodeId, time):
                     relax(u, v, weight, prevs, dists)
                     print("dist source to v: ", dists[v])
                     Q.decreaseKey(v, dists[v])
-                    print(Q.queue[Q.queue.index(FastNode(v, 0))])
             print("\n")
 
     return prevs, dists
@@ -104,9 +107,9 @@ def DijkstraSSSP(graph, sourceNodeId, time):
 
 g = FileParser.FileParser()
 t = Time.Time("00000")
-t.seconds = 21600
+t.intTime(13, 0)
 print(t)
-p, d = DijkstraSSSP(g, '200415016', t)
+p, d = DijkstraSSSP(g, '500000079', t)
 
 print("Predecessors:\n")
 pprint.pprint(p)

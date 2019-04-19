@@ -124,6 +124,7 @@ class BinaryHeap:
 
 
 
+"""
 # PRINT IS THE BEST DEBUGGER
 n1 = FastNode(1, 123)
 n2 = FastNode(2, 23)
@@ -152,5 +153,5 @@ print(Q.extractMin())
 print(Q.extractMin())
 print(Q.extractMin())
 print(Q)
-
+"""
 

@@ -70,4 +70,6 @@ def FileParser():
     return graph
 
 
-#FileParser()
+#g = FileParser()
+
+#print(g.edges["300000035", "300000044"].times)
