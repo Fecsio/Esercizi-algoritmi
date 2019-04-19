@@ -24,13 +24,20 @@ class Time:
             return "0" + H
 
     def getMinute(self):
-        return str(int(self.seconds % 3600 / 60))
+        m = str(int(self.seconds % 3600 / 60))
+        if len(m) == 2:
+            return
+        else:
+            return "0" + m
 
     def __lt__(self, other):
         return self.seconds < other.seconds
 
     def __gt__(self, other):
         return self.seconds > other.seconds
+
+    def __ge__(self, other):
+        return self.seconds >= other.seconds
 
     def __eq__(self, other):
         return self.seconds == other.seconds
@@ -48,8 +55,8 @@ class Time:
         self.seconds += seconds
 
 
-bananagrossa = Time("00000")
+"""bananagrossa = Time("00000")
 bananagrossa.seconds = 46800
 print(bananagrossa.getHour(), bananagrossa.getMinute(), bananagrossa.getTime())
 banana = Time("02535")
-print(banana.getHour(), banana.getMinute(), banana.getTime())
+print(banana.getHour(), banana.getMinute(), banana.getTime())"""
