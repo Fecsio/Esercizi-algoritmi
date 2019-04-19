@@ -26,7 +26,7 @@ class Time:
     def getMinute(self):
         m = str(int(self.seconds % 3600 / 60))
         if len(m) == 2:
-            return
+            return m
         else:
             return "0" + m
 
