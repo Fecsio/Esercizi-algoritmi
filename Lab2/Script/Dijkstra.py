@@ -16,32 +16,39 @@ def w(graph, time, s, t):
              edge's departure time and param "time"
     """
 
-    suitable_edge = graph.edges[(s, t)]  # find all edges that connect s and t
+    suitable_edges = graph.edges[(s, t)]  # find all edges that connect s and t
 
-    real_time = time.getTimeNoDay()  # we need to do this because param "time" could be plus one or more day,
-    # so + 86400 seconds * more days;
+    real_time = time.getTimeNoDay()
+    """ we need to do this because param "time" could be plus one or more day,
+    that means + 86400 seconds * more days;"""
 
-    suitable_times = sorted({e for e in suitable_edge},
+    suitable_times = sorted({e for e in suitable_edges},
                             key=lambda e: e.times[0].seconds - real_time.seconds + e.times[1].seconds - e.times[0].seconds)
-    # filter times in "suitable_edge" selecting only times with departure time greater or equal to real_time and
-    # order them by best time (= journey time + difference between departure time and param "time");
+    """ filter times in "suitable_edge" selecting only times with departure time greater or equal to real_time and
+    order them by best time (= journey time + difference between departure time and real_time, from smallest to largest)
+    """
 
-    suitable_times_pos = list(filter(lambda x: x.times[0] >= real_time, suitable_times))  # selecting
-    # departures at time after real_time, that means departures before 23:59 of the same day;
+    suitable_times_same_day = list(filter(lambda x: x.times[0] >= real_time, suitable_times))
+    # selecting departures at time after real_time, that means departures before 23:59 of the same day;
 
-    if suitable_times_pos:  # if there are departures before the end of the day and after real_time,
+    if suitable_times_same_day:
+        """If there are departures before the end of the day and after real_time,
         # the first of them (that will be the best because they have been sorted before)
-        # is selected and it's time (journey time + difference between departure time and real_time) is returned;
-        return suitable_times_pos[0].id, suitable_times_pos[0].times, (suitable_times_pos[0].times[0].seconds - real_time.seconds +
-                                       suitable_times_pos[0].times[1].seconds - suitable_times_pos[0].times[0].seconds)
+        # is selected and it's time ( = journey time + difference between departure time and real_time) is returned 
+        # together with the id of the associated edge and it's departure time; """
+        return suitable_times_same_day[0].id, suitable_times_same_day[0].times, \
+               (suitable_times_same_day[0].times[0].seconds - real_time.seconds +
+                suitable_times_same_day[0].times[1].seconds - suitable_times_same_day[0].times[0].seconds)
 
     # else, the first suitable time is the day after
-    return suitable_times[0].id, suitable_times[0].times, (suitable_times[0].times[0].seconds - real_time.seconds + suitable_times[0].times[1].seconds -
-                               suitable_times[0].times[0].seconds) + 86400  # we add the number of seconds in a day
-    # because the result of the calculus between parenthesis will be a negative value as result of subtracting
-    # real_time (bigger) to first departure the day after, that will be smaller because it'calculated as it was
-    # the same day but indeed it's in the day after; that first departure won't in fact be bigger than real_time
-    # because in that case we would have selected it the day "before";
+    return suitable_times[0].id, suitable_times[0].times, (suitable_times[0].times[0].seconds - real_time.seconds +
+                                                           suitable_times[0].times[1].seconds -
+                                                           suitable_times[0].times[0].seconds) + 86400
+    """We add the number of seconds in a day because the result of the calculus between the parenthesis will be a 
+    negative value as result of subtracting real_time (bigger) to first departure the day after, that will be smaller
+    because it'calculated as it was the same day but indeed it's in the day after; 
+    that first departure won't in fact be bigger than real_time because in that case we would have selected 
+    it the day "before";"""
 
 
 def relax(s, t, w, prevs, dists, times, temp_t, temp_l):
@@ -50,9 +57,11 @@ def relax(s, t, w, prevs, dists, times, temp_t, temp_l):
     :param s: departure node
     :param t: arrival node
     :param w: weight of edge s -> t
-    :param prevs: dictonary of previous nodes
-    :param dists: dictonary of distances
+    :param prevs: dictionary of previous nodes for each node
+    :param dists: dictionary of distances from source node to each node
+    :param times: dictionary of last times (departure, arrival) and lines used to reach each node
     :param temp_t: departure time, arrival time for edge s -> t
+    :param temp_l: line selected for edge s -> t
     :return: nothing
     """
     dists[t] = dists[s] + w
@@ -66,20 +75,24 @@ def DijkstraSSSP(graph, sourceNodeId, time):
     Dijkstra algorithm implementation
 
     :param graph: graph
-    :param sourceNode: node from which the algorithm has to find shortest path
+    :param sourceNodeId: id of the node from which the algorithm has to find shortest path
     :return: prevs: dictionary with {keys = ids of all nodes; values = id of node that is
              predecessor of the node with id == key, in the minimum path starting from node with id == "sourceNodeId"}
 
              dists: dictionary with {keys = ids of all nodes; values = seconds that are necessary to reach the node with
              id == key, in the minimum path starting from node with id == "sourceNodeId"}
 
+             times_and_lines: dictionary with {keys = ids of all nodes; values = lines
+             and times (departure, arrival) in line used to reach node with id == key,
+             in the minimum path starting from node with id == "sourceNodeId"}
+
     """
     assert sourceNodeId in graph.nodes.keys()
 
     # InitSSSP
-    dists = {n: float("inf") for n in graph.nodes}
-    prevs = {n: None for n in graph.nodes}
-    times_and_lines = {n: [None, None] for n in graph.nodes}
+    dists = {n: float("inf") for n in graph.nodes}  # all distances are infinite before starting to search minimum path
+    prevs = {n: None for n in graph.nodes}  # all previous nodes are None before starting to search minimum path
+    times_and_lines = {n: [None, None] for n in graph.nodes}  # no nodes are reached before starting to search minimum path
 
     dists[sourceNodeId] = 0
 
@@ -93,8 +106,8 @@ def DijkstraSSSP(graph, sourceNodeId, time):
         if dists[u] == float("inf"):  # ...when all remaining nodes are unreachable
             return prevs, dists, times_and_lines
         new_time = Time.Time()
-        new_time.add_seconds(time.seconds + dists[u])  # new_time = starting time + time required to reach u
-        # starting from source node;
+        new_time.add_seconds(time.seconds + dists[u])
+        # new_time = starting time + time required to reach u starting from source node;
         for v in graph.nodes[u].adj:
             if v != sourceNodeId:
                 temp_line, temp_time, weight = w(graph, new_time, u, v)
