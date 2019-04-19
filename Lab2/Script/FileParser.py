@@ -1,10 +1,10 @@
 import os
-from Lab2.Script import Nodo
+from Lab2.Script import Graph
 import re
 
 def FileParser():
     f = open('../File vari/data/bfkoord', 'r', encoding='ISO-8859-1')
-    graph = Nodo.Graph()
+    graph = Graph.Graph()
     f.readline()
     f.readline()
     for x in f:

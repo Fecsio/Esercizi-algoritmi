@@ -105,7 +105,7 @@ def DijkstraSSSP(graph, sourceNodeId, time):
     return prevs, dists
 
 
-g = FileParser.FileParser()
+"""g = FileParser.FileParser()
 t = Time.Time("00000")
 t.intTime(13, 0)
 print(t)
@@ -114,4 +114,4 @@ p, d = DijkstraSSSP(g, '500000079', t)
 print("Predecessors:\n")
 pprint.pprint(p)
 print("Distances:\n")
-pprint.pprint(d)
+pprint.pprint(d)"""

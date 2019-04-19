@@ -10,6 +10,12 @@ class Node:
     def addAdj(self, node):
         self.adj.add(node)
 
+    def getLng(self):
+        return self.lng
+
+    def getLat(self):
+        return self.lat
+
 
 class Edge:
     def __init__(self, idE):

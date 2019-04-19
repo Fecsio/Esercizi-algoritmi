@@ -1,4 +1,4 @@
-from Lab2.Script.Nodo import Graph
+from Lab2.Script.Graph import Graph
 import math
 
 class FastNode:
