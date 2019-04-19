@@ -17,28 +17,39 @@ def w(graph, time, s, t):
              edge's departure time and param "time"
     """
 
-    # print("Arrivo: ", t, "Partenza: ", s)
     suitable_edge = graph.edges[(s, t)]  # find an edge that connects s and t
 
-    # def lam(x): x[0].seconds - time.seconds + x[1].seconds - x[0].seconds
-    print("In w, time:", time)
-    really_suitable_edge = sorted({e for e in suitable_edge.times},
+    """suitable_times = sorted({e[0].seconds - time.seconds + e[1].seconds - e[0].seconds for e in suitable_edge.times
+                             if e[0] >= time},
+                            key=lambda x: x)
+    # filter times in "suitable_edge" selecting only times with departure time greater or equal to param "time" and
+    # order them by best time (= journey time + difference between departure time and param "time")
+
+    suitable_times_pos = list(filter(lambda x: x >= time, suitable_times))  # selecting
+    # departures at time after param "time", that means departures before 23:59 of the same day
+
+    if suitable_times_pos:  # if there's a departure before the end of the day, it's selected
+        return suitable_times_pos[0]
+    # else the first suitable departure is the day after; this means that the sum of journey time with
+    # the difference between departure time and param "time" is a negative value: the more distant from 0
+    # it is, the
+    return suitable_times[0] + 86400"""
+
+    suitable_times = sorted({e for e in suitable_edge.times},
                                    key=lambda e: e[0].seconds - time.seconds + e[1].seconds - e[0].seconds)
     # filter times in "suitable_edge" selecting only times with departure time greater or equal to param "time" and
     # order them by best time (= journey time + difference between departure time and param "time")
 
-    really_suitable_edges_pos = list(filter(lambda x: x[0] >= time, really_suitable_edge))
+    print("Time:", time)
+    suitable_times_pos = list(filter(lambda x: x[0] >= time, suitable_times))  # selecting 
+    # departures before 23:59 of the same day
 
-    # print(really_suitable_edge)
-    if really_suitable_edges_pos:
-        print("Partenze giorno stesso:", really_suitable_edges_pos)
-        print("Parto alle: ", really_suitable_edges_pos[0][0], "arrivo alle: ", really_suitable_edges_pos[0][1])
-        return really_suitable_edges_pos[0][0].seconds - time.seconds + really_suitable_edges_pos[0][1].seconds \
-               - really_suitable_edges_pos[0][0].seconds
-    print("Partenze:", really_suitable_edge)
-    print("Parto alle: ", really_suitable_edge[0][0], "arrivo alle: ", really_suitable_edge[0][1])
-    return really_suitable_edge[0][0].seconds - time.seconds + really_suitable_edge[0][1].seconds \
-           - really_suitable_edge[0][0].seconds
+    if suitable_times_pos:  # if there's a 
+        return suitable_times_pos[0][0].seconds - time.seconds + suitable_times_pos[0][1].seconds \
+               - suitable_times_pos[0][0].seconds
+    print("Partenze:", suitable_times)
+    return suitable_times[0][0].seconds - time.seconds + suitable_times[0][1].seconds \
+           - suitable_times[0][0].seconds + 86400
 
 def relax(s, t, w, prevs, dists):
     """
