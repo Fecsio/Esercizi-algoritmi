@@ -1,7 +1,7 @@
 import math
 
 class Time:
-    def __init__(self, time):
+    def __init__(self, time="00000"):
         self.seconds = (int(time[1])*10 + int(time[2]))*3600 + (int(time[3])*10 + int(time[4]))*60
 
     def intTime(self, hour, minutes):
@@ -15,6 +15,11 @@ class Time:
             return self.getHour() + ":" + self.getMinute() + " " + str(day) + " days after"
         else:
             return self.getHour() + ":" + self.getMinute()
+
+    def getTimeNoDay(self):
+        temp = Time()
+        temp.add_seconds(self.seconds % 86400)
+        return temp
 
     def getHour(self):
         H = str(math.floor((self.seconds / 3600) % 24))
