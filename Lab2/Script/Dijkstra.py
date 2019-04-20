@@ -22,29 +22,31 @@ def w(graph, time, s, t):
     """ we need to do this because param "time" could be plus one or more day,
     that means + 86400 seconds * more days;"""
 
-    suitable_times = sorted({e for e in suitable_edges},
-                            key=lambda e: e.times[0].seconds - real_time.seconds + e.times[1].seconds - e.times[0].seconds)
-    """ filter times in "suitable_edge" selecting only times with departure time greater or equal to real_time and
-    order them by best time (= journey time + difference between departure time and real_time, from smallest to largest)
+    def lam(e):
+        return e.times[0].seconds - real_time.seconds + e.weight
+        # = journey time + difference between departure time and real_time, so real weight considering waiting time
+
+    suitable_times = sorted({(e, lam(e)) for e in suitable_edges},
+                            key=lambda x: lam(x[0]))
+    """filter times in "suitable_edge" selecting only times with departure time greater or equal to real_time and
+    order them by result of applying lam, from smallest to largest
     """
 
-    suitable_times_same_day = list(filter(lambda x: x.times[0] >= real_time, suitable_times))
+    suitable_times_same_day = list(filter(lambda x: x[0].times[0] >= real_time, suitable_times))
     # selecting departures at time after real_time, that means departures before 23:59 of the same day;
 
     if suitable_times_same_day:
         """If there are departures before the end of the day and after real_time,
         # the first of them (that will be the best because they have been sorted before)
-        # is selected and it's time ( = journey time + difference between departure time and real_time) is returned 
-        # together with the id of the associated edge and it's departure time; """
-        return suitable_times_same_day[0].id, suitable_times_same_day[0].times, \
-               (suitable_times_same_day[0].times[0].seconds - real_time.seconds +
-                suitable_times_same_day[0].times[1].seconds - suitable_times_same_day[0].times[0].seconds)
+        # is selected and it's time ( == result of applying lam) is returned 
+        # together with the id of the associated edge and it's departure and arrival time; """
+        return suitable_times_same_day[0][0].id, suitable_times_same_day[0][0].times, suitable_times_same_day[0][1]
+        """ (suitable_times_same_day[0].times[0].seconds - real_time.seconds +
+                suitable_times_same_day[0].weight) # times[1].seconds - suitable_times_same_day[0].times[0].seconds)"""
 
     # else, the first suitable time is the day after
-    return suitable_times[0].id, suitable_times[0].times, (suitable_times[0].times[0].seconds - real_time.seconds +
-                                                           suitable_times[0].times[1].seconds -
-                                                           suitable_times[0].times[0].seconds) + 86400
-    """We add the number of seconds in a day because the result of the calculus between the parenthesis will be a 
+    return suitable_times[0][0].id, suitable_times[0][0].times, (suitable_times[0][1] + 86400)
+    """We add the number of seconds in a day because the result of the application of lam will be a 
     negative value as result of subtracting real_time (bigger) to first departure the day after, that will be smaller
     because it'calculated as it was the same day but indeed it's in the day after; 
     that first departure won't in fact be bigger than real_time because in that case we would have selected 
@@ -120,9 +122,9 @@ def DijkstraSSSP(graph, sourceNodeId, time):
 
 g = FileParser.FileParser()
 t = Time.Time()
-t.intTime(13, 0)
+t.intTime(6, 30)
 print(t)
-p, d, tt = DijkstraSSSP(g, '500000079', t)
+p, d, tt = DijkstraSSSP(g, '210602003', t)
 
 print("Predecessors:\n")
 pprint.pprint(p)

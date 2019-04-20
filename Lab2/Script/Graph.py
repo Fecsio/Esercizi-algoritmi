@@ -20,8 +20,10 @@ class Node:
 
 class Edge:
     def __init__(self, idE, d_time, a_time):
+        assert d_time.seconds <= a_time.seconds
         self.times = [d_time, a_time]
         self.id = idE
+        self.weight = a_time.seconds - d_time.seconds
 
     def __str__(self):
         s = "id: " + self.id + " tempi" + self.times
