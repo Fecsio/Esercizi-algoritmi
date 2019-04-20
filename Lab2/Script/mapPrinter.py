@@ -52,6 +52,7 @@ def mapPrinter(graph, predecessors, lines, destination, departureTime):
     plt.plot(pathLng, pathLat, zorder=10)
     plt.plot(posLng, posLat, linestyle="none", marker="o", markersize=1, color="gray", zorder=1)
     plt.axis('off')
+    plt.savefig("../File vari/Immagini/" + path[len(path)-1] + "to" + path[0] + ".png")
     plt.show()
 
 
