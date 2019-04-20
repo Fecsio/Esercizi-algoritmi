@@ -27,10 +27,9 @@ def w(graph, time, s, t):
         # = journey time + difference between departure time and real_time, so real weight considering waiting time
 
     suitable_times = sorted({(e, lam(e)) for e in suitable_edges},
-                            key=lambda x: lam(x[0]))
-    """filter times in "suitable_edge" selecting only times with departure time greater or equal to real_time and
-    order them by result of applying lam, from smallest to largest
-    """
+                            key=lambda x: (lam(x[0]), x[0].id))
+    """filter times in "suitable_edge" and order them by result of applying lam, from smallest to largest, 
+    keeping ids ordered"""
 
     suitable_times_same_day = list(filter(lambda x: x[0].times[0] >= real_time, suitable_times))
     # selecting departures at time after real_time, that means departures before 23:59 of the same day;
@@ -80,6 +79,7 @@ def DijkstraSSSP(graph, sourceNodeId, time):
 
     :param graph: graph
     :param sourceNodeId: id of the node from which the algorithm has to find shortest path
+    :param time: time of departure
     :return: prevs: dictionary with {keys = ids of all nodes; values = id of node that is
              predecessor of the node with id == key, in the minimum path starting from node with id == "sourceNodeId"}
 
@@ -122,11 +122,11 @@ def DijkstraSSSP(graph, sourceNodeId, time):
     return prevs, dists, times_and_lines
 
 
-g = FileParser.FileParser()
+"""g = FileParser.FileParser()
 t = Time.Time()
-t.intTime(21, 30)
+t.intTime(13, 00)
 print(t)
-p, d, tt = DijkstraSSSP(g, '200406015', t)
+p, d, tt = DijkstraSSSP(g, '500000079', t)
 
 print("Predecessors:\n")
 pprint.pprint(p)
@@ -136,4 +136,4 @@ pprint.pprint(d)
 print("\n")
 print("Best times (arriving to node from its previous), best line: \n")
 pprint.pprint(tt)
-print("\n")
+print("\n")"""

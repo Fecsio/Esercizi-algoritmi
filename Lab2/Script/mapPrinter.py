@@ -1,3 +1,5 @@
+import sys
+
 import matplotlib.pyplot as plt
 from Lab2.Script.Graph import Graph
 import re
@@ -32,7 +34,7 @@ def mapPrinter(graph, predecessors, lines, destination, departureTime):
             currentBus = lines[current][1]
             run = lines[current][1][len(lines[current][1])-5:]
             lineId = lines[current][1][0:len(lines[current][1])-5]
-            changes.append(lines[current][0][0].getTime() + " : run " + run + " " + lineId + " from " + prev + " to ")
+            changes.append(lines[current][0][0].getTime() + " : corsa " + run + " " + lineId + " da " + prev + " a ")
         elif i == 0:
             changes[el] += current
             arrivalTime = lines[current][0][1].getTime()
@@ -42,17 +44,19 @@ def mapPrinter(graph, predecessors, lines, destination, departureTime):
             currentBus = lines[current][1]
             changes[el] += prev
             el += 1
-            changes.append(lines[current][0][0].getTime() + " : run " + run + " " + lineId + " from " + prev + " to ")
+            changes.append(lines[current][0][0].getTime() + " : corsa " + run + " " + lineId + " da " + prev + " a ")
         i -= 1
-    print("Traveling form " + path[len(path)-1] + " to " + path[0])
-    print("Departure time: " + departureTime)
-    print("Arrival time: " + arrivalTime)
+    print("- Viaggio da **" + path[len(path)-1] + "** a **" + path[0] + "**")
+    print("~~~~ \nOrario di partenza: " + departureTime)
+    print("Orario di arrivo: " + arrivalTime + "\n")
     for s in changes:
         print(s)
+    print("~~~~")
+    print("![](Immagini/" + path[len(path)-1] + "to" + path[0] + departureTime + ".png)")
     plt.plot(pathLng, pathLat, zorder=10)
     plt.plot(posLng, posLat, linestyle="none", marker="o", markersize=1, color="gray", zorder=1)
     plt.axis('off')
-    plt.savefig("../File vari/Immagini/" + path[len(path)-1] + "to" + path[0] + ".png")
+    plt.savefig("../File vari/Immagini/" + path[len(path)-1] + "to" + path[0] + departureTime + ".png", bbox_inches='tight')
     plt.show()
 
 

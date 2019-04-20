@@ -65,11 +65,13 @@ def FileParser():
     """for e in graph.nodes:
         print(e, graph.nodes[e].nome)
     for e in graph.edges:
-            print(e, graph.edges[e])"""
+            for i in graph.edges[e]:
+                print(i)
+            print("\n")"""
 
     return graph
 
 
-#g = FileParser()
+g = FileParser()
 
 #print(g.edges["300000035", "300000044"].times)

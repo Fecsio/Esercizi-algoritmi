@@ -1,0 +1,567 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   /*
+   This document has been created with Marked.app <http://marked2app.com>
+   Please leave this notice in place, along with any additional credits below.
+   ---------------------------------------------------------------
+   Title: Kult
+   Author: Peter Sziebig - @bigpe
+   Description: Easy to read
+*/
+
+@font-face {
+    font-family: "Ubuntu";
+    font-style: normal;
+    font-weight: 300;
+    src: local("Ubuntu Light"), local("Ubuntu-Light"), url("http://themes.googleusercontent.com/static/fonts/ubuntu/v4/WtcvfJHWXKxx4x0kuS1kobO3LdcAZYWl9Si6vvxL-qU.woff") format("woff");
+}
+@font-face {
+    font-family: "Ubuntu";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Ubuntu"), url("http://themes.googleusercontent.com/static/fonts/ubuntu/v4/CGXpU_uR_FUfdeyCjAWgZ-vvDin1pK8aKteLpeZ5c0A.woff") format("woff");
+}
+@font-face {
+    font-family: "Ubuntu";
+    font-style: normal;
+    font-weight: 500;
+    src: local("Ubuntu Medium"), local("Ubuntu-Medium"), url("http://themes.googleusercontent.com/static/fonts/ubuntu/v4/gMhvhm-nVj1086DvGgmzB7O3LdcAZYWl9Si6vvxL-qU.woff") format("woff");
+}
+@font-face {
+    font-family: "Ubuntu";
+    font-style: normal;
+    font-weight: 700;
+    src: local("Ubuntu Bold"), local("Ubuntu-Bold"), url("http://themes.googleusercontent.com/static/fonts/ubuntu/v4/nsLtvfQoT-rVwGTHHnkeJrO3LdcAZYWl9Si6vvxL-qU.woff") format("woff");
+}
+@font-face {
+    font-family: "Ubuntu";
+    font-style: italic;
+    font-weight: 300;
+    src: local("Ubuntu Light Italic"), local("Ubuntu-LightItalic"), url("http://themes.googleusercontent.com/static/fonts/ubuntu/v4/DZ_YjBPqZ88vcZCcIXm6VqfTCPadK0KLfdEfFtGWCYw.woff") format("woff");
+}
+
+
+
+html {
+    font-size: 100%;
+}
+html, button, input, select, textarea {
+    font-family: sans-serif;
+}
+
+html, body, button, input, select, textarea {
+    color: #57534A;
+    font-family: "Ubuntu","Myriad Pro","Myriad",sans-serif;
+    font-size: 18px;
+	font-weight: 300;
+}
+
+body{
+    margin: 0 auto;
+    background-color: #FFFFFF;
+}
+
+body, textarea {
+    line-height: 1.4;
+}
+
+
+body:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+body {
+    padding-left: 6rem;
+    padding-right: 6rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 42rem;
+    display: block;
+}
+
+
+
+h1, h2, h3, dt {
+    color: #423F37;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+h2, .article-list .article-title {
+    font-size: 1.5em;
+    margin: 0.83em 0;
+}
+h3, dt {
+    font-size: 1.17em;
+    margin: 1em 0;
+}
+h4 {
+    font-size: 1em;
+    margin: 1.33em 0;
+}
+h5 {
+    font-size: 0.83em;
+    margin: 1.67em 0;
+}
+h6 {
+    font-size: 0.75em;
+    margin: 2.33em 0;
+}
+
+
+a {
+    color: #8DB359;
+    cursor: pointer;
+    outline: 0 none;
+    text-decoration: underline;
+}
+
+a:hover {
+    outline: 0 none;
+    color: #739544;
+}
+
+
+p, pre {
+    margin: 1em 0;
+}
+code, kbd, pre, samp {
+    font-family: monospace,serif;
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+
+}
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+pre {
+    background-color: #F8F5F0;
+    font-size: 0.7rem;
+    overflow-x: auto;
+    padding: 1.3rem;
+    position: relative;
+    white-space: pre;
+    word-wrap: normal;
+}
+pre, code, kbd, samp {
+    margin: 0;
+}
+code, kbd, pre, samp {
+    font-family: monospace,serif;
+}
+
+code {
+    color: #423F37;
+}
+
+
+aside {
+    display: block;
+    float: right;
+    width: 390px;
+}
+
+
+b, strong {
+    font-weight: bold;
+    color: #423F37;
+    font-weight: 700;
+}
+
+blockquote {
+    color: #423F37;
+    font-size: 1.25em;
+    font-weight: 700;
+	margin: 1em 40px;
+}
+
+blockquote {
+    margin-bottom: 2em;
+    margin-top: 2em;
+}
+
+figure {
+	margin-left: -4.5rem;
+    margin-right: -4.5rem;
+    margin-bottom: 2em;
+    margin-top: 2em;
+}
+
+
+hr {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: -moz-use-text-color -moz-use-text-color #ECE6DA;
+    border-image: none;
+    border-style: none none solid;
+    border-width: medium medium 1px;
+    margin: 3em 6em;
+}
+
+
+img {
+    display: block;
+    width: 100%;
+    border: 2px solid #FFFF;
+}
+
+
+ol > li:before {
+    color: #423F37;
+    content: counter(ol, decimal) ".";
+    counter-increment: ol;
+    font-weight: 700;
+    margin-right: 0.333em;
+    position: absolute;
+    right: 100%;
+}
+
+ul > li:before {
+    background-color: #423F37;
+    border-radius: 14px 14px 14px 14px;
+    content: "";
+    height: 6px;
+    margin-right: 0.333em;
+    margin-top: 0.55em;
+    position: absolute;
+    right: 100%;
+    width: 6px;
+}
+
+ol, ul, dl {
+    margin-left: 2rem;
+    padding: 0;
+}
+ol {
+    counter-reset: ol;
+}
+li + li, dd + dt {
+    margin-top: 0.5em;
+}
+
+ul > li {
+    position: relative;
+}
+
+ol > li {
+    position: relative;
+}
+li {
+    list-style: none outside none;
+}
+
+
+figure > figcaption {
+    margin-top: 0.5em;
+}
+small, dd, figcaption {
+    color: #A19C91;
+    display: block;
+    font-size: 0.8rem;
+    font-style: italic;
+    line-height: 1.2;
+}
+
+
+tbody{display:table-row-group}
+tfoot{display:table-footer-group}
+table{margin-bottom:2em;font-size: 0.8em;padding:0;border-collapse:collapse;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.35);width:80%;margin:0 auto 2em auto}
+table th,table td{padding:10px 10px 9px;line-height:18px;text-align:left}
+table th{
+padding-top:9px;!important;text-transform:uppercase;vertical-align:middle}
+table td{vertical-align:top;border-top:1px solid #ddd;}
+table tbody th{border-top:1px solid #ddd;vertical-align:top}
+table{border:1px solid #ddd;border-collapse:separate;*border-collapse:collapse;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px}
+table th+th,table td+td,table th+td{border-left:1px solid #ddd}
+table thead tr:first-child th:first-child,table tbody tr:first-child td:first-child{-webkit-border-radius:4px 0 0 0;-moz-border-radius:4px 0 0 0;border-radius:4px 0 0 0}
+table thead tr:first-child th:last-child,table tbody tr:first-child td:last-child{-webkit-border-radius:0 4px 0 0;-moz-border-radius:0 4px 0 0;border-radius:0 4px 0 0}
+table tbody tr:last-child td:first-child{-webkit-border-radius:0 0 0 4px;-moz-border-radius:0 0 0 4px;border-radius:0 0 0 4px}
+table tbody tr:last-child td:last-child{-webkit-border-radius:0 0 4px 0;-moz-border-radius:0 0 4px 0;border-radius:0 0 4px 0}
+tbody tr:nth-child(odd){background-color:rgba(0,0,0,0.03)}
+
+caption{display:table-caption;font-weight:300;font-size:1.3em;text-transform:uppercase;letter-spacing:2px;word-spacing:.2em;background:rgba(0,0,0,.75);color:#EEE;padding:4px;-webkit-border-radius:4px;margin:4px 0;-webkit-box-shadow:2px 2px 2px rgba(0,0,0,.35)}
+
+/* grey out placeholders */
+:-moz-placeholder {
+  color: #bfbfbf;
+}
+::-webkit-input-placeholder {
+  color: #bfbfbf;
+}
+
+
+.article-date {
+    color: #C7C2B8;
+    display: block;
+    font-size: 0.8rem;
+}
+  </style>
+ </head>
+ <body>
+  <h1 id="lab-2-la-rete-dei-trasporti-pubblici">
+   Lab 2. La rete dei trasporti pubblici
+  </h1>
+  <hr/>
+  <p>
+   <strong>
+    Componenti gruppo:
+   </strong>
+  </p>
+  <ul>
+   <li>
+    Federico Caldart , matricola: 1211144
+   </li>
+   <li>
+    Stefano Panozzo, matricola: 1211143
+   </li>
+   <li>
+    Davide Zago, matricola: 1211260
+   </li>
+  </ul>
+  <hr/>
+  <h3 id="domanda-1">
+   Domanda 1
+  </h3>
+  <p>
+   Per modellare la rete di trasporti pubblici abbiamo utilizzato un grafo così implementato:
+  </p>
+  <ol>
+   <li>
+    <p>
+     I
+     <strong>
+      nodi
+     </strong>
+     identificano le stazioni e hanno come campi dato il nome, le coordinate (longitudine e latitudine) e la lista degli identificativi dei nodi adiacenti; gli identificativi non sono salvati come campo dato nei nodi stessi, ma vengono utilizzati all’interno del grafo, ognuno associato ad un oggetto di classe Node.
+    </p>
+   </li>
+   <li>
+    <p>
+     Gli
+     <strong>
+      archi
+     </strong>
+     identificano i collegamenti tra le stazioni e hanno come campi dato i tempi di partenza e arrivo, un identificativo della corsa e un peso calcolato come differenza tra i secondi a partire dalla mezzanotte del tempo di arrivo e i secondi a partire dalla mezzanotte del tempo di partenza: tale peso non sarà negativo poichè nessun collegamento tra due stazioni parte un giorno e arriva il successivo. Gli archi non memorizzano le due stazioni collegate, che vengono invece associate a oggetti di tipo Edge all’interno del grafo.
+    </p>
+   </li>
+  </ol>
+  <p>
+   Nella classe che modella il grafo, nodi ed archi vengono gestiti con l’ausilio di due dizionari:
+  </p>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      nodes
+     </strong>
+     è un dizionario che ha come chiavi gli identificativi delle stazioni e associa ad ogni chiave un solo oggetto di tipo node, cioè una stazione.
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      edges
+     </strong>
+     è un dizionario che ha come chiavi coppie di identificativi delle stazioni (nodi), in cui il primo indica la stazione di partenza ed il secondo quella di arrivo; ad ogni chiave è associata la lista di archi (cioè oggetti di tipo edge) che collegano le due stazioni, ognuno con identificativo e orari differenti: due stazioni saranno dunque collegate da 0, 1 o più archi.
+    </p>
+   </li>
+  </ol>
+  <h3 id="domanda-2">
+   Domanda 2
+  </h3>
+  <p>
+   Per risolvere il problema abbiamo utilizzato l’algoritmo di
+   <em>
+    Dijkstra
+   </em>
+   , implementando la coda di priorità con una
+   <em>
+    heap binaria
+   </em>
+   .
+  </p>
+  <p>
+   L’algoritmo generico visto a lezione non può essere direttamente applicato al problema, poichè la soluzione di esso deve tener conto di una dipendenza dal tempo.
+   <br/>
+   Questa dipendenza ha portato ad una modifica della funzione che calcola il peso effettivo
+   <em>
+    w(A, B)
+   </em>
+   : per scegliere il percorso più breve da A a B a partire dal tempo
+   <em>
+    t
+   </em>
+   , è necessario tenere conto anche del tempo di attesa da
+   <em>
+    t
+   </em>
+   all’orario di partenza delle corse A -&gt; B oltre al tempo di percorrenza di esse;
+   <em>
+    t
+   </em>
+   , quando viene passato a
+   <em>
+    w(A, B, t)
+   </em>
+   , è uguale alla somma dell’orario  di partenza dal nodo sorgente (in secondi) con il tempo minimo necessario ad arrivare A.
+  </p>
+  <p>
+   E’ stato poi aggiunto un controllo subito dopo l’estrazione del minimo nella heap, che fa terminare l’algoritmo nel caso siano rimasti solo nodi non raggiungibili a partire dal nodo sorgente.
+  </p>
+  <p>
+   Oltre ai predecessori ed ai pesi dei cammini minimi, ritorniamo gli orari di partenza e arrivo e gli identificativi delle corse nei cammini minimi, per facilitarne la stampa in seguito.
+  </p>
+  <h3 id="domanda-3">
+   Domanda 3
+  </h3>
+  <ul>
+   <li>
+    Viaggio da
+    <strong>
+     200415016
+    </strong>
+    a
+    <strong>
+     200405005
+    </strong>
+   </li>
+  </ul>
+  <pre><code>Orario di partenza: 09:30
+Orario di arrivo: 09:52
+
+09:30 : corsa 00360 RGTR da 200415016 a 200405026
+09:40 : corsa 01797 AVL da 200405026 a 200405005
+</code></pre>
+  <p>
+   <img alt="" src="Immagini/200415016to200405005.png"/>
+  </p>
+  <ul>
+   <li>
+    Viaggio da
+    <strong>
+     300000032
+    </strong>
+    a
+    <strong>
+     400000122
+    </strong>
+   </li>
+  </ul>
+  <pre><code>Orario di partenza: 05:30
+Orario di arrivo: 13:50
+
+06:26 : corsa 07608 C88 da 300000032 a 110606001
+06:35 : corsa 03781 C82 da 110606001 a 200405035
+07:46 : corsa 00055 C82 da 200405035 a 400000047
+12:07 : corsa 09879 C82 da 400000047 a 400000122
+</code></pre>
+  <p>
+   <img alt="" src="Immagini/300000032to400000122.png"/>
+  </p>
+  <ul>
+   <li>
+    Viaggio da
+    <strong>
+     210602003
+    </strong>
+    a
+    <strong>
+     300000030
+    </strong>
+   </li>
+  </ul>
+  <pre><code>Orario di partenza: 06:30
+Orario di arrivo: 10:53
+
+06:41 : corsa 00030 CFLBUS da 210602003 a 210502001
+06:55 : corsa 00031 CFLBUS da 210502001 a 201103004
+07:07 : corsa 01306 CFLBUS da 201103004 a 201103001
+07:09 : corsa 00031 CFLBUS da 201103001 a 200301002
+07:11 : corsa 01306 CFLBUS da 200301002 a 200301003
+07:12 : corsa 00031 CFLBUS da 200301003 a 200404028
+07:19 : corsa 01306 CFLBUS da 200404028 a 200404016
+07:20 : corsa 00031 CFLBUS da 200404016 a 200405036
+07:24 : corsa 01173 RGTR da 200405036 a 200405026
+07:27 : corsa 04278 AVL da 200405026 a 200405035
+07:40 : corsa 07630 C82 da 200405035 a 300000030
+</code></pre>
+  <p>
+   <img alt="" src="Immagini/210602003to300000030.png"/>
+  </p>
+  <ul>
+   <li>
+    Viaggio da
+    <strong>
+     200417051
+    </strong>
+    a
+    <strong>
+     140701016
+    </strong>
+   </li>
+  </ul>
+  <pre><code>Orario di partenza: 12:00
+Orario di arrivo: 12:43
+
+12:20 : corsa 03712 C82 da 200417051 a 140701016
+</code></pre>
+  <p>
+   <img alt="" src="Immagini/200417051to14070101612:00.png"/>
+  </p>
+  <ul>
+   <li>
+    Viaggio da
+    <strong>
+     200417051
+    </strong>
+    a
+    <strong>
+     140701016
+    </strong>
+   </li>
+  </ul>
+  <pre><code>Orario di partenza: 23:55
+Orario di arrivo: 00:44
+
+00:09 : corsa 03623 C82 da 200417051 a 140701016
+</code></pre>
+  <p>
+   <img alt="" src="Immagini/200417051to14070101623:55.png"/>
+  </p>
+  <h3 id="domanda-4">
+   Domanda 4
+  </h3>
+  <p>
+   Le soluzioni di viaggio calcolate dalla nostra soluzione sono ottime come tempistiche (escludendo i tempi che nella realtà sono necessari per spostamenti tra le linee), tuttavia può accadere che nella scelta del cammino minimo vengano fatti inutili cambi. Per esempio, nella soluzione di viaggio da 210602003 a 300000030, 00031 CFLBUS e 01306 CFLBUS si alternano per 6 volte: ciò accade perchè, nonostante le due linee percorrano le stesse stazioni, esse impiegano alternativamente meno tempo nelle sotto-tratte (contando il tempo d’attesa), dunque l’algoritmo le valuta alternativamente ottime per i sotto problemi.
+   <br/>
+   E’ possibile migliorare i cammini tenendo traccia delle linea che mi ha portato alla stazione da cui voglio ripartire, per esempio incrementando il peso nel caso in cui sia necessario fare un cambio: ciò potrebbe anche rendere le soluzioni più realistiche, in quanto l’incremento può essere visto come il tempo necessario allo spostamento reale tra le diverse linee.
+  </p>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>

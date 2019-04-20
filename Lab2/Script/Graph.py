@@ -26,7 +26,7 @@ class Edge:
         self.weight = a_time.seconds - d_time.seconds
 
     def __str__(self):
-        s = "id: " + self.id + " tempi" + self.times
+        s = "id: " + self.id + " tempi" + str(self.times[0]) + " " + str(self.times[1])
         return s
 
     def __repr__(self):

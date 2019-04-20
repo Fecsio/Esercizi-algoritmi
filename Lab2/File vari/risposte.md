@@ -1,5 +1,6 @@
 # Lab 2. La rete dei trasporti pubblici
 
+***
 **Componenti gruppo:**
 
 - Federico Caldart , matricola: 1211144
@@ -23,66 +24,93 @@ Nella classe che modella il grafo, nodi ed archi vengono gestiti con l'ausilio d
 
 2. **edges** è un dizionario che ha come chiavi coppie di identificativi delle stazioni (nodi), in cui il primo indica la stazione di partenza ed il secondo quella di arrivo; ad ogni chiave è associata la lista di archi (cioè oggetti di tipo edge) che collegano le due stazioni, ognuno con identificativo e orari differenti: due stazioni saranno dunque collegate da 0, 1 o più archi.
 
+### Domanda 2
+
+Per risolvere il problema abbiamo utilizzato l'algoritmo di *Dijkstra*, implementando la coda di priorità con una *heap binaria*.
+
+L'algoritmo generico visto a lezione non può essere direttamente applicato al problema, poichè la soluzione di esso deve tener conto di una dipendenza dal tempo.
+Questa dipendenza ha portato ad una modifica della funzione che calcola il peso effettivo *w(A, B)*: per scegliere il percorso più breve da A a B a partire dal tempo *t*, è necessario tenere conto anche del tempo di attesa da *t* all'orario di partenza delle corse A -> B oltre al tempo di percorrenza di esse; *t*, quando viene passato a *w(A, B, t)*, è uguale alla somma dell'orario  di partenza dal nodo sorgente (in secondi) con il tempo minimo necessario ad arrivare A.
+
+E' stato poi aggiunto un controllo subito dopo l'estrazione del minimo nella heap, che fa terminare l'algoritmo nel caso siano rimasti solo nodi non raggiungibili a partire dal nodo sorgente.
+
+Oltre ai predecessori ed ai pesi dei cammini minimi, ritorniamo gli orari di partenza e arrivo e gli identificativi delle corse nei cammini minimi, per facilitarne la stampa in seguito.
+
+
+### Domanda 3
+
+- Viaggio da **200415016** a **200405005**
+~~~~ 
+Orario di partenza: 09:30
+Orario di arrivo: 09:52
+
+09:30 : corsa 00360 RGTR da 200415016 a 200405026
+09:40 : corsa 01797 AVL da 200405026 a 200405005
+~~~~
+![](Immagini/200415016to200405005.png)
+
+- Viaggio da **300000032** a **400000122**
+~~~~ 
+Orario di partenza: 05:30
+Orario di arrivo: 13:50
+
+06:26 : corsa 07608 C88 da 300000032 a 110606001
+06:35 : corsa 03781 C82 da 110606001 a 200405035
+07:46 : corsa 00055 C82 da 200405035 a 400000047
+12:07 : corsa 09879 C82 da 400000047 a 400000122
+~~~~
+![](Immagini/300000032to400000122.png)
+
+- Viaggio da **210602003** a **300000030**
+~~~~ 
+Orario di partenza: 06:30
+Orario di arrivo: 10:53
+
+06:41 : corsa 00030 CFLBUS da 210602003 a 210502001
+06:55 : corsa 00031 CFLBUS da 210502001 a 201103004
+07:07 : corsa 01306 CFLBUS da 201103004 a 201103001
+07:09 : corsa 00031 CFLBUS da 201103001 a 200301002
+07:11 : corsa 01306 CFLBUS da 200301002 a 200301003
+07:12 : corsa 00031 CFLBUS da 200301003 a 200404028
+07:19 : corsa 01306 CFLBUS da 200404028 a 200404016
+07:20 : corsa 00031 CFLBUS da 200404016 a 200405036
+07:24 : corsa 01173 RGTR da 200405036 a 200405026
+07:27 : corsa 04278 AVL da 200405026 a 200405035
+07:40 : corsa 07630 C82 da 200405035 a 300000030
+~~~~
+![](Immagini/210602003to300000030.png)
+
+- Viaggio da **200417051** a **140701016**
+~~~~ 
+Orario di partenza: 12:00
+Orario di arrivo: 12:43
+
+12:20 : corsa 03712 C82 da 200417051 a 140701016
+~~~~
+![](Immagini/200417051to14070101612:00.png)
+
+
+- Viaggio da **200417051** a **140701016**
+~~~~ 
+Orario di partenza: 23:55
+Orario di arrivo: 00:44
+
+00:09 : corsa 03623 C82 da 200417051 a 140701016
+~~~~
+![](Immagini/200417051to14070101623:55.png)
 
 
 
 
-### Corse di Prova
+### Domanda 4
 
-1. Traveling form 200415016 to 200405005  
-Departure time: 09:30  
-Arrival time: 09:52  
-09:30 : run 00360 RGTR from 200415016 to 200405026  
-09:40 : run 02069 AVL from 200405026 to 200405023  
-09:41 : run 02338 AVL from 200405023 to 200405005  
-<img src="Immagini/200415016to200405005.png"  width="500">
+Le soluzioni di viaggio calcolate dalla nostra soluzione sono ottime come tempistiche (escludendo i tempi che nella realtà sono necessari per spostamenti tra le linee), tuttavia può accadere che nella scelta del cammino minimo vengano fatti inutili cambi. Per esempio, nella soluzione di viaggio da 210602003 a 300000030, 00031 CFLBUS e 01306 CFLBUS si alternano per 6 volte: ciò accade perchè, nonostante le due linee percorrano le stesse stazioni, esse impiegano alternativamente meno tempo nelle sotto-tratte (contando il tempo d'attesa), dunque l'algoritmo le valuta alternativamente ottime per i sotto problemi.
+E' possibile migliorare i cammini tenendo traccia delle linea che mi ha portato alla stazione da cui voglio ripartire, per esempio incrementando il peso nel caso in cui sia necessario fare un cambio: ciò potrebbe anche rendere le soluzioni più realistiche, in quanto l'incremento può essere visto come il tempo necessario allo spostamento reale tra le diverse linee.
 
-2. Traveling form 300000032 to 400000122  
-Departure time: 05:30  
-Arrival time: 13:50  
-06:26 : run 07608 C88 from 300000032 to 110501002  
-06:50 : run 03781 C82 from 110501002 to 120603002  
-07:01 : run 07608 C88 from 120603002 to 140307001  
-07:09 : run 03781 C82 from 140307001 to 140701016  
-07:16 : run 07608 C88 from 140701016 to 160904001  
-07:26 : run 03781 C82 from 160904001 to 200417051  
-07:39 : run 07608 C88 from 200417051 to 200405035  
-07:46 : run 00055 C82 from 200405035 to 400000047  
-12:07 : run 09879 C82 from 400000047 to 400000122  
-<img src="Immagini/300000032to400000122.png"  width="500">
 
-3. Traveling form 210602003 to 300000030  
-Departure time: 06:30  
-Arrival time: 10:53  
-06:41 : run 00030 CFLBUS from 210602003 to 210202003  
-06:52 : run 00032 CFLBUS from 210202003 to 210502001  
-06:55 : run 00035 CFLBUS from 210502001 to 220502003  
-07:06 : run 00031 CFLBUS from 220502003 to 201103004  
-07:07 : run 01306 CFLBUS from 201103004 to 201103001  
-07:09 : run 00022 RGTR from 201103001 to 200301002  
-07:11 : run 01306 CFLBUS from 200301002 to 200301003  
-07:12 : run 00035 CFLBUS from 200301003 to 200303006  
-07:13 : run 00031 CFLBUS from 200303006 to 200303001  
-07:14 : run 00037 CFLBUS from 200303001 to 200303007  
-07:15 : run 01306 CFLBUS from 200303007 to 200304001  
-07:16 : run 00035 CFLBUS from 200304001 to 200304004  
-07:17 : run 00031 CFLBUS from 200304004 to 200404028  
-07:19 : run 01306 CFLBUS from 200404028 to 200404016  
-07:20 : run 00031 CFLBUS from 200404016 to 200405036  
-07:24 : run 01173 RGTR from 200405036 to 200405026  
-07:27 : run 04278 AVL from 200405026 to 200405035  
-07:40 : run 07630 C82 from 200405035 to 300000030  
-<img src="Immagini/210602003to300000030.png"  width="500">
 
-4. Traveling form 200417051 to 140701016  
-Departure time: 12:00  
-Arrival time: 12:43  
-12:20 : run 03712 C82 from 200417051 to 140701016  
-<img src="Immagini/200417051to140701016.png"  width="500">
 
-5. Traveling form 200417051 to 140701016  
-Departure time: 23:55  
-Arrival time: 00:44  
-00:09 : run 03623 C82 from 200417051 to 140701016  
-<img src="Immagini/200417051to140701016(2).png"  width="500">
+
+
+
+
 
