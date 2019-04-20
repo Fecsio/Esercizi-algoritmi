@@ -120,7 +120,7 @@ def DijkstraSSSP(graph, sourceNodeId, time):
     return prevs, dists, times_and_lines
 
 
-g = FileParser.FileParser()
+"""g = FileParser.FileParser()
 t = Time.Time()
 t.intTime(6, 30)
 print(t)
@@ -134,4 +134,4 @@ pprint.pprint(d)
 print("\n")
 print("Best times (arriving to node from its previous), best line: \n")
 pprint.pprint(tt)
-print("\n")
+print("\n")"""
