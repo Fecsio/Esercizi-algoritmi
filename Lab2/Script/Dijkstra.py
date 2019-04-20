@@ -36,15 +36,17 @@ def w(graph, time, s, t):
     # selecting departures at time after real_time, that means departures before 23:59 of the same day;
 
     if suitable_times_same_day:
-        """If there are departures before the end of the day and after real_time,
-        # the first of them (that will be the best because they have been sorted before)
-        # is selected and it's time ( == result of applying lam) is returned 
-        # together with the id of the associated edge and it's departure and arrival time; """
-        return suitable_times_same_day[0][0].id, suitable_times_same_day[0][0].times, suitable_times_same_day[0][1]
+        """If there are departures before the end of the day and after real_time..."""
+        if (suitable_times[0][1] < 0 and suitable_times_same_day[0][1] <= suitable_times[0][1] + 86400) or \
+                suitable_times[0][1] >= 0:
+            """...the first of them is selected unless it's more convenient to wait and take a ride the day after; 
+            it's time ( == result of applying lam) is returned together with the id of the associated edge and 
+            it's departure and arrival time; """
+            return suitable_times_same_day[0][0].id, suitable_times_same_day[0][0].times, suitable_times_same_day[0][1]
         """ (suitable_times_same_day[0].times[0].seconds - real_time.seconds +
                 suitable_times_same_day[0].weight) # times[1].seconds - suitable_times_same_day[0].times[0].seconds)"""
 
-    # else, the first suitable time is the day after
+    # else, the first suitable time is for sure the day after
     return suitable_times[0][0].id, suitable_times[0][0].times, (suitable_times[0][1] + 86400)
     """We add the number of seconds in a day because the result of the application of lam will be a 
     negative value as result of subtracting real_time (bigger) to first departure the day after, that will be smaller
@@ -120,11 +122,11 @@ def DijkstraSSSP(graph, sourceNodeId, time):
     return prevs, dists, times_and_lines
 
 
-"""g = FileParser.FileParser()
+g = FileParser.FileParser()
 t = Time.Time()
-t.intTime(6, 30)
+t.intTime(21, 30)
 print(t)
-p, d, tt = DijkstraSSSP(g, '210602003', t)
+p, d, tt = DijkstraSSSP(g, '200406015', t)
 
 print("Predecessors:\n")
 pprint.pprint(p)
@@ -134,4 +136,4 @@ pprint.pprint(d)
 print("\n")
 print("Best times (arriving to node from its previous), best line: \n")
 pprint.pprint(tt)
-print("\n")"""
+print("\n")
