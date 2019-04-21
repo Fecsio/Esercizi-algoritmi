@@ -26,7 +26,16 @@ Nella classe che modella il grafo, nodi ed archi vengono gestiti con l'ausilio d
 
 ### Domanda 2
 
-Per risolvere il problema abbiamo utilizzato l'algoritmo di *Dijkstra*, implementando la coda di priorità con una *heap binaria*.
+Per risolvere il problema abbiamo utilizzato l'algoritmo di *Dijkstra*, implementando la coda di priorità con un *min-heap binario*.
+
+Il *min-heap binario* è una struttura dati che consiste in un albero binario nel quale il valore dei figli è maggiore del valore del padre, in questo modo la radice conterrà sempre il valore più basso.  
+L'heap viene implementato utilizzando un array nel quale la posizione *0* contienre un valore nullo mentre tutti i nodi dell'albero sono contenuti nelle altre posizioni con la regola che il nodo in posizione *i* avra come figlio sinistro il nodo in posizione *i\*2* e come figlio destro il nodo in posizione *i\*2+1*, abbiamo dunque utilizzato questa struttura per implementare la coda di priorità e in particolare i metodi significativi implementati sono:
+
+- extractMin(): viene estratto il nodo in posizione *1* dell'array e viene rimpiazzato dall'ultimo nodo presente nell'array, successivamente se il valore della nuova radice è maggiore dei due figli si effettua uno scambio tra il figlio minore e la radice, questo procedimento si ripete in maniera ricorsiva sul sotto-albero che ha come radice il nodo appena scambiato finchè non si trova la posizione corretta del nodo all'interno dell'albero.
+
+- InsertNode(n): l'operazione di inserimento del nodo mette in coda all'array e controlla che il suo valore sia maggiore di quello del padre, se non è così i due nodi vengono scambiati e questo procedimento si ripete finchè il nodo inserito è più grande del padre oppure quando diventa la radice.
+
+- decreaseKey(n, value): l'oerazione di decremento di priorità di un nodo prima trova il nodo all'interno dell'heap, decrementa il suo valore e successivamente lo fa risalire se necessario con lo stesso procedimento utilizzato in insertNode(n).
 
 L'algoritmo generico visto a lezione non può essere direttamente applicato al problema, poichè la soluzione di esso deve tener conto di una dipendenza dal tempo.
 Questa dipendenza ha portato ad una modifica della funzione che calcola il peso effettivo *w(A, B)*: per scegliere il percorso più breve da A a B a partire dal tempo *t*, è necessario tenere conto anche del tempo di attesa da *t* all'orario di partenza delle corse A -> B oltre al tempo di percorrenza di esse; *t*, quando viene passato a *w(A, B, t)*, è uguale alla somma dell'orario  di partenza dal nodo sorgente (in secondi) con il tempo minimo necessario ad arrivare A.
@@ -86,7 +95,7 @@ Orario di arrivo: 12:43
 
 12:20 : corsa 03712 C82 da 200417051 a 140701016
 ~~~~
-![](Immagini/200417051to14070101612:00.png)
+![](Immagini/200417051to140701016.png)
 
 
 - Viaggio da **200417051** a **140701016**
@@ -96,9 +105,57 @@ Orario di arrivo: 00:44
 
 00:09 : corsa 03623 C82 da 200417051 a 140701016
 ~~~~
-![](Immagini/200417051to14070101623:55.png)
+![](Immagini/200417051to140701016(2).png)
 
 
+- Viaggio da **130208003** a **400000129**
+~~~~ 
+Orario di partenza: 11:34
+Orario di arrivo: 13:21
+
+07:06 : corsa 01892 RGTR da 130208003 a 130203002
+07:18 : corsa 01875 RGTR da 130203002 a 140203001
+07:28 : corsa 03433 RGTR da 140203001 a 140401004
+07:39 : corsa 03528 CFLBUS da 140401004 a 140701016
+07:46 : corsa 00457 C82 da 140701016 a 200405035
+08:20 : corsa 04708 C82 da 200405035 a 200415004
+08:25 : corsa 02011 AVL da 200415004 a 200412018
+08:36 : corsa 07223 RGTR da 200412018 a 400000099
+13:01 : corsa 05860 RGTR da 400000099 a 400000129
+~~~~
+![](Immagini/130208003to400000129.png)
+
+
+- Viaggio da **110812001** a **170705002**
+~~~~ 
+Orario di partenza: 16:03
+Orario di arrivo: 18:21
+
+16:26 : corsa 08693 RGTR da 110812001 a 110101002
+16:44 : corsa 03741 C82 da 110101002 a 140701016
+17:17 : corsa 06009 RGTR da 140701016 a 140701024
+17:20 : corsa 01646 RGTR da 140701024 a 140701026
+17:22 : corsa 06009 RGTR da 140701026 a 140701018
+17:23 : corsa 01646 RGTR da 140701018 a 140503001
+17:36 : corsa 03035 RGTR da 140503001 a 180509002
+17:57 : corsa 00229 CFLBUS da 180509002 a 170201002
+18:03 : corsa 00092 CFLBUS da 170201002 a 170501016
+18:15 : corsa 02212 CFLBUS da 170501016 a 170705002
+~~~~
+![](Immagini/110812001to170705002.png)
+
+
+- Viaggio da **180305002** a **200426007**
+~~~~ 
+Orario di partenza: 22:18
+Orario di arrivo: 07:13
+
+06:18 : corsa 02892 RGTR da 180305002 a 200417050
+06:53 : corsa 02565 RGTR da 200417050 a 200417047
+06:59 : corsa 01185 RGTR da 200417047 a 200417005
+07:03 : corsa 03546 AVL da 200417005 a 200426007
+~~~~
+![](Immagini/180305002to200426007.png)
 
 
 ### Domanda 4

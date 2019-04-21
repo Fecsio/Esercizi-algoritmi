@@ -52,11 +52,11 @@ def mapPrinter(graph, predecessors, lines, destination, departureTime):
     for s in changes:
         print(s)
     print("~~~~")
-    print("![](Immagini/" + path[len(path)-1] + "to" + path[0] + departureTime + ".png)")
+    print("![](Immagini/" + path[len(path)-1] + "to" + path[0] + ".png)")
     plt.plot(pathLng, pathLat, zorder=10)
     plt.plot(posLng, posLat, linestyle="none", marker="o", markersize=1, color="gray", zorder=1)
     plt.axis('off')
-    plt.savefig("../File vari/Immagini/" + path[len(path)-1] + "to" + path[0] + departureTime + ".png", bbox_inches='tight')
+    plt.savefig("../File vari/Immagini/" + path[len(path)-1] + "to" + path[0]  + ".png", bbox_inches='tight')
     plt.show()
 
 

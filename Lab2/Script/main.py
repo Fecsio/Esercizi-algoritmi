@@ -4,12 +4,16 @@ from Lab2.Script.mapPrinter import mapPrinter
 from Lab2.Script.Dijkstra import DijkstraSSSP
 from Lab2.Script.Time import Time
 import sys
+import random
 
 def main():
     g = FileParser()
-    start = sys.argv[1]
-    destination = sys.argv[2]
-    time = sys.argv[3]
+    #start = sys.argv[1]
+    #destination = sys.argv[2]
+    #time = sys.argv[3]
+    start = random.choice(list(g.nodes))
+    destination = random.choice(list(g.nodes))
+    time = "02218"
     #start = input("From what node are you starting to travel? ")
     #time = input("When do you want to leave? ")
     #destination = input("Where do you want to go? ")
