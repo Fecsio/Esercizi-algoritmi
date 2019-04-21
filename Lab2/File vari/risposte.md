@@ -29,7 +29,7 @@ Nella classe che modella il grafo, nodi ed archi vengono gestiti con l'ausilio d
 Per risolvere il problema abbiamo utilizzato l'algoritmo di *Dijkstra*, implementando la coda di priorità con un *min-heap binario*.
 
 Il *min-heap binario* è una struttura dati che consiste in un albero binario nel quale il valore dei figli è maggiore del valore del padre, in questo modo la radice conterrà sempre il valore più basso.  
-L'heap viene implementato utilizzando un array nel quale la posizione *0* contienre un valore nullo mentre tutti i nodi dell'albero sono contenuti nelle altre posizioni con la regola che il nodo in posizione *i* avra come figlio sinistro il nodo in posizione *i\*2* e come figlio destro il nodo in posizione *i\*2+1*, abbiamo dunque utilizzato questa struttura per implementare la coda di priorità e in particolare i metodi significativi implementati sono:
+L'heap viene implementato utilizzando un array nel quale la posizione *0* contiene un valore nullo mentre tutti i nodi dell'albero sono contenuti nelle altre posizioni con la regola che il nodo in posizione *i* avra come figlio sinistro il nodo in posizione *i\*2* e come figlio destro il nodo in posizione *i\*2+1*, abbiamo dunque utilizzato questa struttura per implementare la coda di priorità e in particolare i metodi significativi implementati sono:
 
 - extractMin(): viene estratto il nodo in posizione *1* dell'array e viene rimpiazzato dall'ultimo nodo presente nell'array, successivamente se il valore della nuova radice è maggiore dei due figli si effettua uno scambio tra il figlio minore e la radice, questo procedimento si ripete in maniera ricorsiva sul sotto-albero che ha come radice il nodo appena scambiato finchè non si trova la posizione corretta del nodo all'interno dell'albero.
 
@@ -105,7 +105,7 @@ Orario di arrivo: 00:44
 
 00:09 : corsa 03623 C82 da 200417051 a 140701016
 ~~~~
-![](Immagini/200417051to140701016(2).png)
+![](Immagini/200417051to140701016\(2\).png)
 
 
 - Viaggio da **130208003** a **400000129**
