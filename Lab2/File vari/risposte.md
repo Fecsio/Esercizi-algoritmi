@@ -7,7 +7,6 @@
 - Stefano Panozzo, matricola: 1211143
 - Davide Zago, matricola: 1211260
 
-
 ***
 
 ### Domanda 1
@@ -43,6 +42,16 @@ Questa dipendenza ha portato ad una modifica della funzione che calcola il peso 
 E' stato poi aggiunto un controllo subito dopo l'estrazione del minimo nella heap, che fa terminare l'algoritmo nel caso siano rimasti solo nodi non raggiungibili a partire dal nodo sorgente.
 
 Oltre ai predecessori ed ai pesi dei cammini minimi, ritorniamo gli orari di partenza e arrivo e gli identificativi delle corse nei cammini minimi, per facilitarne la stampa in seguito.
+
+È stato preso in considerazione anche l'agoritmo *A\** per la risuluzione del problema. L'euristica utilizzata considerava:
+
+- La distanza euclidea rispetto al nodo finale, calcolata utilizzando le coordinate fornite, cosicchè tramite gli spostamenti ci si avvicini alla destinazione finale.
+- Il numero di treni in partenza da una stazione, ovvero il numero di archi uscenti da un nodo. 
+- Il numero di mete raggiunte da una stazione, ovvero il numero di archi uscenti unici verso nodi differenti.
+
+Gli ultimi due punti sono stati presi in considerazione partendo dal fatto che, per il trasporto pubblico, non è detto che per raggiungere più velocemente una destinazione sia necessario utilizzare la tratta che percorre la distanza più breve. In alcuni casi, infatti, una stazione con molti collegamenti, sia verso destinazioni differenti che verso la stessa ma con trasporti frequenti, può risultare più veloce. Questo si può notare anche dai risultati ottenuti per alcune tratte visibili di seguito.
+
+La funzione per la stima della distanza verso la destinazione finale, però, non è risultata ammissibile. Infatti, in alcuni casi, la stima non risultava attendibile e causava trasferimenti non ottimali, per questo si è rinunciato a questa in favore dell'algoritmo di *Dijkstra*.
 
 
 ### Domanda 3
