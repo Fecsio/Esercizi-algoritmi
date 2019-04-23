@@ -43,7 +43,9 @@ E' stato poi aggiunto un controllo subito dopo l'estrazione del minimo nella hea
 
 Oltre ai predecessori ed ai pesi dei cammini minimi, ritorniamo gli orari di partenza e arrivo e gli identificativi delle corse nei cammini minimi, per facilitarne la stampa in seguito.
 
-È stato preso in considerazione anche l'agoritmo *A\** per la risuluzione del problema. L'euristica utilizzata considerava:
+***
+
+È stato preso in considerazione anche l'agoritmo *A\** per la risoluzione del problema. L'euristica utilizzata considerava:
 
 - La distanza euclidea rispetto al nodo finale, calcolata utilizzando le coordinate fornite, cosicchè tramite gli spostamenti ci si avvicini alla destinazione finale.
 - Il numero di treni in partenza da una stazione, ovvero il numero di archi uscenti da un nodo. 
