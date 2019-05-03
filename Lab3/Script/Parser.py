@@ -32,12 +32,14 @@ def Parser():
             if line[0] == "EOF":
                 break
             else:
-                nodes.append(Node(line[0], math.floor(float(line[1])), math.floor(float(line[2]))))
+                nodes.append(Node(line[0], (float(line[1])), (float(line[2]))))
         graph.insertNodes(nodes)
         graphList.append(graph)
     return graphList
 
 g = Parser()
-print(g[0].type)
-for x in g[0].distMatrix:
-    print(x)
+
+for gr in g:
+    print(gr.type)
+    for n in gr.distMatrix:
+        print(n)

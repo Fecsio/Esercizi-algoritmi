@@ -1,3 +1,5 @@
+import math
+
 from Lab3.Script.Distance import eucDistance
 from Lab3.Script.Distance import geoDistance
 
@@ -8,6 +10,14 @@ class Node:
         self.id = id
         self.coord1 = coord1
         self.coord2 = coord2
+
+    def __str__(self):
+        s = "id: " + self.id + " coord1: " + str(self.coord1) + " coord2: " + str(self.coord2)
+        return s
+
+    def __repr__(self):
+        s = "id: " + self.id + " coord1: " + str(self.coord1) + " coord2: " + str(self.coord2)
+        return s
 
 
 class Graph:
