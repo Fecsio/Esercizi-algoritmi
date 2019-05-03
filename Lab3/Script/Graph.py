@@ -10,7 +10,7 @@ class Node:
 
 class Graph:
     def __init__(self, name, type, dimension):
-        self.distMatrix = [[0 for x in range(int(dimension)+1)] for y in range(int(dimension)+1)]
+        self.distMatrix = [[0 for x in range(int(dimension))] for y in range(int(dimension))]
         self.name = name
         self.type = type
         self.nodeNumber = 0
@@ -19,13 +19,16 @@ class Graph:
         print(self.type)
         for x in nodeList:
             id = int(x.id)
-            for i in range(id, 0, -1):
+            for i in range(id-1, -1, -1):
                 if self.type.strip() == "EUC_2D":
                     dist = eucDistance(x.coord1, x.coord2, nodeList[i].coord1, nodeList[i].coord2)
                     self.distMatrix[i][id - 1] = dist
                     self.distMatrix[id - 1][i] = dist
                 #else:
                     #self.distMatrix = geoDist(x.coord1, x.coord2, nodeList[i].coord1, nodeList[i].coord2)
+
+    def getDistance(self, node1, node2):
+        return self.distMatrix[node1-1][node2-1]
 
 
 
