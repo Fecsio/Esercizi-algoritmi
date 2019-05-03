@@ -1,4 +1,6 @@
 from Lab3.Script.Distance import eucDistance
+from Lab3.Script.Distance import geoDistance
+
 
 
 class Node:
@@ -16,7 +18,6 @@ class Graph:
         self.nodeNumber = 0
 
     def insertNodes(self, nodeList):
-        print(self.type)
         for x in nodeList:
             id = int(x.id)
             for i in range(id-1, -1, -1):
@@ -24,8 +25,10 @@ class Graph:
                     dist = eucDistance(x.coord1, x.coord2, nodeList[i].coord1, nodeList[i].coord2)
                     self.distMatrix[i][id - 1] = dist
                     self.distMatrix[id - 1][i] = dist
-                #else:
-                    #self.distMatrix = geoDist(x.coord1, x.coord2, nodeList[i].coord1, nodeList[i].coord2)
+                else:
+                    dist = geoDistance(x.coord1, x.coord2, nodeList[i].coord1, nodeList[i].coord2)
+                    self.distMatrix[i][id - 1] = dist
+                    self.distMatrix[id - 1][i] = dist
 
     def getDistance(self, node1, node2):
         return self.distMatrix[node1-1][node2-1]
