@@ -21,5 +21,8 @@ def geoDistance(dLat1, dLong1, dLat2, dLong2):
 
 
 def eucDistance(x1, y1, x2, y2):
-    return int(math.sqrt((x1 - y1)**2 + (x2 - y2)**2))
+    return int(math.sqrt((x1 - x2)**2 + (y1 - y2)**2))
 
+
+print(geoDistance(52.2296756, 21.0122287, 52.406374, 16.9251681))
+print(eucDistance(0.00000e+00, 0.00000e+00, 1.17350e+03, 2.03780e+03))
