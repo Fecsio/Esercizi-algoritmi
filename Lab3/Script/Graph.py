@@ -19,6 +19,8 @@ class Node:
         s = "id: " + self.id + " coord1: " + str(self.coord1) + " coord2: " + str(self.coord2)
         return s
 
+    def __eq__(self, other):
+        return self.id == other.id
 
 class Graph:
     def __init__(self, name, type, dimension):
@@ -36,7 +38,8 @@ class Graph:
                     self.distMatrix[i][id - 1] = dist
                     self.distMatrix[id - 1][i] = dist
                 else:
-                    dist = geoDistance(x.coord1, x.coord2, nodeList[i].coord1, nodeList[i].coord2)
+                    dist = geoDistance(x.coord1, x.coord2, nodeList[i].coord1, nodeList[i].coord2) \
+                        if x is not nodeList[i] else 0
                     self.distMatrix[i][id - 1] = dist
                     self.distMatrix[id - 1][i] = dist
 
