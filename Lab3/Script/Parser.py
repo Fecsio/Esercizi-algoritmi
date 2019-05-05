@@ -37,9 +37,9 @@ def Parser():
         graphList.append(graph)
     return graphList
 
-g = Parser()
+#g = Parser()
 
-for gr in g:
+"""for gr in g:
     print(gr.type)
     for n in gr.distMatrix:
-        print(n)
+        print(n)"""
