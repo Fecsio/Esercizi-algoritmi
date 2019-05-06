@@ -1,6 +1,7 @@
 import multiprocessing
 import pprint
 import sys
+import time
 
 from Lab3.Script import Graph, Parser
 
@@ -44,13 +45,14 @@ def call_hk_tsp(timeout, graph):
         manager = multiprocessing.Manager()
         return_value = manager.list()
         p = multiprocessing.Process(target=hk_tsp, args=(graph, return_value))
+        start = time.time()
         p.start()
         p.join(timeout)
 
         if p.is_alive():
             p.terminate()
-            return True, return_value
+            return True, return_value[0], timeout
         else:
-            return False, return_value
+            return False, return_value[0], time.time() - start
 
 

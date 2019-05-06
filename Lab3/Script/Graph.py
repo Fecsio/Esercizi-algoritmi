@@ -46,6 +46,11 @@ class Graph:
     def getDistance(self, node1, node2):
         return self.distMatrix[node1-1][node2-1]
 
+    def __str__(self):
+        return str(self.name)
+
+    def __repr__(self):
+        return str(self.name)
 
 
 
