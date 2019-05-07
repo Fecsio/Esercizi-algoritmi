@@ -6,53 +6,43 @@ import time
 from Lab3.Script import Graph, Parser
 
 
-def hk_visit(G, v, S, dists, prevs):
+def hk_visit(G, v, S, dists, prevs, timeout):
+
+    timed_out = False
 
     if len(S) == 1:
-        return G.getDistance(v, 1)
+        return G.getDistance(v, 1), False
 
     elif dists[v - 1].get(S) is not None:
-        return dists[v - 1][S]
+        return dists[v - 1][S], False
 
     else:
         mindist = float("inf")
         minprec = None
         for n in S:
             if n != v:
-                dist = hk_visit(G, n, S.difference([v]), dists, prevs) + G.getDistance(n, v)
+                dist, t_o = hk_visit(G, n, S.difference([v]), dists, prevs, timeout)
+                dist += G.getDistance(n, v)
+
                 if dist < mindist:
                     mindist = dist
                     minprec = n
+
+                if t_o or time.time() > timeout:
+                    timed_out = True
+                    break
+
         dists[v - 1][S] = mindist
         prevs[v - 1][S] = minprec
+        return mindist, timed_out
 
-        return mindist
 
-
-def hk_tsp(G, return_val):
+def hk_tsp(G, timeout):
     dists = [dict() for n in range(0, len(G.distMatrix))]
     prevs = [dict() for n in range(0, len(G.distMatrix))]
     S = frozenset(range(1, len(G.distMatrix) + 1))
-    a = hk_visit(G, 1, S, dists, prevs)
-    return_val.insert(0, a)
 
+    start = time.time()
+    r, t_o = hk_visit(G, 1, S, dists, prevs, time.time() + timeout)
 
-def call_hk_tsp(timeout, graph):
-    if timeout <= 0.0 or type(timeout) not in [int, float]:
-        raise IOError("Invalid timeout!")
-
-    else:
-        manager = multiprocessing.Manager()
-        return_value = manager.list()
-        p = multiprocessing.Process(target=hk_tsp, args=(graph, return_value))
-        start = time.time()
-        p.start()
-        p.join(timeout)
-
-        if p.is_alive():
-            p.terminate()
-            return True, return_value[0], timeout
-        else:
-            return False, return_value[0], time.time() - start
-
-
+    return r, t_o, time.time() - start
