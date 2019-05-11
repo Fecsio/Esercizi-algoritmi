@@ -1,5 +1,6 @@
 from Lab3.Script.Graph import Graph
 from Lab3.Script.Graph import Node
+from Lab3.Script.Graph import Edge
 import math
 import pprint
 import os
@@ -37,9 +38,14 @@ def Parser():
         graphList.append(graph)
     return graphList
 
-#g = Parser()
+g = Parser()
 
 """for gr in g:
     print(gr.type)
     for n in gr.distMatrix:
         print(n)"""
+
+print(g)
+list = g[1].getOrderedEdges()
+for e in list:
+    print(e.getWeight())

@@ -2,6 +2,7 @@ import math
 
 from Lab3.Script.Distance import eucDistance
 from Lab3.Script.Distance import geoDistance
+import numpy as np
 
 
 
@@ -46,11 +47,32 @@ class Graph:
     def getDistance(self, node1, node2):
         return self.distMatrix[node1-1][node2-1]
 
+    def getOrderedEdges(self):
+        edgeList = []
+        for i in range(len(self.distMatrix)):
+            k = 0
+            for j in range(k, len(self.distMatrix[i])):
+                edgeList.append(Edge(i, j, self.distMatrix[i][j]))
+        return sorted(edgeList, key=lambda x: x.getWeight())
+
+
+
     def __str__(self):
         return str(self.name)
 
     def __repr__(self):
         return str(self.name)
+
+
+class Edge:
+    def __init__(self, node1, node2, weight):
+        self.node1 = node1
+        self.node2 = node2
+        self.weight = weight
+
+    def getWeight(self):
+        return self.weight
+
 
 
 
