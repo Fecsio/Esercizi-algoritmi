@@ -5,7 +5,7 @@ import time
 
 from Lab3.Script import Graph, Parser
 
-
+sys.setrecursionlimit(8000)
 def hk_visit(G, v, S, dists, prevs, timeout):
 
     timed_out = False
