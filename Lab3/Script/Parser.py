@@ -43,9 +43,12 @@ g = Parser()
 """for gr in g:
     print(gr.type)
     for n in gr.distMatrix:
-        print(n)"""
-
+        print(n)
+        
+        
 print(g)
 list = g[1].getOrderedEdges()
 for e in list:
-    print(e.getWeight())
+    print(e.getWeight())"""
+
+

@@ -8,6 +8,8 @@ from Lab3.Script import held_karp
 
 graph_list = Parser.Parser()
 
+
+
 best_sol = [35002, 3323, 21294, 426, 7013, 134602]
 
 try:

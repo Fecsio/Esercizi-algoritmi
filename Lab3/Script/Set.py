@@ -2,13 +2,14 @@
 class Node:
     def __init__(self, value):
         self.value = value
-        self.parent = None
+        self.parent = self
+        self.rank = 0
 
     def setParent(self, parent):
         self.parent = parent
 
     def getParent(self):
-        return self.parent.getValue()
+        return self.parent
 
     def getValue(self):
         return self.value
@@ -16,20 +17,31 @@ class Node:
     def setValue(self, newValue):
         self.value = newValue
 
+    def __ne__(self, other):
+        self.value != other.value
+
 class Set:
     def __init__(self):
-        self.leader = None
-        self.rank = 0
+        self.setList = []
 
     def makeSet(self, node):
-        self.leader = Node(node)
-        self.leader.setParent(self.leader)
+        self.setList.append(Node(node))
 
     def findSet(self, node):
-        parent = node.getParent()
-        if parent != node.getValue():
-            parent.setParent(self.findSet(parent))
+        parent = self.setList[node].getParent()
+        if parent != self.setList[node]:
+            parent.setParent(self.findSet(parent.getValue()))
         return parent
 
-    def union(self, set1, set2):
-        
+    def union(self, node1, node2):
+        x = self.findSet(self.setList[node1].getValue())
+        y = self.findSet(self.setList[node2].getValue())
+        if x.rank > y.rank:
+            y.setParent(x)
+        else:
+            x.setParent(y)
+            if y.rank == x.rank:
+                y.rank = y.rank + 1
+
+
+

@@ -49,11 +49,16 @@ class Graph:
 
     def getOrderedEdges(self):
         edgeList = []
+        k = 0
         for i in range(len(self.distMatrix)):
-            k = 0
             for j in range(k, len(self.distMatrix[i])):
                 edgeList.append(Edge(i, j, self.distMatrix[i][j]))
+            k += 1
+
         return sorted(edgeList, key=lambda x: x.getWeight())
+
+    def getDim(self):
+        return len(self.distMatrix)
 
 
 
