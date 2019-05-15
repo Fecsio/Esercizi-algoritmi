@@ -32,7 +32,7 @@ class Set:
         val = parent.getValue()
         if parent.getValue() != self.setList[node].getValue():
             self.setList[node].setParent(self.findSet(parent.getValue()))
-        return parent
+        return self.setList[node].getParent()
 
     def union(self, node1, node2):
         x = self.findSet(self.setList[node1].getValue())
@@ -42,7 +42,7 @@ class Set:
         else:
             x.setParent(y)
             if y.rank == x.rank:
-                y.rank = y.rank + 1
+                y.rank += 1
 
 
 

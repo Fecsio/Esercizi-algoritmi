@@ -13,9 +13,10 @@ def Kruskal(Graph):
     for i in range(Graph.getDim()):
         setList.makeSet(i)
     for e in edgeList:
-        if setList.findSet(e.node1).getValue() != setList.findSet(e.node2).getValue():
-            node1 = setList.findSet(e.node1).getValue()
-            node2 = setList.findSet(e.node2).getValue()
+        node1 = setList.findSet(e.node1).getValue()
+        node2 = setList.findSet(e.node2).getValue()
+        if node1 != node2:
+            print("node1:", node1, "node2:", node2)
             supTree.append(e)
             setList.union(e.node1, e.node2)
     return supTree
@@ -24,7 +25,11 @@ g = Parser()
 print("grafi:", g)
 set = Kruskal(g[0])
 print("length:", len(set))
+count = 0
 for e in set:
-    print('{'+str(e.node1), str(e.node2)+'}',)
+    print('{'+str(e.node1), str(e.node2)+'}', "w="+str(e.weight))
+    if count == 12:
+        print("----")
+    count+=1
 
 
