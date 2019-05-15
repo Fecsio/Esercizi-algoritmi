@@ -14,6 +14,8 @@ def Kruskal(Graph):
         setList.makeSet(i)
     for e in edgeList:
         if setList.findSet(e.node1).getValue() != setList.findSet(e.node2).getValue():
+            node1 = setList.findSet(e.node1).getValue()
+            node2 = setList.findSet(e.node2).getValue()
             supTree.append(e)
             setList.union(e.node1, e.node2)
     return supTree

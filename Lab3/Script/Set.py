@@ -29,8 +29,9 @@ class Set:
 
     def findSet(self, node):
         parent = self.setList[node].getParent()
-        if parent != self.setList[node]:
-            parent.setParent(self.findSet(parent.getValue()))
+        val = parent.getValue()
+        if parent.getValue() != self.setList[node].getValue():
+            self.setList[node].setParent(self.findSet(parent.getValue()))
         return parent
 
     def union(self, node1, node2):
