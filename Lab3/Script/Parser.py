@@ -7,6 +7,7 @@ import os
 
 
 def Parser():
+    print("Parsing")
     directory = os.fsencode('../File vari/Data')
     graphList = []
     for file in os.listdir(directory):
@@ -28,6 +29,7 @@ def Parser():
             elif line[0].strip("\n") == "NODE_COORD_SECTION":
                 break
         graph = Graph(name, type, dimension)
+        print("Parsing")
         for x in f:
             line = x.split()
             if line[0] == "EOF":

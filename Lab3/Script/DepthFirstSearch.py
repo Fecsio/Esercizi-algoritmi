@@ -1,27 +1,9 @@
 from Lab3.Script.Graph import Graph
 
-class TreeNode:
-    def __init__(self, value):
-        self.value = value
-        self.parent = None
-        self.son = []
 
-    def setParent(self, treeNode):
-        self.parent = treeNode
 
-    def addSon(self, treeNode):
-        self.son.append(treeNode)
 
-    def getParent(self):
-        return self.parent
-
-    def getSon(self):
-        return self.son
-
-    def getValue(self):
-        return self.value
-
-def listToTree(edgeList):
+"""def listToTree(edgeList):
     nodeList = []
     for e in edgeList:
         present1 = False
@@ -32,8 +14,24 @@ def listToTree(edgeList):
             if i.getValue() == e.node2:
                 present2 = True
         if not present1:
-            nodeList.append(TreeNode())
+            nodeList.append(TreeNode())"""
 
 
-#def depthFirstSearch(Graph, tree):
+def depthFirstSearch(graph, treeNode, orderList, parent):
+    value = treeNode.getValue()
+    orderList.append(value)
+    pathWeight = 0
+    for i in treeNode.getLinks():
+        if i.getValue() != parent:
+            depthFirstSearch(graph, i, orderList, value)
+    if parent == -1:
+        for i in range(len(orderList)-1):
+            node1 = orderList[i]
+            node2 = None
+            if i+1 > len(orderList)-1:
+                node2 = orderList[0]
+            else:
+                node2 = orderList[i+1]
+            pathWeight += graph.getDistance(node1, node2)
+        return pathWeight
 
