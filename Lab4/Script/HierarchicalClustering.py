@@ -3,12 +3,25 @@ from Lab4.Script import Contea
 import pprint
 import math
 
+class Cluster:
+    def __init__(self, points):
+        self.points = points
+
+    def put(self, point):
+        self.points.add(point)
+
 def h_clustering(P, k):
     n = len(P)
     sortedP = sorted(P, key=lambda c: c.x) # sortedP = P ordinato secondo la coordinata x
     S = [i for i in range(0, len(P))]
-    S.sort(key=lambda i: P[i].y)  # S = lista degli indici di P ordinati per coordinata y di P[i]
+    S.sort(key=lambda i: P[i].y)  # S = lista degli indici i di P ordinati per coordinata y di P[i]
 
+    clusters = set(Cluster([p]) for p in P)
+
+    while len(clusters) > k:
+        i, j = fast_closest_pair(clusters, S)
+        cluster_i = Cluster(clusters
+        clusters.add(Cluster(Cluster))
     
 
 """
