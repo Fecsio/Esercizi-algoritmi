@@ -33,5 +33,6 @@ def depthFirstSearch(graph, treeNode, orderList, parent):
             else:
                 node2 = orderList[i+1]
             pathWeight += graph.getDistance(node1, node2)
+        print(orderList)
         return pathWeight
 
