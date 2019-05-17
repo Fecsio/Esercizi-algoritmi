@@ -25,7 +25,7 @@ def depthFirstSearch(graph, treeNode, orderList, parent):
         if i.getValue() != parent:
             depthFirstSearch(graph, i, orderList, value)
     if parent == -1:
-        for i in range(len(orderList)-1):
+        for i in range(len(orderList)):
             node1 = orderList[i]
             node2 = None
             if i+1 > len(orderList)-1:
@@ -33,6 +33,5 @@ def depthFirstSearch(graph, treeNode, orderList, parent):
             else:
                 node2 = orderList[i+1]
             pathWeight += graph.getDistance(node1, node2)
-        print(orderList)
         return pathWeight
 
