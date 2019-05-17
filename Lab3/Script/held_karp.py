@@ -11,10 +11,10 @@ def hk_visit(G, v, S, dists, prevs, timeout):
     timed_out = False
 
     if len(S) == 1:
-        return G.getDistance(v, 1), False
+        return G.getDistance(v, 0), False
 
-    elif dists[v - 1].get(S) is not None:
-        return dists[v - 1][S], False
+    elif dists[v].get(S) is not None:
+        return dists[v][S], False
 
     else:
         mindist = float("inf")
@@ -32,17 +32,17 @@ def hk_visit(G, v, S, dists, prevs, timeout):
                     timed_out = True
                     break
 
-        dists[v - 1][S] = mindist
-        prevs[v - 1][S] = minprec
+        dists[v][S] = mindist
+        prevs[v][S] = minprec
         return mindist, timed_out
 
 
 def hk_tsp(G, timeout):
     dists = [dict() for n in range(0, len(G.distMatrix))]
     prevs = [dict() for n in range(0, len(G.distMatrix))]
-    S = frozenset(range(1, len(G.distMatrix) + 1))
+    S = frozenset(range(0, len(G.distMatrix)))
 
     start = time.time()
-    r, t_o = hk_visit(G, 1, S, dists, prevs, time.time() + timeout)
+    r, t_o = hk_visit(G, 0, S, dists, prevs, time.time() + timeout)
 
     return r, t_o, time.time() - start
