@@ -26,6 +26,7 @@ def Kruskal(Graph):
     supTree = []
     treeIndex = -1
     maxLinks = 0
+    minEdges = []
     for i in range(Graph.getDim()):
         supTree.append(TreeNode(i))
     for i in range(Graph.getDim()):
@@ -34,6 +35,7 @@ def Kruskal(Graph):
         node1 = setList.findSet(e.node1).getValue()
         node2 = setList.findSet(e.node2).getValue()
         if node1 != node2:
+            minEdges.append(e.getWeight())
             supTree[e.node1].addLink(supTree[e.node2])
             supTree[e.node2].addLink(supTree[e.node1])
             index = -1
@@ -48,18 +50,21 @@ def Kruskal(Graph):
                 treeIndex = index
                 maxLinks = localMax
             setList.union(e.node1, e.node2)
+    treeWeight = 0
+    for e in minEdges:
+        treeWeight += e
     print("Nodo", treeIndex, maxLinks)
     return supTree[treeIndex]
 
-"""g = Parser()
-sel = g[0]
+g = Parser()
+sel = g[3]
 print("grafi:", g)
 tree = Kruskal(sel)
 orderedList = []
 pathWeight = depthFirstSearch(sel, tree, orderedList, -1)
 print(sel, pathWeight)
 count = 0
-for e in edgeList:
+"""for e in edgeList:
     print('{'+str(e.node1), str(e.node2)+'}', "w="+str(e.weight))
     if count == 12:
         print("----")

@@ -45,7 +45,7 @@ class Graph:
                     self.distMatrix[id - 1][i] = dist
 
     def getDistance(self, node1, node2):
-        return self.distMatrix[node1-1][node2-1]
+        return self.distMatrix[node1][node2]
 
     def getOrderedEdges(self):
         edgeList = []
