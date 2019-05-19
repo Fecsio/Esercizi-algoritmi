@@ -16,7 +16,7 @@
   <th></th>
   <th colspan="3">Held Karp</th>
   <th colspan="3">2-approssimato</th>
-  <th colspan="3"> Euristica costruttiva</th>
+  <th colspan="3"> Closest Insertion</th>
   </tr>
   <tr>
     <th>Istanza</th>
@@ -38,9 +38,9 @@
      <td>3702</td>
      <td>0.0</td>
      <td>11.41%</td>
-     <td></td>
-     <td></td>
-     <td></td>
+     <td>3336</td>
+     <td>0.0</td>
+     <td>0.39%</td>
   </tr>
   <tr>
      <td>ulysses22.tsp</td>
@@ -50,9 +50,9 @@
      <td>8363</td>
      <td>0.0</td>
      <td>19.25%</td>
-     <td></td>
-     <td></td>
-     <td></td>
+     <td>7390</td>
+     <td>0.0</td>
+     <td>5.38%</td>
   </tr>
   <tr>
      <td>eli51.tsp</td>
@@ -62,9 +62,9 @@
      <td>594</td>
      <td>0.01</td>
      <td>39.44%</td>
-     <td></td>
-     <td></td>
-     <td></td>
+     <td>459</td>
+     <td>0.0</td>
+     <td>7.75%</td>
   </tr>
   <tr>
      <td>kroD100.tsp</td>
@@ -74,9 +74,9 @@
      <td>28027</td>
      <td>0.02</td>
      <td>31.62%</td>
-     <td></td>
-     <td></td>
-     <td></td>
+     <td>25225</td>
+     <td>0.01</td>
+     <td>18.46%</td>
   </tr>
   <tr>
      <td>gr229.tsp</td>
@@ -86,9 +86,9 @@
      <td>177614</td>
      <td>0.13</td>
      <td>31.95%</td>
-     <td></td>
-     <td></td>
-     <td></td>
+     <td>153720</td>
+     <td>0,08</td>
+     <td>14.2%</td>
   </tr>
   <tr>
      <td>d493.tsp</td>
@@ -98,9 +98,9 @@
      <td>45190</td>
      <td>0.72</td>
      <td>29.11%</td>
-     <td></td>
-     <td></td>
-     <td></td>
+     <td>41248</td>
+     <td>0.47</td>
+     <td>17.84%</td>
   </tr>
   <tr>
      <td>dsj1000.tsp</td>
@@ -110,10 +110,11 @@
      <td>25034577</td>
      <td>3.2</td>
      <td>34.16%</td>
-     <td></td>
-     <td></td>
-     <td></td>
+     <td>22909568</td>
+     <td>4.24</td>
+     <td>22.78%</td>
   </tr>
+
   
 
 </table>
