@@ -3,27 +3,18 @@ from Lab3.Script.Graph import Graph
 
 
 
-"""def listToTree(edgeList):
-    nodeList = []
-    for e in edgeList:
-        present1 = False
-        present2 = False
-        for i in nodeList:
-            if i.getValue() == e.node1:
-                present1 = True
-            if i.getValue() == e.node2:
-                present2 = True
-        if not present1:
-            nodeList.append(TreeNode())"""
-
-
 def depthFirstSearch(graph, treeNode, orderList, parent):
     value = treeNode.getValue()
     orderList.append(value)
     pathWeight = 0
+    # Partendo dal nodo selezionato come radice scorre in maniera ricorsiva l'albero
     for i in treeNode.getLinks():
+        # controllo per evitare che si passi 2 volte per lo stesso nodo
         if i.getValue() != parent:
             depthFirstSearch(graph, i, orderList, value)
+    # parent è -1 solo nella prima chiamata a questa funzione quindi si entrerà solamente quando tutte le chiamate
+    # ricorsive sono finite e dunque la lista contenente l'ordine di scorrimento dei nodi è completa
+    # quindi viene calcolato il peso del circuito
     if parent == -1:
         for i in range(len(orderList)):
             node1 = orderList[i]

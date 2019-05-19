@@ -4,6 +4,8 @@ from Lab3.Script.Set import Node
 from Lab3.Script.Parser import Parser
 from Lab3.Script.DepthFirstSearch import depthFirstSearch
 
+# Visto che gli archi non vengono selezionati in successione è stata creata una struttura doppiamente linkata invece che
+# una vera e propria struttura ad albero, l'algoritmo depthFirst si occupera di scorrere la struttura in maniera corretta
 class TreeNode:
     def __init__(self, value):
         self.value = value
@@ -20,17 +22,25 @@ class TreeNode:
     def getValue(self):
         return self.value
 
+# Implementazione dell'algoritmo di kruskal
 def Kruskal(Graph):
+    # creazione della lista di archi ordinati per peso
     edgeList = Graph.getOrderedEdges()
     setList = Set()
     supTree = []
     treeIndex = -1
     maxLinks = 0
     minEdges = []
+    # Creazione dei nodi che andrano a formare l'albero di supporto minimo
     for i in range(Graph.getDim()):
         supTree.append(TreeNode(i))
+
+    # creazione dei set utilizzati per tenere traccia delle componeti connesse del grafo man mano che si aggiungono archi
     for i in range(Graph.getDim()):
         setList.makeSet(i)
+
+    # Per ogni arco nella lista controlla se collega due set diversi e in quel caso unisce i set.
+    # inoltre salva il nodo con più archi che poi verrà utilizzato come radice dell'albero
     for e in edgeList:
         node1 = setList.findSet(e.node1).getValue()
         node2 = setList.findSet(e.node2).getValue()
@@ -52,18 +62,4 @@ def Kruskal(Graph):
             setList.union(e.node1, e.node2)
     return supTree[treeIndex]
 
-"""g = Parser()
-sel = g[0]
-print("grafi:", g)
-tree = Kruskal(sel)
-orderedList = []
-pathWeight = depthFirstSearch(sel, tree, orderedList, -1)
-print(sel, pathWeight)
-count = 0
-for e in edgeList:
-    print('{'+str(e.node1), str(e.node2)+'}', "w="+str(e.weight))
-    if count == 12:
-        print("----")
-    count+=1
-listToTree(edgeList)"""
 

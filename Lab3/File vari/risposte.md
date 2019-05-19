@@ -129,7 +129,13 @@ In linea generale dunque possiamo affermare che l'errore dell'algoritmo esatto a
 
 #### 2-Approssimato
 
-Senza dubbio l'algoritmo 2-approssimato implementato creando un albero di copertura minimo con l'algoritmo di kruskal è il più efficiente.                                                                                                  Questa implementazione infatti permette di trovare una soluzione approssimata in pochi secondi anche per grafi di grandi dimensioni come nel caso di dsj1000.                                                 L'approssimazione ottenuta è abbastanza buona, dai risultati trovati si nota che l'errore relativo non dipende dalla dimensione del grafo e non supera in nessun caso il 40%.                                    E' possibile inoltre ottenere soluzioni migliori provando a costruire in maniera diversa l'albero di copertura minimo, tuttavia non sembra esserci una regola per la costruzione che minimizzi l'errore per ogni grafo.                                                                                                                                                                          
+Senza dubbio l'algoritmo 2-approssimato implementato creando un albero di copertura minimo con l'algoritmo di kruskal è il più efficiente.   
+
+Questa implementazione infatti permette di trovare una soluzione approssimata in pochi secondi anche per grafi di grandi dimensioni come nel caso di dsj1000.
+
+L'approssimazione ottenuta è abbastanza buona, dai risultati trovati si nota che l'errore relativo non dipende dalla dimensione del grafo e non supera in nessun caso il 40%, quindi la soluzione rimane sempre ben sotto al caso peggiore trovato teoricamente nel quale la soluzione approssimata è due volte superiore alla soluzione ottima.
+
+E' possibile inoltre ottenere soluzioni migliori provando a utilizzare nodi diversi come radici dell'albero di copertura minimo, tuttavia non sembra esserci una regola per la selezione del nodo che minimizzi l'errore per ogni grafo.                                                                                                                                                                          
 
 
 
