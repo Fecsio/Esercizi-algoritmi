@@ -17,6 +17,8 @@ best_sol = [134602, 21294, 7013, 3323, 426, 18659688, 35002]
 # [5]: dsj1000.tsp,
 # [6]: d493.tsp
 
+# Euristica costruttiva
+
 for j in range(0, 7):
     minTime = 0
     minLength = float("inf")
@@ -30,6 +32,9 @@ for j in range(0, 7):
     print("\nSolution for graph ", graph_list[j], "First node:", tour[0], "Length:", minLength, "Time:", round(1000*minTime, 6), "with error =", round(100*(minLength - best_sol[j]) / best_sol[j], 2), "%")
 
 """
+
+# MST-Approssimato 
+
 for i in range(0, 7):
     try:
         start = time.time()
@@ -39,7 +44,9 @@ for i in range(0, 7):
     except IOError as e:
         print(e)
 
-for i in range(0,7)
+# Held-Karp
+
+for i in range(0, 7)
     try:
         val, t_o, time_exec = held_karp.hk_tsp(graph_list[i], 180)
         if t_o:
