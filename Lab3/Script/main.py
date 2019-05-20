@@ -16,16 +16,10 @@ best_sol = [134602, 21294, 7013, 3323, 426, 18659688, 35002]
 # [4]: eil51.tsp,
 # [5]: dsj1000.tsp,
 # [6]: d493.tsp
-minTime = 0
-minLenght = float("inf")
-minTour = []
-for i in range(0,100):
-    tour, time, lenght = ch.insertion_algorithm(graph_list[6])
-    if(lenght < minLenght):
-        minLenght = lenght
-        minTime = time
-        minTour = tour
-print("Tour:", minTour, "\nLenght:", minLenght, "\nTime:", minTime)
+
+for i in range(0,7):
+    tour, time, lenght = ch.insertion_algorithm(graph_list[i])
+    print("Tour per", i, ":", tour, "\nLenght:", lenght, "\nTime:", time)
 
 """
 for i in range(0, 7):
