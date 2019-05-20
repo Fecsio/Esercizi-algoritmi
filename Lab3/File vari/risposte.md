@@ -16,7 +16,7 @@
   <th></th>
   <th colspan="3">Held Karp</th>
   <th colspan="3"> Closest Insertion</th>
-  <th colspan="3">2-approssimato</th>
+  <th colspan="3">MST-approssimato</th>
   </tr>
   <tr>
     <th>Istanza</th>
@@ -27,7 +27,7 @@
     <th>Tempo (ms) </th>
     <th>Errore</th>
     <th>Soluzione</th>
-    <th>Tempo (s) </th>
+    <th>Tempo (ms) </th>
     <th>Errore</th>
   </tr>
   <tr>
@@ -39,7 +39,7 @@
      <td>0.1</td>
      <td>0.39%</td>
      <td>3702</td>
-     <td>0.0</td>
+     <td>0.5</td>
      <td>11.41%</td>
   </tr>
   <tr>
@@ -48,10 +48,10 @@
      <td>180</td>
      <td>1.31%</td>
      <td>7390</td>
-     <td>0.4</td>
+     <td>0.28</td>
      <td>5.38%</td>
      <td>8363</td>
-     <td>0.0</td>
+     <td>1.16</td>
      <td>19.25%</td>
   </tr>
   <tr>
@@ -60,10 +60,10 @@
      <td>180</td>
      <td>137.32%</td>
      <td>459</td>
-     <td>2.2</td>
+     <td>1.59</td>
      <td>7.75%</td>
      <td>594</td>
-     <td>0.01</td>
+     <td>5.8</td>
      <td>39.44%</td>
   </tr>
   <tr>
@@ -72,10 +72,10 @@
      <td>180</td>
      <td>589.49%</td>
      <td>24999</td>
-     <td>11.1</td>
+     <td>7.55</td>
      <td>17.39%</td>
      <td>28027</td>
-     <td>0.02</td>
+     <td>24.03</td>
      <td>31.62%</td>
   </tr>
   <tr>
@@ -83,11 +83,11 @@
      <td>176680</td>
      <td>180</td>
      <td>31.26%</td>
-     <td>153456</td>
-     <td>90.5</td>
-     <td>14.01%</td>
+     <td>154089</td>
+     <td>70.39</td>
+     <td>14.48%</td>
      <td>177614</td>
-     <td>0.13</td>
+     <td>131.69</td>
      <td>31.95%</td>
   </tr>
   <tr>
@@ -96,10 +96,10 @@
      <td>180</td>
      <td>219.25%</td>
      <td>41248</td>
-     <td>472</td>
+     <td>701</td>
      <td>17.84%</td>
      <td>45190</td>
-     <td>0.72</td>
+     <td>715.67</td>
      <td>29.11%</td>
   </tr>
   <tr>
@@ -107,14 +107,14 @@
      <td>551354888</td>
      <td>180</td>
      <td>2854.79%</td>
-     <td>22909568</td>
-     <td>4.24e3</td>
-     <td>22.78%</td>
+     <td>22722300</td>
+     <td>4.37e3</td>
+     <td>21.77%</td>
      <td>25034577</td>
-     <td>3.2</td>
+     <td>3142.31</td>
      <td>34.16%</td>
   </tr>
-
+</table>
 
 
 ### Domanda 2
@@ -128,7 +128,7 @@ In linea generale dunque possiamo affermare che l'errore dell'algoritmo esatto a
 
 #### Closest Insertion
 
-L'euristica costruttiva "Closest Insertion" offre un buon compromesso in termini di prestazioni e risultati ottenuti. Come si può notare, per grafi con uno scarso numero di nodi, si riesce a calcolare un percorso minimo in tempi molto brevi (<1ms) con un errore rispetto alla soluzione ottima soddisfacente. Riguardo a questo, si può notare come all'aumentare del numero di nodi l'errore sia via via crescente, fino ad arrivare al 22.78%, accettabile considerando la velocità d'esecuzione dell'algoritmo e comunque ottenendo una soluzione 2-approssimata. 
+L'euristica costruttiva "Closest Insertion" offre un buon compromesso in termini di prestazioni e risultati ottenuti. Come si può notare, per grafi con uno scarso numero di nodi, si riesce a calcolare un percorso minimo in tempi molto brevi (&#60;1ms) con un errore rispetto alla soluzione ottima soddisfacente. Riguardo a questo, si può notare come all'aumentare del numero di nodi l'errore sia via via crescente, fino ad arrivare al 21.77%, accettabile considerando la velocità d'esecuzione dell'algoritmo e comunque ottenendo una soluzione 2-approssimata. 
 I test sono stati eseguiti scegliendo il primo nodo in maniera casuale, così da apprezzare la diversa approssimazione nei vari casi. Di seguito sono elencati i nodi di partenza con cui si sono ottenuti i risultati riportati in tabella:
 
 <table>
@@ -142,41 +142,47 @@ I test sono stati eseguiti scegliendo il primo nodo in maniera casuale, così da
   </tr>
   <tr>
      <td>ulysses22.tsp</td>
-     <td>10</td>
+     <td>3</td>
   </tr>
   <tr>
      <td>eli51.tsp</td>
-     <td>12</td>
+     <td>22</td>
   </tr>
   <tr>
      <td>kroD100.tsp</td>
-     <td>25</td>
+     <td>95</td>
   </tr>
   <tr>
      <td>gr229.tsp</td>
-     <td>32</td>
+     <td>202</td>
   </tr>
   <tr>
      <td>d493.tsp</td>
-     <td>377</td>
+     <td>424</td>
   </tr>
   <tr>
      <td>dsj1000.tsp</td>
-     <td>94</td>
+     <td>177</td>
   </tr>
 </table>
 
 
 
-#### 2-Approssimato
+#### MST-Approssimato
 
-Senza dubbio l'algoritmo 2-approssimato implementato creando un albero di copertura minimo con l'algoritmo di kruskal è il più efficiente.   
-
+Senza dubbio l'algoritmo MST-approssimato implementato creando un albero di copertura minimo con l'algoritmo di kruskal è il più efficiente con grafi di grandi dimensioni.
 Questa implementazione infatti permette di trovare una soluzione approssimata in pochi secondi anche per grafi di grandi dimensioni come nel caso di dsj1000.
-
 L'approssimazione ottenuta è abbastanza buona, dai risultati trovati si nota che l'errore relativo non dipende dalla dimensione del grafo e non supera in nessun caso il 40%, quindi la soluzione rimane sempre ben sotto al caso peggiore trovato teoricamente nel quale la soluzione approssimata è due volte superiore alla soluzione ottima.
+E' possibile inoltre ottenere soluzioni migliori provando a utilizzare nodi diversi come radici dell'albero di copertura minimo, tuttavia non sembra esserci una regola per la selezione del nodo che minimizzi l'errore per ogni grafo.
 
-E' possibile inoltre ottenere soluzioni migliori provando a utilizzare nodi diversi come radici dell'albero di copertura minimo, tuttavia non sembra esserci una regola per la selezione del nodo che minimizzi l'errore per ogni grafo.                                                                                                                                                                          
+</br>
+
+#### Considerazioni finali
+
+*Rispetto all'errore di approssimazione*, l'algoritmo che utilizza l'euristica *Closest Insertion* è sempre migliore degli altri due, indipendentemente dalla grandezza del grafo, ma richiede un tempo d'esecuzione maggiore per grafi di grandi dimensioni rispetto a *MST-approssimato*. 
+
+Possiamo dunque suggerire l'utilizzo di *Held-Karp* per grafi molto piccoli, di un algoritmo che utilizzi un'euristica costruttiva per grafi di media-grande dimensione e dell'algoritmo *MST-approssimato* per grafi di elevata dimensione.
+
 
 
 
