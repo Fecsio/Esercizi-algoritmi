@@ -14,10 +14,10 @@ class Contea:
         self.cancer_risk = risk
 
     def __str__(self):
-        s = "id: " + self.id
+        s = "id: " + str(self.id)
         return s
 
     def __repr__(self):
-        s = "id: " + self.id
+        s = "id: " + str(self.id)
         return s
 
