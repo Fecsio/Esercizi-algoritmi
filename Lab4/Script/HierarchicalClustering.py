@@ -170,11 +170,11 @@ lists = [Contea.Contea(0, 1, 1, 0, 0), Contea.Contea(1, 3, 2.5, 0, 0), Contea.Co
          Contea.Contea(3, 7, 2, 0, 0), Contea.Contea(4, 5, 6, 0, 0), Contea.Contea(5, 6.5, 5.5, 0, 0),
          Contea.Contea(6, 6, 6, 0, 0)]
 
-for c in lists:
-    print(str(c) + " x: " + str(c.x) + " y: " + str(c.y))
+#for c in lists:
+    #print(str(c) + " x: " + str(c.x) + " y: " + str(c.y))
 
-print("")
-h_clustering(lists, 3)
+#print("")
+#h_clustering(lists, 3)
 """lists = [Contea.Contea(0, 1, 1, 0, 0), Contea.Contea(1, 3, 2.5, 0, 0), Contea.Contea(2, 1, 4, 0, 0),
          Contea.Contea(3, 7, 2, 0, 0), Contea.Contea(4, 5, 6, 0, 0), Contea.Contea(5, 6.5, 5.5, 0, 0),
          Contea.Contea(6, 6, 6, 0, 0)]
