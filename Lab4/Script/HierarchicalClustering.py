@@ -2,9 +2,13 @@ from Lab4.Script import Parser
 from Lab4.Script import Contea
 import pprint
 import math
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 class Centroid:
     def __init__(self, points):
+        self.points = points
         x, y = 0, 0
 
         for p in points:
@@ -27,37 +31,31 @@ def h_clustering(P, k):
     sortedP = sorted(P, key=lambda c: c.x)  # sortedP = P ordinato secondo la coordinata x
     centers = list(Centroid([p]) for p in sortedP)
 
-    print(centers)
+    #print(centers)
 
     while len(centers) > k:
         S = [i for i in range(0, len(centers))]
         S.sort(key=lambda i: centers[i].y)  # S = lista degli indici i di P ordinati per coordinata y di P[i]
 
-        _, i, j = slow_closest_pair(centers) # range(0, len(centers)), centers, S)
-        print("+ vicini: ", i, j)
-        prev_i, prev_j = centers[i], centers[j]
-        centers[i] = Centroid([centers[i], centers[j]])
-        centers.remove(prev_j)
-        print(centers)
-
-        # clusters.add(Centroid(clusters))
+        _, i, j = fast_closest_pair(range(0, len(centers)), centers, S) # range(0, len(centers)), centers, S)
+        # _, i, j = slow_closest_pair(centers)
+        centers[i] = Centroid(centers[i].points+centers[j].points)
+        centers.remove(centers[j])
 
 
-    
+    print(centers)
+    centroids = []
+    clusters = []
+    labels = [None for p in P]
+    count = 0
+    for i in centers:
+        count += 1
+        for j in range(0, len(P)):
+            if sortedP[j] in i.points:
+                labels[j] = count
 
-"""
-    clusters = set(tuple([p]) for p in P)
-    pprint.pprint(clusters)
-    while len(clusters) > k:
-        i, j = fast_closest_pair(
-        clusters.add(tuple([P[i], P[j]]))
-        try:
-            clusters.remove(tuple([P[i]]))
-            clusters.remove(tuple([P[j]]))
-        except KeyError:
-            return clusters
-    return clusters
-"""
+    return labels, P
+
 
 # ~~~~~~~~~~~~~~~ funziona ~~~~~~~~~~~~~~~
 
@@ -68,8 +66,8 @@ def slow_closest_pair(P):
     due punti la cui distanza è d
     """
     d, i, j = float("inf"), -1, -1
-    for u in range(0, len(P)-1):
-        for v in range(u + 1, len(P)-1):
+    for u in range(0, len(P)):
+        for v in range(u + 1, len(P)):
             new_d = euclidean_dist(P[u], P[v])
             if new_d < d:
                 d = new_d
@@ -91,8 +89,6 @@ def split(S, Pl):
     # print("len(Pl):", len(Pl))
     Sl = []
     Sr = []
-    pprint.pprint(Pl)
-    pprint.pprint(S)
     for i in range(0, len(S)):
         if S[i] in Pl:
             Sl.append(S[i])
@@ -157,32 +153,51 @@ def closest_pair_strip(P, S, mid, d):
     return d, i, j
 
 
-def euclidean_dist(c1, c2):
-    return math.sqrt((c1.x - c2.x)**2 + (c1.y - c2.y)**2)
+def euclidean_dist(p1, p2):
+    x1 = p1.x
+    y1 = p1.y
+    x2 = p2.x
+    y2 = p2.y
+    return math.pow(math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2), 0.5)
+    #return math.sqrt((c1.x - c2.x)**2 + (c1.y - c2.y)**2)
 
 
-L = Parser.Parser()
 #C = h_clustering(list(set().union(*(l for l in L))), 5)
 
 """for l in L[3]:
     print(str(l.id) + "," + str(l.x) + "," + str(l.y))"""
-lists = [Contea.Contea(0, 1, 1, 0, 0), Contea.Contea(1, 3, 2.5, 0, 0), Contea.Contea(2, 1.25, 3.75, 0, 0),
+"""lists = [Contea.Contea(0, 1, 1, 0, 0), Contea.Contea(1, 3, 2.5, 0, 0), Contea.Contea(2, 1.25, 3.75, 0, 0),
          Contea.Contea(3, 7, 2, 0, 0), Contea.Contea(4, 5, 6, 0, 0), Contea.Contea(5, 6.5, 5.5, 0, 0),
-         Contea.Contea(6, 6, 6, 0, 0)]
+         Contea.Contea(6, 6, 6, 0, 0)]""
 
 #for c in lists:
     #print(str(c) + " x: " + str(c.x) + " y: " + str(c.y))
 
 #print("")
-#h_clustering(lists, 3)
-"""lists = [Contea.Contea(0, 1, 1, 0, 0), Contea.Contea(1, 3, 2.5, 0, 0), Contea.Contea(2, 1, 4, 0, 0),
-         Contea.Contea(3, 7, 2, 0, 0), Contea.Contea(4, 5, 6, 0, 0), Contea.Contea(5, 6.5, 5.5, 0, 0),
-         Contea.Contea(6, 6, 6, 0, 0)]
+h_clustering(lists, 3)
 
+
+"""
+lists = Parser.Parser()[3]
+"""lists = [Contea.Contea(0, 1, 1, 0, 0), Contea.Contea(1, 3, 2.5, 0, 0), Contea.Contea(2, 1.25, 3.75, 0, 0),
+        Contea.Contea(3, 7, 2, 0, 0), Contea.Contea(4, 5, 6, 0, 0), Contea.Contea(5, 6.5, 5.5, 0, 0),
+       Contea.Contea(6, 6, 6, 0, 0)]"""
+
+for l in lists:
+    print(str(l.x) + "," + str(l.y))
 
 S = sorted([i for i in range(0, len(lists))], key=lambda c: lists[c].y)  # ok
 lists.sort(key=lambda c: c.x)  # ok
 
+labels, P= h_clustering(lists, 3)
+
+print(labels)
+X = np.array([[i.x, i.y] for i in lists])
+
+plt.scatter(X[:,0],X[:,1], c=labels, cmap='rainbow')
+
+plt.show()
+"""
 m = math.floor(len(lists) / 2)
 
 mid = 0.5 * (lists[m - 1].x + lists[m].x)

@@ -11,11 +11,12 @@ def Parser():
     dataset_list = []
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
+        print(filename)
         f = open('../File vari/Data/' + filename, 'r', encoding='ISO-8859-1')
-        dataset = set()
+        dataset = list()
         for line in f:
             line = line.split(',')
-            dataset.add(Contea.Contea(line[0], float(line[1]), float(line[2]),
+            dataset.append(Contea.Contea(line[0], float(line[1]), float(line[2]),
                                       int(line[3]), float(line[4])))
         dataset_list.append(dataset)
 
