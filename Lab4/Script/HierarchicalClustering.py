@@ -145,8 +145,6 @@ def euclidean_dist(c1, c2):
 #print("")
 h_clustering(lists, 3)
 
-
-"""
 lists = Parser.Parser('unifiedCancerData_3108.csv')
 
 start = time.time()
@@ -165,7 +163,7 @@ end = time.time()
 ScatterPlotCluster.scatter_plot_cluster(clusters, lists)
 
 print("Exec. time:", end - start)
-"""
+
 X = np.array([[i.x, i.y] for i in lists])
 
 plt.scatter(X[:,0],X[:,1], c=labels, cmap='rainbow')
