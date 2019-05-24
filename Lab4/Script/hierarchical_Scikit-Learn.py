@@ -8,7 +8,7 @@ from sklearn.cluster import AgglomerativeClustering
 
 from Lab4.Script import Parser
 
-lists = Parser.Parser()[3]
+lists = Parser.Parser('unifiedCancerData_212.csv')
 """lists = [Contea.Contea(0, 1, 1, 0, 0), Contea.Contea(1, 3, 2.5, 0, 0), Contea.Contea(2, 1.25, 3.75, 0, 0),
         Contea.Contea(3, 7, 2, 0, 0), Contea.Contea(4, 5, 6, 0, 0), Contea.Contea(5, 6.5, 5.5, 0, 0),
        Contea.Contea(6, 6, 6, 0, 0)]"""
