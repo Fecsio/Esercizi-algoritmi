@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 
 def scatter_plot_cluster(clusters, P):
     labels = [None for p in P]
@@ -11,7 +12,7 @@ def scatter_plot_cluster(clusters, P):
                 labels[j] = count
         count += 1
 
-    X = np.array([[i.x, i.y, i.population/size] for i in P])
+    X = np.array([[i.x, i.y, math.ceil(i.population/size)] for i in P])
 
     img = plt.imread("../File vari/USA_Counties.png")
 
