@@ -1,3 +1,5 @@
+import time
+
 from Lab4.Script import Parser
 from Lab4.Script import ScatterPlotCluster
 import math
@@ -131,9 +133,6 @@ def closest_pair_strip(S, mid, d):
 def euclidean_dist(c1, c2):
     return math.sqrt((c1[0] - c2[0])**2 + (c1[1] - c2[1])**2)
 
-
-#C = h_clustering(list(set().union(*(l for l in L))), 5)
-
 """for l in L[3]:
     print(str(l.id) + "," + str(l.x) + "," + str(l.y))"""
 """lists = [Contea.Contea(0, 1, 1, 0, 0), Contea.Contea(1, 3, 2.5, 0, 0), Contea.Contea(2, 1.25, 3.75, 0, 0),
@@ -148,8 +147,9 @@ h_clustering(lists, 3)
 
 
 """
-lists = Parser.Parser('unifiedCancerData_3108.csv')
+lists = Parser.Parser('unifiedCancerData_212.csv')
 
+start = time.time()
 
 for l in lists:
     print(str(l.x) + "," + str(l.y))
@@ -157,11 +157,14 @@ for l in lists:
 S = sorted([i for i in range(0, len(lists))], key=lambda c: lists[c].y)  # ok
 lists.sort(key=lambda c: c.x)  # ok
 
-clusters = h_clustering(lists, 3)
+clusters = h_clustering(lists, 15)
 
+end = time.time()
 #print(labels)
 
 ScatterPlotCluster.scatter_plot_cluster(clusters, lists)
+
+print("Exec. time:", end - start)
 """
 X = np.array([[i.x, i.y] for i in lists])
 
