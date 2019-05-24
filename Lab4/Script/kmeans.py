@@ -3,7 +3,7 @@ from Lab4.Script.HierarchicalClustering import Centroid
 from Lab4.Script.HierarchicalClustering import euclidean_dist
 from Lab4.Script.Parser import Parser
 
-def kmenas(P, k, q):
+def kmeans(P, k, q):
     n = len(P)
     sortedP = sorted(P, key=lambda c: c.population)  # sortedP = P ordinato secondo la popolazione
     centers = []
@@ -12,7 +12,7 @@ def kmenas(P, k, q):
         l = [0 for x in range(n)]
     for i in range(q):
         for j in range(n):
-            l[i] = minDist(P[i], centers)
+            l[j] = minDist(P[j], centers)
         centers = center(P, l, k)
     print(centers)
     return l
@@ -50,11 +50,19 @@ class Point:
         self.x = x
         self.y = y
 
-L = Parser()
+    def __str__(self):
+        s = ("x: " + str(self.x) + " y: " + str(self.y))
+        return s
+
+    def __repr__(self):
+        s = ("x: " + str(self.x) + " y: " + str(self.y))
+        return s
+
+L = Parser('unifiedCancerData_212.csv')
 
 
 lists = [Contea(0, 1, 1, 1, 0), Contea(1, 3, 2.5, 2, 0), Contea(2, 1.25, 3.75, 3, 0),
          Contea(3, 7, 2, 4, 0), Contea(4, 5, 6, 0, 0), Contea(5, 6.5, 5.5, 0, 0),
          Contea(6, 6, 6, 10, 0)]
 
-kmenas(lists, 3, 1)
+kmeans(L, 3, 100)
