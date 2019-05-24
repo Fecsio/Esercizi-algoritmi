@@ -147,7 +147,7 @@ h_clustering(lists, 3)
 
 
 """
-lists = Parser.Parser('unifiedCancerData_212.csv')
+lists = Parser.Parser('unifiedCancerData_562.csv')
 
 start = time.time()
 
@@ -157,7 +157,7 @@ for l in lists:
 S = sorted([i for i in range(0, len(lists))], key=lambda c: lists[c].y)  # ok
 lists.sort(key=lambda c: c.x)  # ok
 
-clusters = h_clustering(lists, 15)
+clusters = h_clustering(lists, 9)
 
 end = time.time()
 #print(labels)

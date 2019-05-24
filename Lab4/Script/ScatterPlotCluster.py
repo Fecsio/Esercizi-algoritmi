@@ -18,7 +18,13 @@ def scatter_plot_cluster(clusters, P):
 
     fig, ax = plt.subplots()
     ax.imshow(img)
-    plt.scatter(X[:,0],X[:,1], s=X[:,2], c=labels, cmap='Paired', alpha=0.5, edgecolors='black')
+    plt.scatter(X[:,0],X[:,1], s=10, c=labels, cmap='Paired', alpha=0.5, edgecolors='black', linewidths=0.1)
 
-    plt.savefig("usa_", dpi=1200)
+    centers = clusters.keys()
+
+    XC = np.array([[i[0], i[1]] for i in centers])
+
+    plt.scatter(XC[:,0], XC[:,1], s=5, c=range(0, len(centers)), cmap='Paired', marker='X', edgecolors='black', linewidths=0.1)
+
+    plt.savefig("usa_", dpi=600)
 
