@@ -60,14 +60,14 @@ class Point:
         s = ("x: " + str(self.x) + " y: " + str(self.y))
         return s
 
-L = Parser('unifiedCancerData_212.csv')
+L = Parser('unifiedCancerData_3108.csv')
 
 
 lists = [Contea(0, 1, 1, 1, 0), Contea(1, 3, 2.5, 2, 0), Contea(2, 1.25, 3.75, 3, 0),
          Contea(3, 7, 2, 4, 0), Contea(4, 5, 6, 0, 0), Contea(5, 6.5, 5.5, 0, 0),
          Contea(6, 6, 6, 10, 0)]
 
-clusters = kmeans(L, 3, 100)
+clusters = kmeans(L, 15, 100)
 
 scatter_plot_cluster(clusters, L)
 
