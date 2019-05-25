@@ -1,23 +1,14 @@
-import time
-
-from Lab4.Script import Parser
-from Lab4.Script import ScatterPlotCluster
-import math
-
-
-def calcCenter(points):
-    x, y = 0, 0
-
-    for p in points:
-        x += p.x
-        y += p.y
-
-    n = len(points)
-
-    return x/n, y/n
+from Lab4.Script.utils import *
 
 
 def h_clustering(P, k):
+    """
+     Algoritmo di clustering gerarchico agglomerativo
+
+    :param P: lista di oggetti di tipo Contea (con coordinate x e y)
+    :param k: numero di cluster in cui dividere l'insieme P
+    :return:
+    """
 
     clusters = {(p.x, p.y): [p] for p in P}
 
@@ -32,11 +23,12 @@ def h_clustering(P, k):
 
         # _, i, j = slow_closest_pair(points)
 
-        clusters[calcCenter(clusters[i]+clusters[j])] = clusters[i]+clusters[j]
+        clusters[calc_center(clusters[i]+clusters[j])] = clusters[i]+clusters[j]
         clusters.pop(i)
         clusters.pop(j)
 
     return clusters
+
 
 def slow_closest_pair(P):
     """
@@ -56,6 +48,7 @@ def slow_closest_pair(P):
                 j = P[v]
     return d, i, j
 
+
 def split(S, Pl):
     """
     :param S: vettore ordinato
@@ -70,7 +63,6 @@ def split(S, Pl):
         else:
             Sr.append(S[i])
     return Sl, Sr
-
 
 
 def fast_closest_pair(P, S):
@@ -129,70 +121,3 @@ def closest_pair_strip(S, mid, d):
                 j = S1[v]
     return d, i, j
 
-
-def euclidean_dist(c1, c2):
-    return math.sqrt((c1[0] - c2[0])**2 + (c1[1] - c2[1])**2)
-
-"""for l in L[3]:
-    print(str(l.id) + "," + str(l.x) + "," + str(l.y))"""
-"""lists = [Contea.Contea(0, 1, 1, 0, 0), Contea.Contea(1, 3, 2.5, 0, 0), Contea.Contea(2, 1.25, 3.75, 0, 0),
-         Contea.Contea(3, 7, 2, 0, 0), Contea.Contea(4, 5, 6, 0, 0), Contea.Contea(5, 6.5, 5.5, 0, 0),
-         Contea.Contea(6, 6, 6, 0, 0)]""
-
-#for c in lists:
-    #print(str(c) + " x: " + str(c.x) + " y: " + str(c.y))
-
-#print("")
-h_clustering(lists, 3)
-
-lists = Parser.Parser('unifiedCancerData_3108.csv')
-
-start = time.time()
-
-for l in lists:
-    print(str(l.x) + "," + str(l.y))
-
-S = sorted([i for i in range(0, len(lists))], key=lambda c: lists[c].y)  # ok
-lists.sort(key=lambda c: c.x)  # ok
-
-clusters = h_clustering(lists, 9)
-
-end = time.time()
-#print(labels)
-
-ScatterPlotCluster.scatter_plot_cluster(clusters, lists)
-
-print("Exec. time:", end - start)
-
-X = np.array([[i.x, i.y] for i in lists])
-
-plt.scatter(X[:,0],X[:,1], c=labels, cmap='rainbow')
-
-plt.show()
-
-m = math.floor(len(lists) / 2)
-
-mid = 0.5 * (lists[m - 1].x + lists[m].x)
-
-d = 3
-
-d, i, j = closest_pair_strip(lists, S, mid, d)
-
-print(i,j)
-print(lists[i], lists[j])
-
-# S = [0, 1, 4, 5, 9, 10, 12]
-m = math.floor(len(S) / 2)
-Pl = [S[i] for i in range(0, m)]
-Pr = [S[i] for i in range(m, len(S))]
-
-Sl, Sr = split(S, Pl)
-pprint.pprint(S)
-pprint.pprint(Sl)
-pprint.pprint(Sr)
-
-# C = h_clustering(list(L[2]), 7)
-
-# pprint.pprint(C)
-
-"""

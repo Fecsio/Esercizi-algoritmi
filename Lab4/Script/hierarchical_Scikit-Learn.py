@@ -1,14 +1,15 @@
 import pprint
+import time
 
 import numpy as np
 import matplotlib.pyplot as plt
 import math
 from scipy.cluster.hierarchy import dendrogram, linkage
-from sklearn.cluster import AgglomerativeClustering
+from sklearn.cluster import KMeans
 
 from Lab4.Script import Parser
 
-lists = Parser.Parser('unifiedCancerData_212.csv')
+lists = Parser.Parser('unifiedCancerData_3108.csv')
 """lists = [Contea.Contea(0, 1, 1, 0, 0), Contea.Contea(1, 3, 2.5, 0, 0), Contea.Contea(2, 1.25, 3.75, 0, 0),
         Contea.Contea(3, 7, 2, 0, 0), Contea.Contea(4, 5, 6, 0, 0), Contea.Contea(5, 6.5, 5.5, 0, 0),
        Contea.Contea(6, 6, 6, 0, 0)]"""
@@ -18,11 +19,16 @@ X = np.array([[i.x, i.y] for i in lists])
 labels = [str(math.floor(i.x)) + " , " + str(math.floor(i.y)) for i in lists]
 
 #print(labels)
+start=time.time()
+sortedP = sorted(lists, key=lambda c: c.population, reverse=True)  # sortedP = P ordinato secondo la popolazione
 
-cluster = AgglomerativeClustering(n_clusters=3, affinity='euclidean', linkage='single')
+init = np.array([[sortedP[i].x, sortedP[i].y] for i in range(15)], np.float)
+
+cluster = KMeans(n_clusters=15, max_iter=100, algorithm='auto', init=init)
 
 cluster.fit_predict(X)
 
+print(time.time() - start)
 print(cluster.labels_)
 
 
