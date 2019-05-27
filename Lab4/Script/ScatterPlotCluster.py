@@ -20,6 +20,7 @@ def scatter_plot_cluster(clusters, P, nome):
 
     fig, ax = plt.subplots()
     ax.imshow(img)
+    plt.axis('off')
 
     cmap = colors.ListedColormap(['#DF73FF', '#7FFFD4', '#FF6600', '#708090', '#FFFFF0', '#007FFF',
                                   '#ABCDEF', '#7FFF00', '#002FA7', '#FF00FF', '#987654', '#F4C430',
@@ -38,6 +39,4 @@ def scatter_plot_cluster(clusters, P, nome):
         plt.plot([P[i].x, XC[labels[i]][0]], [P[i].y, XC[labels[i]][1]],
                  c=cm.get_cmap(cmap)((labels[i])/(len(centers)-1)), lw=0.1, zorder=2)
 
-
-    plt.savefig("../File vari/usa_" + nome, dpi=600)
-
+    plt.savefig("../File vari/usa_" + nome, dpi=600, bbox_inches='tight')
