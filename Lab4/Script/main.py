@@ -1,3 +1,4 @@
+import pprint
 import time
 from Lab4.Script.Parser import Parser
 from Lab4.Script.kmeans import kmeans
@@ -11,46 +12,53 @@ dataset_1041 = Parser('unifiedCancerData_1041.csv')
 dataset_3108 = Parser('unifiedCancerData_3108.csv')
 
 # Domanda 1
-"""
+
 start = time.time()
-clusters = h_clustering(dataset_3108, 15)
+clusters_1 = h_clustering(dataset_3108, 15)
 print("Tempo di esecuzione senza plot:", time.time()-start, "\n")
 
 start2 = time.time()
-scatter_plot_cluster(clusters, dataset_3108, "gerarchico_3108")
+scatter_plot_cluster(clusters_1, dataset_3108, "gerarchico_3108")
 print("Tempo di esecuzione plot:", time.time()-start2, '\n')
 
 # Domanda 2
 
 start = time.time()
-clusters = kmeans(dataset_3108, 15, 5)
+clusters_2 = kmeans(dataset_3108, 15, 5)
 print("Tempo di esecuzione senza plot:", time.time()-start, '\n')
 
 start2 = time.time()
-scatter_plot_cluster(clusters, dataset_3108, "kmeans_3108")
-print("Tempo di esecuzione plot:", time.time()-start2, '\n')"""
+scatter_plot_cluster(clusters_2, dataset_3108, "kmeans_3108")
+print("Tempo di esecuzione plot:", time.time()-start2, '\n')
 
 # Domanda 4
 
 start = time.time()
-clusters = h_clustering(dataset_212, 9)
+clusters_4 = h_clustering(dataset_212, 9)
 print("Tempo di esecuzione senza plot:", time.time()-start)
-#Domanda 6
-print("Distorsione clustering gerarchico:", distortion(clusters))
 
-"""start2 = time.time()
-scatter_plot_cluster(clusters, dataset_212, "gerarchico_212", '\n')
-print("Tempo di esecuzione plot:", time.time()-start2)"""
+start2 = time.time()
+scatter_plot_cluster(clusters_4, dataset_212, "gerarchico_212")
+print("Tempo di esecuzione plot:", time.time()-start2, '\n')
 
 # Domanda 5
 
 start = time.time()
-clusters = kmeans(dataset_212, 9, 5)
+clusters_5 = kmeans(dataset_212, 9, 5)
 print("Tempo di esecuzione senza plot:", time.time()-start)
-#Domanda 6
-print("Distorsione clustering kmeans:", distortion(clusters))
-"""
+
 start2 = time.time()
-scatter_plot_cluster(clusters, dataset_212, "kmeans_212", '\n')
-print("Tempo di esecuzione plot:", time.time()-start2)"""
+scatter_plot_cluster(clusters_5, dataset_212, "kmeans_212")
+print("Tempo di esecuzione plot:", time.time()-start2, '\n')
+
+#Domanda 6
+
+clustozzo = kmeans(dataset_526, 16, 5)
+
+clustozzo2 = h_clustering(dataset_526, 16)
+
+
+print("Distorsione clustering gerarchico:", '%.5e' % distortion(clustozzo2))
+
+print("Distorsione clustering kmeans:", '%.5e' % distortion(clustozzo))
 

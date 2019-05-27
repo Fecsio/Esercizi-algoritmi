@@ -11,10 +11,17 @@ def kmeans(P, k, q):
 
     for i in range(q):
         clusters = partition(P, centers)
+        if i == q-1:
+            old_centers = centers.copy()
         for j in range(k):
             centers[j] = calc_center(clusters[centers[j]])
-    return clusters
 
+    for i in range(k):
+        clusters[centers[i]] = clusters[old_centers[i]]
+        if centers[i] != old_centers[i]:
+            del clusters[old_centers[i]]
+
+    return clusters
 
 def partition(P, centers):
     c = {i: [] for i in centers}  # dizionario con chiavi = centri, valori = lista di punti nel cluster con centro == chiave
