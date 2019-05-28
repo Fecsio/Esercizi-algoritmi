@@ -51,5 +51,5 @@ def distortionPlot(hierarchical, kmeans, nome, titolo):
     plt.ylabel('Distortion')
     plt.title(titolo)
     plt.legend()
-    plt.savefig("../File vari/" + nome, dpi=600, bbox_inches='tight')
+    plt.savefig("../File vari/" + nome, bbox_inches='tight')
     plt.close()
