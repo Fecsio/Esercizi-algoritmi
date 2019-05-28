@@ -6,7 +6,8 @@ def kmeans(P, k, q):
     sortedP = sorted(P, key=lambda c: c.population, reverse=True)  # sortedP = P ordinato secondo la popolazione
 
     centers = [(sortedP[i].x, sortedP[i].y) for i in range(k)]
-    print("centri iniziali:", centers)
+
+    #print("centri iniziali:", centers)
 
     clusters = defaultdict(list)
 

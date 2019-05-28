@@ -14,7 +14,7 @@ def scatter_plot_cluster(clusters, P, nome):
                 labels[j] = count
         count += 1
 
-    X = np.array([[i.x, i.y, math.ceil(i.population/size)] for i in P])
+    X = np.array([[i.x, i.y] for i in P])
 
     img = plt.imread("../File vari/USA_Counties.png")
 
@@ -42,10 +42,9 @@ def scatter_plot_cluster(clusters, P, nome):
     plt.savefig("../File vari/usa_" + nome, dpi=600, bbox_inches='tight')
 
 
-
-def distortionPlot(heirarchical, kmeans, nome, titolo):
+def distortionPlot(hierarchical, kmeans, nome, titolo):
     dataset = [x for x in range(6, 21)]
-    plt.plot(dataset, sorted(heirarchical, reverse=True), label='heirarchical')
+    plt.plot(dataset, sorted(hierarchical, reverse=True), label='hierarchical')
     plt.plot(dataset, kmeans, label='kmeans')
     plt.grid()
     plt.xlabel('Cluster Number')

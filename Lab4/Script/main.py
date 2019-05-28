@@ -15,56 +15,41 @@ dataset_3108 = Parser('unifiedCancerData_3108.csv')
 # Domanda 1
 
 start = time.time()
-clusters_1 = h_clustering(dataset_3108, 15)
-print("Tempo di esecuzione senza plot:", time.time()-start, "\n")
+clusters_1 = h_clustering(dataset_3108, 15, False)
+print("Tempo di esecuzione gerarchico 3108:", time.time()-start, "\n")
 
-start2 = time.time()
 scatter_plot_cluster(clusters_1, dataset_3108, "gerarchico_3108")
-print("Tempo di esecuzione plot:", time.time()-start2, '\n')
 
 # Domanda 2
 
 start = time.time()
 clusters_2 = kmeans(dataset_3108, 15, 5)
-print("Tempo di esecuzione senza plot:", time.time()-start, '\n')
+print("Tempo di esecuzione kmeans 3108:", time.time()-start, '\n')
 
-start2 = time.time()
 scatter_plot_cluster(clusters_2, dataset_3108, "kmeans_3108")
-print("Tempo di esecuzione plot:", time.time()-start2, '\n')
 
 # Domanda 4
 
 start = time.time()
-clusters_4 = h_clustering(dataset_212, 9)
-print("Tempo di esecuzione senza plot:", time.time()-start)
+clusters_4 = h_clustering(dataset_212, 9, False)
+print("Tempo di esecuzione gerarchico 212:", time.time()-start, "\n")
 
-start2 = time.time()
 scatter_plot_cluster(clusters_4, dataset_212, "gerarchico_212")
-print("Tempo di esecuzione plot:", time.time()-start2, '\n')
 
 # Domanda 5
 
 start = time.time()
 clusters_5 = kmeans(dataset_212, 9, 5)
-print("Tempo di esecuzione senza plot:", time.time()-start)
+print("Tempo di esecuzione kmeans 212:", time.time()-start, '\n')
 
-start2 = time.time()
 scatter_plot_cluster(clusters_5, dataset_212, "kmeans_212")
-print("Tempo di esecuzione plot:", time.time()-start2, '\n')
 
 #Domanda 6
 
-clustozzo = kmeans(dataset_562, 16, 5)
+print("Distorsione clustering gerarchico:", '%.5e' % distortion(clusters_4))
 
-clustozzo2 = h_clustering(dataset_562, 16)
-
-
-print("Distorsione clustering gerarchico:", '%.5e' % distortion(clustozzo2))
-
-print("Distorsione clustering kmeans:", '%.5e' % distortion(clustozzo))
-
+print("Distorsione clustering kmeans:", '%.5e' % distortion(clusters_5))
 """
-
 # Domanda 9
 
 kmeansDist_212 = []
@@ -101,3 +86,4 @@ for k in range(20, 5, -1):
 distortionPlot(hDist_212, kmeansDist_212, "Distorsione212", "212 Contee")
 distortionPlot(hDist_562, kmeansDist_562, "Distorsione562", "562 Contee")
 distortionPlot(hDist_1041, kmeansDist_1041, "Distorsione1041", "1041 Contee")
+
