@@ -45,10 +45,12 @@ def scatter_plot_cluster(clusters, P, nome):
 
 def distortionPlot(heirarchical, kmeans, nome, titolo):
     dataset = [x for x in range(6, 21)]
-    plt.plot(dataset, heirarchical, label='heirarchical')
+    plt.plot(dataset, sorted(heirarchical, reverse=True), label='heirarchical')
     plt.plot(dataset, kmeans, label='kmeans')
+    plt.grid()
     plt.xlabel('Cluster Number')
     plt.ylabel('Distortion')
     plt.title(titolo)
     plt.legend()
     plt.savefig("../File vari/" + nome, dpi=600, bbox_inches='tight')
+    plt.close()

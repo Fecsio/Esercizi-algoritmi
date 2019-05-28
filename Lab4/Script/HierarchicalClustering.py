@@ -1,16 +1,22 @@
 from Lab4.Script.utils import *
 
 
-def h_clustering(P, k):
+def h_clustering(P, k, pre_processed):
     """
      Algoritmo di clustering gerarchico agglomerativo
 
-    :param P: lista di oggetti di tipo Contea (con coordinate x e y)
+    :param P: lista di oggetti di tipo Contea (con coordinate x e y) oppure
+            un dizionario di cluster pre calcolati (con pre_processed = True)
     :param k: numero di cluster in cui dividere l'insieme P
+    :param pre_processed: TRUE sse viene passato in P un dizionario di cluster pre calcolati
     :return:
     """
 
-    clusters = {(p.x, p.y): [p] for p in P}
+    if not pre_processed:
+        clusters = {(p.x, p.y): [p] for p in P}
+
+    else:
+        clusters = P
 
     while len(clusters) > k:
 

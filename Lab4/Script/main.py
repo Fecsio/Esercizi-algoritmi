@@ -3,12 +3,12 @@ import time
 from Lab4.Script.Parser import Parser
 from Lab4.Script.kmeans import kmeans
 from Lab4.Script.HierarchicalClustering import h_clustering
-from Lab4.Script.ScatterPlotCluster import scatter_plot_cluster
+from Lab4.Script.Plotter import scatter_plot_cluster
 from Lab4.Script.utils import distortion
-from Lab4.Script.ScatterPlotCluster import distortionPlot
+from Lab4.Script.Plotter import distortionPlot
 
 dataset_212 = Parser('unifiedCancerData_212.csv')
-dataset_526 = Parser('unifiedCancerData_562.csv')
+dataset_562 = Parser('unifiedCancerData_562.csv')
 dataset_1041 = Parser('unifiedCancerData_1041.csv')
 dataset_3108 = Parser('unifiedCancerData_3108.csv')
 """
@@ -54,9 +54,9 @@ print("Tempo di esecuzione plot:", time.time()-start2, '\n')
 
 #Domanda 6
 
-clustozzo = kmeans(dataset_526, 16, 5)
+clustozzo = kmeans(dataset_562, 16, 5)
 
-clustozzo2 = h_clustering(dataset_526, 16)
+clustozzo2 = h_clustering(dataset_562, 16)
 
 
 print("Distorsione clustering gerarchico:", '%.5e' % distortion(clustozzo2))
@@ -65,26 +65,39 @@ print("Distorsione clustering kmeans:", '%.5e' % distortion(clustozzo))
 
 """
 
-#domanda 9
+# Domanda 9
 
-kmeansDist = []
-hDist = []
+kmeansDist_212 = []
+kmeansDist_562 = []
+kmeansDist_1041 = []
 
-"""for clusters in range(6, 21):
-    kmeansDist.append(distortion(kmeans(dataset_212, clusters, 5)))
-    hDist.append(distortion(h_clustering(dataset_212, clusters)))
-distortionPlot(hDist, kmeansDist, "Distorsione212", "212 Contee")"""
-kmeans(dataset_212, 15, 5)
+hDist_212 = []
+hDist_562 = []
+hDist_1041 = []
 
+h_dataset_212 = dataset_212
+h_dataset_562 = dataset_562
+h_dataset_1041 = dataset_1041
 
-"""for clusters in range(6, 21):
-    kmeansDist.append(distortion(kmeans(dataset_526, clusters, 5)))
-    hDist.append(distortion(h_clustering(dataset_526, clusters)))
-distortionPlot(hDist, kmeansDist, "Distorsione526", "526 Contee")"""
+pre_processed = False
 
-"""for clusters in range(6, 21):
-    kmeansDist.append(distortion(kmeans(dataset_1041, clusters, 5)))
-    hDist.append(distortion(h_clustering(dataset_1041, clusters)))
-distortionPlot(hDist, kmeansDist, "Distorsione1041", "1041 Contee")"""
+for k in range(6, 21):
+    kmeansDist_212.append(distortion(kmeans(dataset_212, k, 5)))
+    kmeansDist_562.append(distortion(kmeans(dataset_562, k, 5)))
+    kmeansDist_1041.append(distortion(kmeans(dataset_1041, k, 5)))
 
+for k in range(20, 5, -1):
+    h_dataset_212 = h_clustering(h_dataset_212, k, pre_processed)
+    hDist_212.append(distortion(h_dataset_212))
 
+    h_dataset_562 = h_clustering(h_dataset_562, k, pre_processed)
+    hDist_562.append(distortion(h_dataset_562))
+
+    h_dataset_1041 = h_clustering(h_dataset_1041, k, pre_processed)
+    hDist_1041.append(distortion(h_dataset_1041))
+
+    pre_processed = True
+
+distortionPlot(hDist_212, kmeansDist_212, "Distorsione212", "212 Contee")
+distortionPlot(hDist_562, kmeansDist_562, "Distorsione562", "562 Contee")
+distortionPlot(hDist_1041, kmeansDist_1041, "Distorsione1041", "1041 Contee")
