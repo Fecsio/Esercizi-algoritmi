@@ -70,10 +70,11 @@ print("Distorsione clustering kmeans:", '%.5e' % distortion(clustozzo))
 kmeansDist = []
 hDist = []
 
-for clusters in range(6, 21):
+"""for clusters in range(6, 21):
     kmeansDist.append(distortion(kmeans(dataset_212, clusters, 5)))
     hDist.append(distortion(h_clustering(dataset_212, clusters)))
-distortionPlot(hDist, kmeansDist, "Distorsione212", "212 Contee")
+distortionPlot(hDist, kmeansDist, "Distorsione212", "212 Contee")"""
+kmeans(dataset_212, 15, 5)
 
 
 """for clusters in range(6, 21):

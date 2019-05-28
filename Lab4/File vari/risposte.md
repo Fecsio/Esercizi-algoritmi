@@ -8,7 +8,7 @@
 - Davide Zago, matricola: 1211260
 
 ***
-##Efficienza
+## Efficienza
 
 ### Domanda 1
 
@@ -23,9 +23,36 @@
 
 ### Domanda 2
 
+<div class="outer">
+    <div class="inner">
+	 <img src="usa_kmeans_3108.png"  />
+    </div>
+</div>
+
 ### Domanda 3
 
 ## Automazione
+
+### Domanda 4
+###### Gerarchico
+
+<div class="outer">
+    <div class="inner">
+	 <img src="usa_gerarchico_212.png"  />
+    </div>
+</div>
+
+### Domanda 5
+###### kmeans
+
+<div class="outer">
+    <div class="inner">
+	 <img src="usa_kmeans_212.png"  />
+    </div>
+</div>
+
+### Domanda 7
+Visto che il clustering k means viene inizializzato utilizzando
 
 ## Qualità
 
