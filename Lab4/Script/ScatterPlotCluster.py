@@ -40,3 +40,15 @@ def scatter_plot_cluster(clusters, P, nome):
                  c=cm.get_cmap(cmap)((labels[i])/(len(centers)-1)), lw=0.1, zorder=2)
 
     plt.savefig("../File vari/usa_" + nome, dpi=600, bbox_inches='tight')
+
+
+
+def distortionPlot(heirarchical, kmeans, nome):
+    dataset = [x for x in range(6, 20)]
+    plt.plot(dataset, heirarchical, label='heirarchical')
+    plt.plot(dataset, kmeans, label='kmeans')
+    plt.xlabel('Cluster Number')
+    plt.ylabel('Distortion')
+    plt.title("212 Contee")
+    plt.legend()
+    plt.savefig("../File vari/" + nome, dpi=600, bbox_inches='tight')

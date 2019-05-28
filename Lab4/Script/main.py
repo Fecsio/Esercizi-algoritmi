@@ -5,12 +5,13 @@ from Lab4.Script.kmeans import kmeans
 from Lab4.Script.HierarchicalClustering import h_clustering
 from Lab4.Script.ScatterPlotCluster import scatter_plot_cluster
 from Lab4.Script.utils import distortion
+from Lab4.Script.ScatterPlotCluster import distortionPlot
 
 dataset_212 = Parser('unifiedCancerData_212.csv')
 dataset_526 = Parser('unifiedCancerData_562.csv')
 dataset_1041 = Parser('unifiedCancerData_1041.csv')
 dataset_3108 = Parser('unifiedCancerData_3108.csv')
-
+"""
 # Domanda 1
 
 start = time.time()
@@ -61,4 +62,28 @@ clustozzo2 = h_clustering(dataset_526, 16)
 print("Distorsione clustering gerarchico:", '%.5e' % distortion(clustozzo2))
 
 print("Distorsione clustering kmeans:", '%.5e' % distortion(clustozzo))
+
+"""
+
+#domanda 9
+
+kmeansDist = []
+hDist = []
+"""
+for clusters in range(6, 20):
+    kmeansDist.append(distortion(kmeans(dataset_212, clusters, 5)))
+    hDist.append(distortion(h_clustering(dataset_212, clusters)))
+distortionPlot(hDist, kmeansDist, "Distorsione212")
+"""
+
+"""for clusters in range(6, 20):
+    kmeansDist.append(distortion(kmeans(dataset_526, clusters, 5)))
+    hDist.append(distortion(h_clustering(dataset_526, clusters)))
+distortionPlot(hDist, kmeansDist, "Distorsione526")"""
+
+for clusters in range(6, 20):
+    kmeansDist.append(distortion(kmeans(dataset_1041, clusters, 5)))
+    hDist.append(distortion(h_clustering(dataset_1041, clusters)))
+distortionPlot(hDist, kmeansDist, "Distorsione1041")
+
 
