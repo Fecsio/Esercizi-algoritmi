@@ -30,8 +30,8 @@ def h_clustering(P, k, pre_processed):
         # _, i, j = slow_closest_pair(points)
 
         clusters[calc_center(clusters[i]+clusters[j])] = clusters[i]+clusters[j]
-        clusters.pop(i)
-        clusters.pop(j)
+        del clusters[i]
+        del clusters[j]
 
     return clusters
 

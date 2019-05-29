@@ -2,6 +2,9 @@
 <html>
  <head>
   <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
   <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
   <style type="text/css">
    /*
@@ -263,9 +266,6 @@ ul > li {
 ol > li {
     position: relative;
 }
-li {
-    list-style: none outside none;
-}
 
 
 figure > figcaption {
@@ -316,8 +316,8 @@ caption{display:table-caption;font-weight:300;font-size:1.3em;text-transform:upp
 
 div.outer {
 padding: 0;
-width: 100%;
-margin: 0;
+width: 100%; 
+margin: 0; 
 overflow: visible;
 }
 
@@ -329,14 +329,14 @@ right: 65%;
 }
 
 div.inner img {
-position: relative;
+position: relative; 
 right:-50%;
 width: 130%;
 border: 1px solid black;
 }
 
 div.inner figcaption{
-position: relative;
+position: relative; 
 right:-50%;
 width: 130%;
 text-align: center;
@@ -352,6 +352,25 @@ margin-top: 0;
 padding: 0;
   font-style: italic;
 
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: red;
+}
+
+.reddo{
+ color: red;
+}
+
+code, pre{
+  right: 15%;
+  background-color: #F8F5F0 !important;
+ border: 1px solid gray;
+}
+
+pre{
+	width: 120%;
 }
   </style>
  </head>
@@ -390,6 +409,8 @@ padding: 0;
     </figcaption>
    </div>
   </div>
+  <div style="page-break-after: always;">
+  </div>
   <h3 id="domanda-2">
    Domanda 2
   </h3>
@@ -401,9 +422,85 @@ padding: 0;
     </figcaption>
    </div>
   </div>
+  <div style="page-break-after: always;">
+  </div>
   <h3 id="domanda-3">
    Domanda 3
   </h3>
+  <p>
+   Quando il numero di cluster richiesti in output è molto più piccolo del numero totale di punti, il clustering gerarchico è sicuramente molto più lento del clustering k-means con un numero piccolo di iterazioni; ad esempio, per ottenere i 15 cluster in Fig.1 , ci sono voluti all’incirca
+   <strong>
+    3 minuti
+   </strong>
+   con hierarchical, mentre per ottenere i 15 cluster in Fig.2 sono bastati
+   <strong>
+    0.14 secondi
+   </strong>
+   utilizzando k-means con 5 iterazioni. Infatti:
+  </p>
+  <ul>
+   <li>
+    Il clustering gerarchico utilizza la funzione
+    <em>
+     FastClosestPair
+    </em>
+    per trovare le coppie di punti più vicini, che ha complessità
+    <em>
+     O(nlogn)
+    </em>
+    cosiderando il preordinamento. Osservando la nostra implementazione, però, è necessario fare delle considerazioni aggiuntive; per fare ciò riportiamo alcune righe significative di codice, analizzandone e commentandone la complessità.
+   </li>
+  </ul>
+  <pre><code class="python">
+""" n = numero di punti, k = numero di cluster in output,
+ i = iterazione (0...n-k) """
+
+    while len(clusters) &gt; k:  # n-k iterazioni (1)
+        centers = clusters.keys()
+
+        points = sorted(centers, key=lambda k: k[0]) # (n-i)*log(n-i) (2)
+        S = sorted(centers, key=lambda k: k[1]) # (n-i)*log(n-i)  (3)
+
+        _, i, j = fast_closest_pair(points, S) # (n-i)*log(n-i) (4)
+
+        clusters[calc_center(clusters[i]+clusters[j])] = clusters[i]+clusters[j] 
+        # lunghezza(cluster i-esimo + cluster j-esimo)  (5)
+        del clusters[i]
+        del clusters[j]
+
+</code></pre>
+  <p>
+   <span class="reddo">
+    (1)
+   </span>
+   : l’algoritmo itera finchè non ha trovato esattamente k cluster, dunque n-k volte;
+   <br/>
+   <span class="reddo">
+    (2)
+   </span>
+   e
+   <span class="reddo">
+    (3)
+   </span>
+   : ad ogni iterazione i, viene effettuato un ordinamento su n-i punti;
+   <br/>
+   <span class="reddo">
+    (4)
+   </span>
+   : ad ogni iterazione i viene chiamata la funzione fast_closest_pair su n-i punti;
+   <br/>
+   <span class="reddo">
+    (5)
+   </span>
+   : ad ogni iterazione viene ricalcolato il nuovo centro con il metodo calc_center(points), che è lineare rispetto al numero di punti in input e tali punti saranno al massimo n;
+  </p>
+  <p>
+   Possiamo dunque riassumere la complessità in tempo dell’algoritmo nel seguente modo: (n-k)*(2*n*log(n) + n); dato che stiamo considerando k &lt;&lt; n, possiamo definire la complessità asintotica come
+   <strong>
+    O( n² * log(n) )
+   </strong>
+   .
+  </p>
   <h2 id="automazione">
    Automazione
   </h2>
@@ -418,6 +515,8 @@ padding: 0;
     </figcaption>
    </div>
   </div>
+  <div style="page-break-after: always;">
+  </div>
   <h3 id="domanda-5">
    Domanda 5
   </h3>
@@ -428,6 +527,8 @@ padding: 0;
      Fig.4: Clustering k-means - 212 contee
     </figcaption>
    </div>
+  </div>
+  <div style="page-break-after: always;">
   </div>
   <h3 id="domanda-7">
    Domanda 7
@@ -451,6 +552,8 @@ padding: 0;
    <br/>
    di kmeans che richiede una inizializzazione corretta.
   </p>
+  <div style="page-break-after: always;">
+  </div>
   <h2 id="qualita">
    Qualità
   </h2>
@@ -477,6 +580,14 @@ padding: 0;
    <figcaption class="dist">
     Fig.7: Confronto distorsione - 1041 contee
    </figcaption>
+  </p>
+  <div style="page-break-after: always;">
+  </div>
+  <h3 id="domanda-10">
+   Domanda 10
+  </h3>
+  <p>
+   Dai grafici si nota che nessuno dei due metodi porta ad ottenere sempre cluster con distorsione più bassa, infatti le curve si incrociano diverse volte. Si può notare però che nel caso delle 212 contee il metodo kmeans ottiene un clustering con distorsione minore rispetto al metodo gerarchico quando il numero di cluster è basso, questo probabilmente accade perchè la selezione dei centri con cui viene inizializzato kmeans in questo caso risulta efficace.
   </p>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
   </script>
