@@ -73,6 +73,9 @@ di kmeans che richiede una inizializzazione corretta.
  <img class="dist" src="Distorsione1041.png"  />
 <figcaption class="dist"> Fig.7: Confronto distorsione - 1041 contee</figcaption>
 
+### Domanda 10
+Dai grafici si nota che nessuno dei due metodi porta ad ottenere sempre cluster con distorsione più bassa, infatti le curve si incrociano diverse volte. Si può notare però che nel caso delle 212 contee il metodo kmeans ottiene un clustering con distorsione minore rispetto al metodo gerarchico quando il numero di cluster è basso, questo probabilmente accade perchè la selezione dei centri con cui viene inizializzato kmeans in questo caso risulta efficace.
+
 
 
 
