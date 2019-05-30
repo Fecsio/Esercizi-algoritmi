@@ -284,7 +284,6 @@ tbody{display:table-row-group}
 tfoot{display:table-footer-group}
 table{margin-bottom:2em;font-size: 0.8em;padding:0;border-collapse:collapse;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.35);width:80%;margin:0 auto 2em auto}
 table th,table td{padding:10px 10px 9px;line-height:18px;}
-table td{text-align:left;}
 table th{
 padding-top:9px;vertical-align:middle}
 table td{vertical-align:top;border-top:1px solid #ddd;}
@@ -316,8 +315,8 @@ caption{display:table-caption;font-weight:300;font-size:1.3em;text-transform:upp
 
 div.outer {
 padding: 0;
-width: 100%; 
-margin: 0; 
+width: 100%;
+margin: 0;
 overflow: visible;
 }
 
@@ -329,14 +328,14 @@ right: 65%;
 }
 
 div.inner img {
-position: relative; 
+position: relative;
 right:-50%;
 width: 130%;
 border: 1px solid black;
 }
 
 div.inner figcaption{
-position: relative; 
+position: relative;
 right:-50%;
 width: 130%;
 text-align: center;
@@ -371,6 +370,11 @@ code, pre{
 
 pre{
 	width: 120%;
+}
+
+table td{
+  text-align: center;
+
 }
   </style>
  </head>
@@ -495,11 +499,90 @@ pre{
    : ad ogni iterazione viene ricalcolato il nuovo centro con il metodo calc_center(points), che è lineare rispetto al numero di punti in input e tali punti saranno al massimo n;
   </p>
   <p>
-   Possiamo dunque riassumere la complessità in tempo dell’algoritmo nel seguente modo: (n-k)*(2*n*log(n) + n); dato che stiamo considerando k &lt;&lt; n, possiamo definire la complessità asintotica come
+   Possiamo dunque riassumere la complessità in tempo dell’algoritmo nel seguente modo: (n-k)*(3*n*log(n) + n); dato che stiamo considerando k &lt;&lt; n, possiamo definire la complessità asintotica come
    <strong>
     O( n² * log(n) )
    </strong>
    .
+  </p>
+  <ul>
+   <li>
+    Anche per il clustering k-means riportiamo e analizziamo alcune importanti righe di codice :
+   </li>
+  </ul>
+  <pre><code class="python">""" n = numero di punti, k = numero di cluster in output,
+ q = numero di iterazioni """
+
+def kmeans(P, k, q):
+    sortedP = sorted(P, key=lambda c: c.population, reverse=True) # n*log(n) (1)
+
+    centers = [(sortedP[i].x, sortedP[i].y) for i in range(k)]
+
+    clusters = defaultdict(list)
+
+    for i in range(q): # q iterazioni (2)
+        clusters = partition(P, centers) # n * k (3)
+        if i == q-1:
+            old_centers = centers.copy() # k, ma viene eseguito una sola volta (4)
+        for j in range(k): # k iterazioni (5)
+            centers[j] = calc_center(clusters[centers[j]]) 
+            #lunghezza(cluster j-esimo) (5.5)
+
+    for i in range(k): # k iterazioni (6)
+        clusters[centers[i]] = clusters[old_centers[i]]
+        if centers[i] != old_centers[i]:
+            del clusters[old_centers[i]]
+
+    return clusters
+</code></pre>
+  <p>
+   <span class="reddo">
+    (1)
+   </span>
+   : viene effettuato un preordinamento della lista degli n punti;
+   <br/>
+   <span class="reddo">
+    (2)
+   </span>
+   : l’algoritmo itera q volte;
+   <br/>
+   <span class="reddo">
+    (3)
+   </span>
+   : una chiamata a partition calcola ∀ punto la distanza da ogni centro;
+   <br/>
+   <span class="reddo">
+    (4)
+   </span>
+   : all’ultima iterazione vengono copiati e salvati gli ultimi centroidi calcolati;
+   <br/>
+   <span class="reddo">
+    (5) e (5.5)
+   </span>
+   : l’algoritmo chiama calc_center sui punti di ogni cluster (k volte); tuttavia, ogni chiamata a calc_center ha in input una frazione degli n punti e la somma di queste frazioni è esattamente n, dunque (5) e (5.5) possono essere raggruppati in:
+   <br/>
+   <em>
+    Σ_i∈{0..k} lunghezza(cluster[i]) = n
+   </em>
+   <br/>
+   <span class="reddo">
+    (6)
+   </span>
+   : vengono effettuate 3 operazioni in tempo O(1) k volte;
+  </p>
+  <p>
+   Possiamo dunque riassumere la complessità in tempo dell’algoritmo nel seguente modo:
+   <strong>
+    n*log(n) + q*n*k + n + k
+   </strong>
+   ); dato che stiamo considerando k, q &lt;&lt; n, possiamo definire la complessità asintotica come
+   <strong>
+    O(n*log(n) + q*n*k)
+   </strong>
+   ; in particolare considerando la crescita lenta del logaritmo, possiamo ridurre la complessità a
+   <strong>
+    O(q*n*k)  con  n &lt;= 2^k*q
+   </strong>
   </p>
   <h2 id="automazione">
    Automazione
@@ -530,6 +613,34 @@ pre{
   </div>
   <div style="page-break-after: always;">
   </div>
+  <h3 id="domanda-6">
+   Domanda 6
+  </h3>
+  <table>
+   <tr>
+    <th>
+    </th>
+    <th>
+     Distorsione
+    </th>
+   </tr>
+   <tr>
+    <th>
+     Clustering gerarchico
+    </th>
+    <td>
+     1.96752e+11
+    </td>
+   </tr>
+   <tr>
+    <th>
+     Clustering k-means
+    </th>
+    <td>
+     9.53828e+10
+    </td>
+   </tr>
+  </table>
   <h3 id="domanda-7">
    Domanda 7
   </h3>

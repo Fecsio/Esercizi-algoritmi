@@ -61,7 +61,45 @@ Quando il numero di cluster richiesti in output è molto più piccolo del numero
 <span class="reddo"> (4) </span>: ad ogni iterazione i viene chiamata la funzione fast_closest_pair su n-i punti;
 <span class="reddo"> (5) </span>: ad ogni iterazione viene ricalcolato il nuovo centro con il metodo calc_center(points), che è lineare rispetto al numero di punti in input e tali punti saranno al massimo n;
 
-Possiamo dunque riassumere la complessità in tempo dell'algoritmo nel seguente modo: (n-k)\*(2\*n\*log(n) + n); dato che stiamo considerando k << n, possiamo definire la complessità asintotica come **O( n² \* log(n) )**.
+Possiamo dunque riassumere la complessità in tempo dell'algoritmo nel seguente modo: (n-k)\*(3\*n\*log(n) + n); dato che stiamo considerando k << n, possiamo definire la complessità asintotica come **O( n² \* log(n) )**.
+
+- Anche per il clustering k-means riportiamo e analizziamo alcune importanti righe di codice : 
+
+```python
+""" n = numero di punti, k = numero di cluster in output,
+ q = numero di iterazioni """
+ 
+def kmeans(P, k, q):
+    sortedP = sorted(P, key=lambda c: c.population, reverse=True) # n*log(n) (1)
+
+    centers = [(sortedP[i].x, sortedP[i].y) for i in range(k)]
+
+    clusters = defaultdict(list)
+  
+    for i in range(q): # q iterazioni (2)
+        clusters = partition(P, centers) # n * k (3)
+        if i == q-1:
+            old_centers = centers.copy() # k, ma viene eseguito una sola volta (4)
+        for j in range(k): # k iterazioni (5)
+            centers[j] = calc_center(clusters[centers[j]]) 
+            #lunghezza(cluster j-esimo) (5.5)
+
+    for i in range(k): # k iterazioni (6)
+        clusters[centers[i]] = clusters[old_centers[i]]
+        if centers[i] != old_centers[i]:
+            del clusters[old_centers[i]]
+
+    return clusters
+``` 
+<span class="reddo"> (1) </span>: viene effettuato un preordinamento della lista degli n punti;
+<span class="reddo"> (2) </span>: l'algoritmo itera q volte;
+<span class="reddo"> (3) </span>: una chiamata a partition calcola ∀ punto la distanza da ogni centro;
+<span class="reddo"> (4) </span>: all'ultima iterazione vengono copiati e salvati gli ultimi centroidi calcolati;
+<span class="reddo"> (5) e (5.5) </span>: l'algoritmo chiama calc\_center sui punti di ogni cluster (k volte); tuttavia, ogni chiamata a calc\_center ha in input una frazione degli n punti e la somma di queste frazioni è esattamente n, dunque (5) e (5.5) possono essere raggruppati in:
+ *Σ\_i∈{0..k} lunghezza(cluster[i]) = n*
+ <span class="reddo"> (6) </span>: vengono effettuate 3 operazioni in tempo O(1) k volte;
+ 
+ Possiamo dunque riassumere la complessità in tempo dell'algoritmo nel seguente modo: **n\*log(n) + q\*n\*k + n + k**); dato che stiamo considerando k, q << n, possiamo definire la complessità asintotica come **O(n\*log(n) + q\*n\*k)**; in particolare considerando la crescita lenta del logaritmo, possiamo ridurre la complessità a **O(q\*n\*k)  con  n <= 2^k*q ** 
 
 ## Automazione
 
@@ -87,6 +125,22 @@ Possiamo dunque riassumere la complessità in tempo dell'algoritmo nel seguente 
 
 <div style="page-break-after: always;"></div>
 
+### Domanda 6
+
+<table>
+  <tr>
+  <th></th>
+  <th>Distorsione</th>
+  </tr>
+  <tr>
+    <th>Clustering gerarchico</th>
+    <td>1.96752e+11</td>
+  </tr>
+  <tr>
+    <th>Clustering k-means </th>
+    <td>9.53828e+10</td>
+  </tr>
+ </table>
 ### Domanda 7
 Dalle figure si nota che le contee della costa occidentale con il clustering gerarchico vengono raggruppate in due cluster, di cui uno contiene una sola contea, mentre con il clustering kmeans vengono raggruppati in 4 diversi cluster.
 Questo accade perché i centri iniziali di kmeans sono le 15 contee più popolate e 4 di queste sono sulla costa occidentale. Durante le iterazioni del metodo kmeans i quattro centri sulla costa occidentale non riescono a spostarsi e catturano un numero molto basso di punti,

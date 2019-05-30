@@ -51,7 +51,7 @@ html, body, button, input, select, textarea {
     color: #57534A;
     font-family: "Ubuntu","Myriad Pro","Myriad",sans-serif;
     font-size: 18px;
-	font-weight: 300;
+  font-weight: 300;
 }
 
 body{
@@ -178,7 +178,7 @@ blockquote {
     color: #423F37;
     font-size: 1.25em;
     font-weight: 700;
-	margin: 1em 40px;
+  margin: 1em 40px;
 }
 
 blockquote {
@@ -187,7 +187,7 @@ blockquote {
 }
 
 figure {
-	margin-left: -4.5rem;
+  margin-left: -4.5rem;
     margin-right: -4.5rem;
     margin-bottom: 2em;
     margin-top: 2em;
@@ -206,11 +206,14 @@ hr {
     margin: 3em 6em;
 }
 
+.image-container {
+    width: 150%;
+    border: solid 1px red;
+    margin: 0;
+}
 
-img {
-    display: block;
-    width: 100%;
-    border: 2px solid #FFFF;
+.image-container img {
+    border: solid 1px green;
 }
 
 
@@ -254,15 +257,12 @@ ul > li {
 ol > li {
     position: relative;
 }
-li {
-    list-style: none outside none;
-}
 
 
 figure > figcaption {
     margin-top: 0.5em;
 }
-small, dd, figcaption {
+small, dd {
     color: #A19C91;
     display: block;
     font-size: 0.8rem;
@@ -275,7 +275,6 @@ tbody{display:table-row-group}
 tfoot{display:table-footer-group}
 table{margin-bottom:2em;font-size: 0.8em;padding:0;border-collapse:collapse;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.35);width:80%;margin:0 auto 2em auto}
 table th,table td{padding:10px 10px 9px;line-height:18px;}
-table td{text-align:left;}
 table th{
 padding-top:9px;vertical-align:middle}
 table td{vertical-align:top;border-top:1px solid #ddd;}
@@ -305,4 +304,66 @@ caption{display:table-caption;font-weight:300;font-size:1.3em;text-transform:upp
     font-size: 0.8rem;
 }
 
+div.outer {
+padding: 0;
+width: 100%;
+margin: 0;
+overflow: visible;
+}
 
+.inner {
+position:relative;
+float: left;
+right: 65%;
+
+}
+
+div.inner img {
+position: relative;
+right:-50%;
+width: 130%;
+border: 1px solid black;
+}
+
+div.inner figcaption{
+position: relative;
+right:-50%;
+width: 130%;
+text-align: center;
+}
+
+.dist{
+width: 100% !important;
+text-align: center;
+}
+
+figcaption{
+margin-top: 0;
+padding: 0;
+  font-style: italic;
+
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: red;
+}
+
+.reddo{
+ color: red;
+}
+
+code, pre{
+  right: 15%;
+  background-color: #F8F5F0 !important;
+ border: 1px solid gray;
+}
+
+pre{
+	width: 120%;
+}
+
+table td{
+  text-align: center;
+
+}
