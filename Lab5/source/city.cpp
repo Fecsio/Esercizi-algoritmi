@@ -1,5 +1,5 @@
-#include "city.h"
 #include <iostream>
+#include "city.h"
 
 City::City(int id, string name, int pop, float lat, float lon): 
             id(id), name(name), population(pop), latitude(lat), longitude(lon) {}
@@ -24,8 +24,11 @@ int City::getPopulation() const {
   return population;
 }
 
+bool City::comparePtrToNode(City* c1, City* c2) { return (*c1 < *c2); }
+
 bool City::operator<(const City& c) const {
-  if(getPopulation() <= c.getPopulation())
+  //std::cout << getName() << " (" << getPopulation() << ") - " << c.getName() << " (" << c.getPopulation() << ") " << std::endl;
+  if(getPopulation() < c.getPopulation()) 
     return true;
   return false;
 }

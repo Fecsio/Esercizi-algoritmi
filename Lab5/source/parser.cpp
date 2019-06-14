@@ -4,7 +4,7 @@
 #include <sstream>
 #include <vector>
 #include <string>
-#include "kmeans.cpp"
+#include "kmeans.h"
 
 class CSVRow {
     public:
@@ -55,11 +55,11 @@ int main() {
         std::stringstream(row[4]) >> lon; 
         cities.push_back(new City(id, row[1], pop, lat, lon));
     }
-    
+    /**
     // test allocazione City
     for(auto i : cities)
         std::cout << i->getId() << " | " << i->getName() <<  " | " << i->getPopulation() <<  " | " << i->getLatitude() <<  " | " << i->getLongitude() << "\n";
-    /*
+    
     // test operator<
     std::cout << cities[18]->getName() << ": " << cities[18]->getPopulation() << "\n";
     std::cout << cities[23]->getName() << ": " << cities[23]->getPopulation() << "\n";
@@ -68,6 +68,8 @@ int main() {
     else
         std::cout << cities[18]->getName() << "(" << cities[18]->getPopulation() << ") > "<< cities[23]->getName() << "(" << cities[23]->getPopulation() << ")\n"; 
     
-    kmeans(cities, 0, 0);
+    std::cout << std::endl << "kmeans" << std::endl;
     */
+    kmeans(cities, 5, 1);
+    
 }

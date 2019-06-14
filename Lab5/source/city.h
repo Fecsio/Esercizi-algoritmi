@@ -11,12 +11,13 @@ class City {
     float latitude;
     float longitude;
   public:
-    City(int id, string name, int pop, float lat, float lon);
+    City(int, string, int, float, float);
     int getId() const; 
     string getName() const; 
     float getLatitude() const; 
     float getLongitude() const; 
     int getPopulation() const;
+    static bool comparePtrToNode(City*, City*);
     bool operator<(const City&) const;
 };
 
