@@ -126,3 +126,7 @@ share/doc/networkx-2.2/requirements.txt
 File vari/output\.txt
 
 bin/
+
+Lab5/\.vscode/
+
+Lab5/source/\.vscode/
