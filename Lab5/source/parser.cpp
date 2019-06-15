@@ -45,31 +45,20 @@ int main() {
     CSVRow row;
     int id, pop;
     float lat, lon;
+    int minpop = 100000;    // soglia minima di popolazione
     std::string line;
-    // skip the first line
+    // skip the first line with the header
     std::getline(file, line);
     while(file >> row) {
-        std::stringstream(row[0]) >> id;
         std::stringstream(row[2]) >> pop;
-        std::stringstream(row[3]) >> lat;
-        std::stringstream(row[4]) >> lon; 
-        cities.push_back(new City(id, row[1], pop, lat, lon));
+        if(pop >= minpop) {
+            std::stringstream(row[0]) >> id;
+            std::stringstream(row[3]) >> lat;
+            std::stringstream(row[4]) >> lon; 
+            cities.push_back(new City(id, row[1], pop, lat, lon));
+        }
     }
-    /**
-    // test allocazione City
-    for(auto i : cities)
-        std::cout << i->getId() << " | " << i->getName() <<  " | " << i->getPopulation() <<  " | " << i->getLatitude() <<  " | " << i->getLongitude() << "\n";
     
-    // test operator<
-    std::cout << cities[18]->getName() << ": " << cities[18]->getPopulation() << "\n";
-    std::cout << cities[23]->getName() << ": " << cities[23]->getPopulation() << "\n";
-    if(*cities[18] < *cities[23])
-        std::cout << cities[18]->getName() << "(" << cities[18]->getPopulation() << ") <= "<< cities[23]->getName() << "(" << cities[23]->getPopulation() << ")\n"; 
-    else
-        std::cout << cities[18]->getName() << "(" << cities[18]->getPopulation() << ") > "<< cities[23]->getName() << "(" << cities[23]->getPopulation() << ")\n"; 
-    
-    std::cout << std::endl << "kmeans" << std::endl;
-    */
-    kmeans(cities, 5, 1);
+    kmeans(cities, 10, 20);
     
 }
