@@ -3,9 +3,7 @@
 #include <map>
 #include <vector>
 #include <typeinfo>
-
 #include <chrono>
-
 #include <utility>      // std::pair
 #include "kmeans.h"
 #include "utils.h"
@@ -61,16 +59,10 @@ std::pair<float, float> calc_center(std::vector<City*> &cities, std::vector<int>
 
 void kmeans(std::vector<City*> &cities, int k, int q) { // partition of cities, k clusters, q iteration 
     std::vector<City*> sortedP(cities);
-    // auto start = std::chrono::system_clock::now();
+    auto start = std::chrono::system_clock::now();
     
     std::sort (sortedP.begin(), sortedP.end(), City::comparePtrToNode);
 
-    // auto end = std::chrono::system_clock::now();
-
-    // std::chrono::duration<double> elapsed_seconds = end-start;
-    // std::time_t end_time = std::chrono::system_clock::to_time_t(end);
-
-    // std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
     std::pair<float, float> centers[k];
     std::map<int, std::vector<int>> clusters;
     std::pair<float, float> old_centers[k];
@@ -87,17 +79,22 @@ void kmeans(std::vector<City*> &cities, int k, int q) { // partition of cities, 
         clusters = partition(cities, centers, k);
         totDist = 0;
         for(int j=0; j < k; ++j) {
-            std::cout << "Cluster " << j << ": " << centers[j].first << ", " << centers[j].second << " - size: " << clusters[j].size() << std::endl;
+            // std::cout << "Cluster " << j << ": " << centers[j].first << ", " << centers[j].second << " - size: " << clusters[j].size() << std::endl;
             centers[j] = calc_center(cities, clusters[j]);
             distance[j] = calc_distance(cities, clusters[j], centers, j);
-            std::cout << "Distanza dal cluster " << j << ": " << distance[j] << " - Distanza media: " << distance[j]/k << std::endl;
+            // std::cout << "Distanza dal cluster " << j << ": " << distance[j] << " - Distanza media: " << distance[j]/k << std::endl;
             totDist += distance[j];
         }
         if(totDist < minDist) {
             minDist = totDist;
             minIt = i;
         }
-        std::cout << "Distanza totale: " << totDist << std::endl << "--------------------------------------------------------" << std::endl;
+        // std::cout << "Distanza totale: " << totDist << std::endl << "--------------------------------------------------------" << std::endl;
     }
+    auto end = std::chrono::system_clock::now();
+
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
     std::cout << minDist << " - " << minIt << std::endl;
+    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
 }

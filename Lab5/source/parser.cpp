@@ -45,7 +45,7 @@ int main() {
     CSVRow row;
     int id, pop;
     float lat, lon;
-    int minpop = 100000;    // soglia minima di popolazione
+    int minpop = -999;    // DOMANDA 1
     std::string line;
     // skip the first line with the header
     std::getline(file, line);
@@ -58,7 +58,18 @@ int main() {
             cities.push_back(new City(id, row[1], pop, lat, lon));
         }
     }
-    
+    std::cout << cities.size() << std::endl;
+    /* DOMANDA 2
+    for(int i=10; i<=100; i += 10) {
+        std::cout << "# cluster: " << i << std::endl;
+        kmeans(cities, i, 100);
+    }
+    */
+    /* DOMANDA 3
+    for(int i=10; i<=1000; i += 99) {
+        std::cout << "# iterazioni: " << i << std::endl;
+        kmeans(cities, 50, i);
+    }
+    */
     kmeans(cities, 50, 100);
-    
 }
