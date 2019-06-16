@@ -27,7 +27,6 @@ int City::getPopulation() const {
 bool City::comparePtrToNode(City* c1, City* c2) { return (*c1 < *c2); }
 
 bool City::operator<(const City& c) const {
-  //std::cout << getName() << " (" << getPopulation() << ") - " << c.getName() << " (" << c.getPopulation() << ") " << std::endl;
   if(getPopulation() < c.getPopulation()) 
     return true;
   return false;

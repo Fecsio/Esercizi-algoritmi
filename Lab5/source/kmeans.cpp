@@ -52,6 +52,8 @@ std::pair<float, float> calc_center(std::vector<City*> &cities, std::vector<int>
         x += cities[clusterCityIndexes[i]]->getLatitude();
         y += cities[clusterCityIndexes[i]]->getLongitude();
     }
+    if(n == 0)
+        ++n;
     res.first = x/n;
     res.second = y/n;
     return res;
@@ -74,7 +76,8 @@ void kmeans(std::vector<City*> &cities, int k, int q) { // partition of cities, 
     std::pair<float, float> old_centers[k];
     int distance[k];
     int totDist = 0;
-    
+    int minDist = 999999999;
+    int minIt;
     // centers initialization
     for(int i=0; i < k; ++i) {
         centers[i] = std::make_pair(sortedP[sortedP.size()-i-1]->getLatitude(), sortedP[sortedP.size()-i-1]->getLongitude());
@@ -90,6 +93,11 @@ void kmeans(std::vector<City*> &cities, int k, int q) { // partition of cities, 
             std::cout << "Distanza dal cluster " << j << ": " << distance[j] << " - Distanza media: " << distance[j]/k << std::endl;
             totDist += distance[j];
         }
+        if(totDist < minDist) {
+            minDist = totDist;
+            minIt = i;
+        }
         std::cout << "Distanza totale: " << totDist << std::endl << "--------------------------------------------------------" << std::endl;
     }
+    std::cout << minDist << " - " << minIt << std::endl;
 }

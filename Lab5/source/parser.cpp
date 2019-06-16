@@ -59,6 +59,6 @@ int main() {
         }
     }
     
-    kmeans(cities, 10, 20);
+    kmeans(cities, 50, 100);
     
 }
