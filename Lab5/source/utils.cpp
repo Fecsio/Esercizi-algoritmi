@@ -21,9 +21,11 @@ float geoDistance(float dLat1, float dLong1, float dLat2, float dLong2) {
   return int(earthRadius * acos(0.5*((1.0 + q1)*q2 - (1.0 - q1)*q3)) + 1.0);
 }
 
-float calc_distance(std::vector<City*> cities, std::vector<int> clusterCityIndexes, std::pair<float, float> *centers, int centerIndex) {
+float calc_distance(std::vector<City*> cities, std::vector<int> cluster, int centerindex, std::pair<float, float> center) {
     float res = 0;
-    for(int i=0; i < clusterCityIndexes.size(); ++i)
-        res += geoDistance(cities[clusterCityIndexes[i]]->getLatitude(), cities[clusterCityIndexes[i]]->getLongitude(), centers[centerIndex].first, centers[centerIndex].second);
+    int n = cluster.size();
+    for(int i=0; i < n; ++i)
+        if(cluster[i] == centerindex)
+        res += geoDistance(cities[i]->getLatitude(), cities[i]->getLongitude(), center.first, center.second);
     return res;
 }

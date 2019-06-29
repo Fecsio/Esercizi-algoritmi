@@ -1,22 +1,20 @@
-#include <iostream>
+#include <iostream> // ~~~~~~~~~~~~~ DA RIMUOVERE POI
 #include <algorithm>    // std::sort
-#include <map>
 #include <vector>
-#include <typeinfo>
 #include <chrono>
 #include <utility>      // std::pair
+#include <limits>
 #include "kmeans.h"
 #include "utils.h"
 
 /* 
  * Partizionamento delle città su k clusters
- * std::map<std::pair<float, float>, std::vector<int>>> --> map(center pair, cities indexes)
+ * 
  */
-std::map<int, std::vector<int>> partition(std::vector<City*> cities, std::pair<float, float> *centers, int k) {
-    std::map<int, std::vector<int>> c;
-    
+void Partition(const std::vector<City*>& cities, const std::vector<std::pair<float, float>>& centers, std::vector<int>& cluster, int k) {   
     //std::cout << "Partitioning start" << std::endl;
-    for(int i = 0; i < cities.size(); ++i) {
+    int n = cities.size();
+    for(int i = 0; i < n; ++i) { 
         int best_c = 0;    // centroid for city of index i initialized to centers[0]
         float best_dist = geoDistance(cities[i]->getLatitude(), cities[i]->getLongitude(), centers[0].first, centers[0].second);
         for(int z = 1; z < k; ++z) {
@@ -26,64 +24,69 @@ std::map<int, std::vector<int>> partition(std::vector<City*> cities, std::pair<f
                 best_c = z;
             }
         }
-        c[best_c].push_back(i);
-        //if(i >= 10 && i < 50) 
-        //    std::cout << "best_dist for " << i << " at " << best_c << ": " << best_dist << std::endl;
+
+        cluster[i] = best_c;
     }
-    return c;
 }
 
-// Calculate new centroids (cities: cities in database, clusterCityIndexes: index of cities in the cluster)
-std::pair<float, float> calc_center(std::vector<City*> &cities, std::vector<int> clusterCityIndexes) {
-    std::pair<float, float> res;
-    float x = 0.0;
-    float y = 0.0;
-    int n = clusterCityIndexes.size();
-    for(int i=0; i < n; ++i) {
-        x += cities[clusterCityIndexes[i]]->getLatitude();
-        y += cities[clusterCityIndexes[i]]->getLongitude();
+std::pair<std::pair<float, float>, int> ReduceCluster(const std::vector<int>& cluster, const std::vector<City*>& cities, int i, int j, int h){
+    if(i == j){
+        if(cluster[i] == h){
+            return std::make_pair(std::make_pair(cities[i]->getLatitude(), cities[i]->getLongitude()), 1);
+        }
+        
+        return std::make_pair(std::make_pair(0,0), 0);
     }
-    if(n == 0)
-        ++n;
-    res.first = x/n;
-    res.second = y/n;
-    return res;
+
+    int mid = (i+j)/2;
+    auto left =  ReduceCluster(cluster, cities, i, mid, h);
+    auto right = ReduceCluster(cluster, cities, mid + 1, j, h);
+    return std::make_pair(std::make_pair(left.first.first + right.first.first, left.first.second + right.first.second), left.second + right.second);  
 }
 
-void kmeans(std::vector<City*> &cities, int k, int q) { // partition of cities, k clusters, q iteration 
+
+std::pair<std::vector<int>, std::vector<std::pair<float, float>>> Kmeans(std::vector<City*> &cities, int k, int q) { // partition of cities, k clusters, q iteration 
     std::vector<City*> sortedP(cities);
     auto start = std::chrono::system_clock::now();
     
+    unsigned int n = cities.size();
     std::sort (sortedP.begin(), sortedP.end(), City::comparePtrToNode);
 
-    std::pair<float, float> centers[k];
-    std::map<int, std::vector<int>> clusters;
-    std::pair<float, float> old_centers[k];
-    int distance[k];
-    int totDist = 0;
-    int minDist = 999999999;
-    int minIt;
+    std::vector<int> cluster(n, -1);
+
+    std::vector<std::pair<float, float>> centers;
+    centers.reserve(k);
+
     // centers initialization
     for(int i=0; i < k; ++i) {
-        centers[i] = std::make_pair(sortedP[sortedP.size()-i-1]->getLatitude(), sortedP[sortedP.size()-i-1]->getLongitude());
-        // std::cout << "initial centers: " << centers[i].first << ", " << centers[i].second << std::endl;
+        centers.push_back(std::make_pair(sortedP[n-i-1]->getLatitude(), sortedP[n-i-1]->getLongitude()));
     }
+
+    int distance[k];
+    int totDist = 0;
+    int minDist = std::numeric_limits<int>::max();
+    int minIt;
+
     for(int i=0; i < q; ++i) {
-        clusters = partition(cities, centers, k);
+        Partition(cities, centers, cluster, k);
+
         totDist = 0;
         for(int j=0; j < k; ++j) {
-            // std::cout << "Cluster " << j << ": " << centers[j].first << ", " << centers[j].second << " - size: " << clusters[j].size() << std::endl;
-            centers[j] = calc_center(cities, clusters[j]);
-            distance[j] = calc_distance(cities, clusters[j], centers, j);
-            // std::cout << "Distanza dal cluster " << j << ": " << distance[j] << " - Distanza media: " << distance[j]/k << std::endl;
+            auto sumSize = ReduceCluster(cluster, cities, 0, n-1, j);
+            float sumLat = sumSize.first.first;
+            float sumLong = sumSize.first.second;
+            int size = sumSize.second;
+            centers[j] = std::make_pair(sumLat/size, sumLong/size);
+            distance[j] = calc_distance(cities, cluster, j, centers[j]);
             totDist += distance[j];
         }
+
         if(totDist < minDist) {
             minDist = totDist;
             minIt = i;
         }
-        // std::cout << "Distanza totale: " << totDist << std::endl << "--------------------------------------------------------" << std::endl;
     }
+
     auto end = std::chrono::system_clock::now();
 
     std::chrono::duration<double> elapsed_seconds = end-start;
@@ -95,4 +98,6 @@ void kmeans(std::vector<City*> &cities, int k, int q) { // partition of cities, 
     for(auto c: centers){
         std::cout << "(" << c.first << ", " << c.second << ")" << std::endl;
     }
+
+    return std::make_pair(cluster, centers);
 }

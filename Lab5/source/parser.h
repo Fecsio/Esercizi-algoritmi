@@ -16,6 +16,6 @@ class CSVRow {
 
 std::istream& operator>>(std::istream&, CSVRow&);
 
-std::vector<City*> Parser(const std::string&);
+std::vector<City*> Parser(const std::string& filepath);
 
 #endif

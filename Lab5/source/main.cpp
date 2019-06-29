@@ -1,6 +1,6 @@
 #include "parser.h"
 #include "kmeans.h"
-//#include "pkmeans.h"
+#include "pkmeans.h"
 
 int main() {
     auto cities = Parser("../cities-and-towns-of-usa.csv");
@@ -16,5 +16,5 @@ int main() {
         kmeans(cities, 50, i);
     }
     */
-    kmeans(cities, 50, 109);
+    PKmeans(cities, 10, 10);
 }

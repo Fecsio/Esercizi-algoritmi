@@ -11,7 +11,7 @@ class City {
     float latitude;
     float longitude;
   public:
-    City(int, string, int, float, float);
+    City(int id, string name, int pop, float lat, float lon);
     int getId() const; 
     string getName() const; 
     float getLatitude() const; 
