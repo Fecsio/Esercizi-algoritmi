@@ -20,11 +20,11 @@ std::pair<std::pair<float, float>, int> PReduceCluster(const std::vector<int>& c
         float lon = 0;
         int size = 0;
 
-        for(int z = i; z < j; ++z){
+        for(int z = i; z <= j; ++z){
             if(cluster[z] == h){
                 lat += cities[z]->getLatitude();
                 lon += cities[z]->getLongitude();
-                size++;
+                size+=1;
             }
         }
 
@@ -111,10 +111,18 @@ std::pair<std::vector<int>, std::vector<std::pair<float, float>>> PKmeans(std::v
         }
     }
     
+   
+
+    auto end = std::chrono::system_clock::now();
+
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+
     for(auto c: centers){
         std::cout << "(" << c.first << ", " << c.second << ")" << std::endl;
     }
-
+    
     return std::make_pair(cluster, centers);
 
 }

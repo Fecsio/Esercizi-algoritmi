@@ -16,5 +16,5 @@ int main() {
         kmeans(cities, 50, i);
     }
     */
-    PKmeans(cities, 10, 10);
+    Kmeans(cities, 10, 10);
 }
