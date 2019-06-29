@@ -8,13 +8,6 @@
 #include "kmeans.h"
 #include "utils.h"
 
-int calc_distance(std::vector<City*> cities, std::vector<int> clusterCityIndexes, std::pair<float, float> *centers, int centerIndex) {
-    int res = 0;
-    for(int i=0; i < clusterCityIndexes.size(); ++i)
-        res += geoDistance(cities[clusterCityIndexes[i]]->getLatitude(), cities[clusterCityIndexes[i]]->getLongitude(), centers[centerIndex].first, centers[centerIndex].second);
-    return res;
-}
-
 /* 
  * Partizionamento delle città su k clusters
  * std::map<std::pair<float, float>, std::vector<int>>> --> map(center pair, cities indexes)
@@ -97,4 +90,9 @@ void kmeans(std::vector<City*> &cities, int k, int q) { // partition of cities, 
     std::time_t end_time = std::chrono::system_clock::to_time_t(end);
     std::cout << minDist << " - " << minIt << std::endl;
     std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+
+    // stampo centroidi finali per confronto
+    for(auto c: centers){
+        std::cout << "(" << c.first << ", " << c.second << ")" << std::endl;
+    }
 }

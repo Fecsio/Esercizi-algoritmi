@@ -1,45 +1,12 @@
- #include "pkmeans.h"
- #include <cilk/cilk.h>
- #include <iterator>
+#include "pkmeans.h"
+#include "utils.h"
+
+#include <cilk/cilk.h>
+#include <algorithm>    // std::sort
+#include <chrono>
 #include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <string>
+#include <numeric>
 
-class CSVRow {
-    public:
-        std::string const& operator[](std::size_t index) const {
-            return m_data[index];
-        }
-        std::size_t size() const {
-            return m_data.size();
-        }
-        void readNextRow(std::istream& str) {
-            std::string line;
-            std::getline(str, line);
-
-            std::stringstream lineStream(line);
-            std::string cell;
-
-            m_data.clear();
-            while(std::getline(lineStream, cell, ',')) {
-                m_data.push_back(cell);
-            }
-            // This checks for a trailing comma with no data after it.
-            if (!lineStream && cell.empty()) {
-                // If there was a trailing comma then add an empty element.
-                m_data.push_back("");
-            }
-        }
-    private:
-        std::vector<std::string> m_data;
-};
-
-std::istream& operator>>(std::istream& str, CSVRow& data) {
-    data.readNextRow(str);
-    return str;
-}   
 
 std::pair<std::pair<float, float>, int> PReduceCluster(const std::vector<int>& cluster, const std::vector<City*>& cities, int i, int j, int h){
     if(i == j){
@@ -57,39 +24,98 @@ std::pair<std::pair<float, float>, int> PReduceCluster(const std::vector<int>& c
     return std::make_pair(std::make_pair(left.first.first + right.first.first, left.first.second + right.first.second), left.second + right.second);  
 }
 
-int main() {
-    std::ifstream file("../cities-and-towns-of-usa.csv");
-    std::vector<City*> cities;
-    CSVRow row;
-    int id, pop;
-    float lat, lon;
-    int minpop = -999;    // DOMANDA 1
-    std::string line;
-    // skip the first line with the header
-    std::getline(file, line);
-    while(file >> row) {
-        std::stringstream(row[2]) >> pop;
-        if(pop >= minpop) {
-            std::stringstream(row[0]) >> id;
-            std::stringstream(row[3]) >> lat;
-            std::stringstream(row[4]) >> lon; 
-            cities.push_back(new City(id, row[1], pop, lat, lon));
+/* 
+ * Partizionamento delle città su k clusters
+ */
+
+void Partition(const std::vector<City*>& cities, const std::vector<std::pair<float, float>>& centers, std::vector<int>& cluster, int k) {   
+    //std::cout << "Partitioning start" << std::endl;
+    int n = cities.size();
+    cilk_for (int i = 0; i < n; ++i) { // parallel for
+        int best_c = 0;    // centroid for city of index i initialized to centers[0]
+        float best_dist = geoDistance(cities[i]->getLatitude(), cities[i]->getLongitude(), centers[0].first, centers[0].second);
+        for(unsigned int z = 1; z < k; ++z) {
+            float tmp_dist = geoDistance(cities[i]->getLatitude(), cities[i]->getLongitude(), centers[z].first, centers[z].second);
+            if(tmp_dist < best_dist) {
+                best_dist = tmp_dist;
+                best_c = z;
+            }
+        }
+
+        cluster[i] = best_c;
+        //if(i >= 10 && i < 50) 
+        //    std::cout << "best_dist for " << i << " at " << best_c << ": " << best_dist << std::endl;
+    }
+}
+
+/**
+ * Parallel k-means
+ *  
+ * Params:
+ *  cities = std::vector of cities (points)
+ *  q = # of iteractions
+ *  k = # of clusters
+ * 
+ * Returns: 
+ *  A pair made of: 
+ *  1. A vector of n = cities.size() int, where an int at position i identify the center 
+ *     of the cluster in which cities[i] is, that is, the index of that center in the array of point 2.;
+ *  2. A vector of size = k, in which are stored centers (point (latitude, longitude)), calculated in the 
+ *     last iteraction of the algorithm.
+ * 
+*/
+std::pair<std::vector<int>, std::vector<std::pair<float, float>>> PKmeans(std::vector<City*>& cities, int k, int q){
+
+    unsigned int n = cities.size();
+    std::vector<City*> sortedP(cities);
+
+    auto start = std::chrono::system_clock::now();
+
+    std::sort (sortedP.begin(), sortedP.end(), City::comparePtrToNode);
+
+    std::vector<int> cluster(n, -1);
+
+    std::vector<std::pair<float, float>> centers;
+    centers.reserve(k);
+    // ~~~~~~~~~~~~
+    int distance[k];
+    int totDist = 0;
+    int minDist = 999999999;
+    int minIt;
+    //~~~~~~~~~~~~
+
+    // centers initialization
+    for(int i=0; i < k; ++i) {
+        centers.push_back(std::make_pair(sortedP[n-i-1]->getLatitude(), sortedP[n-i-1]->getLongitude()));
+        // std::cout << "initial centers: " << centers[i].first << ", " << centers[i].second << std::endl;
+    }
+
+    std::cout << centers.size() << std::endl;
+    std::cout << cluster.size() << std::endl;
+
+
+    for(int i = 0; i<q; ++i){
+
+        Partition(cities, centers, cluster, k); // side-effect on cluster
+
+        cilk_for(unsigned int f = 0; f < k; ++f){
+            auto sumSize = PReduceCluster(cluster, cities, 0, n-1, f);
+            float sumLat = sumSize.first.first;
+            float sumLong = sumSize.first.second;
+            int size = sumSize.second;
+            centers[f] = std::make_pair(sumLat/size, sumLong/size);
         }
     }
-    std::cout << cities.size() << std::endl;
+    
+    std::cout << centers.size() << std::endl;
 
-    std::vector<int> cluster;
-    cluster.reserve(cities.size());
-    std::cout << cities.size();
-    cluster.push_back(3);
-
-    for (auto i = 0; i<cities.size()/2; ++i){
-        cluster.push_back(1);
-        cluster.push_back(0);
-
+    for(auto c: centers){
+        std::cout << "(" << c.first << ", " << c.second << ")" << std::endl;
     }
 
-    auto r = PReduceCluster(cluster, cities, 0, cluster.size() - 1, 1);
-    std::cout << "(" << r.first.first << "," << r.first.second << ")" << " " << r.second << endl;
+    return std::make_pair(cluster, centers);
 
 }
+
+
+

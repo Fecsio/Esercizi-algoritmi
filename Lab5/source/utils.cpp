@@ -1,6 +1,5 @@
 #include <cmath>
 #include <utility>
-#include <vector>
 #include "city.h"
 #include "utils.h"
 
@@ -20,4 +19,11 @@ float geoDistance(float dLat1, float dLong1, float dLat2, float dLong2) {
   float q2 = cos(lat1 - lat2);
   float q3 = cos(lat1 + lat2);
   return int(earthRadius * acos(0.5*((1.0 + q1)*q2 - (1.0 - q1)*q3)) + 1.0);
+}
+
+float calc_distance(std::vector<City*> cities, std::vector<int> clusterCityIndexes, std::pair<float, float> *centers, int centerIndex) {
+    float res = 0;
+    for(int i=0; i < clusterCityIndexes.size(); ++i)
+        res += geoDistance(cities[clusterCityIndexes[i]]->getLatitude(), cities[clusterCityIndexes[i]]->getLongitude(), centers[centerIndex].first, centers[centerIndex].second);
+    return res;
 }

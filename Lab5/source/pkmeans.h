@@ -1,3 +1,5 @@
+#ifndef PKMEANS_H
+#define PKMEANS_H
 #include <map>
 #include <vector>
 #include <utility>      // std::pair
@@ -8,4 +10,8 @@
 
 std::pair<std::pair<float, float>, int> PReduceCluster(const std::vector<int>&, const std::vector<City*>&, int , int , int );
 
-// void pkmeans(std::vector<City*>&, int, int);
+void Partition(const std::vector<City*>&, const std::vector<std::pair<float, float>>&, std::vector<int>&, int);
+
+std::pair<std::vector<int>, std::vector<std::pair<float, float>>> PKmeans(std::vector<City*>& , int , int );
+
+#endif
