@@ -8,14 +8,14 @@ class City {
     int id;
     string name;
     int population;
-    float latitude;
-    float longitude;
+    double latitude;
+    double longitude;
   public:
-    City(int id, string name, int pop, float lat, float lon);
+    City(int id, string name, int pop, double lat, double lon);
     int getId() const; 
     string getName() const; 
-    float getLatitude() const; 
-    float getLongitude() const; 
+    double getLatitude() const; 
+    double getLongitude() const; 
     int getPopulation() const;
     static bool comparePtrToNode(City*, City*);
     bool operator<(const City&) const;

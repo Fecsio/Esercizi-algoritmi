@@ -41,7 +41,7 @@ std::vector<City*> Parser(const std::string& filepath){
     std::vector<City*> cities;
     CSVRow row;
     int id, pop;
-    float lat, lon;
+    double lat, lon;
     int minpop = -999;    // DOMANDA 1
     std::string line;
 

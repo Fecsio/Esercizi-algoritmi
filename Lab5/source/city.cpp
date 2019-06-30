@@ -1,7 +1,7 @@
 #include <iostream>
 #include "city.h"
 
-City::City(int id, string name, int pop, float lat, float lon): 
+City::City(int id, string name, int pop, double lat, double lon): 
             id(id), name(name), population(pop), latitude(lat), longitude(lon) {}
 
 int City::getId() const {
@@ -12,11 +12,11 @@ string City::getName() const {
   return name;
 }
 
-float City::getLatitude() const {
+double City::getLatitude() const {
   return latitude;
 }
 
-float City::getLongitude() const {
+double City::getLongitude() const {
   return longitude;
 }
 

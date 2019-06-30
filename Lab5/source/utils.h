@@ -5,12 +5,12 @@
 
 #define PI 3.14159265
 
-float convertRadians(float);
+double convertRadians(double);
 
-float geoDistance(float dLat1, float dLong1, float dLat2, float dLong2);
+double geoDistance(double dLat1, double dLong1, double dLat2, double dLong2);
 
-float calc_distance(std::vector<City*> cities, std::vector<int> cluster, int centerindex, std::pair<float, float> center);
+double calc_distance(std::vector<City*> cities, std::vector<int> cluster, int centerindex, std::pair<double, double> center);
 
-float calc_distortion(std::vector<City*> cities, std::vector<int> cluster, std::vector<std::pair<float, float>> centers);
+double calc_distortion(std::vector<City*> cities, std::vector<int> cluster, std::vector<std::pair<double, double>> centers);
 
 #endif
