@@ -13,6 +13,7 @@ int main() {
     int n = cities.size();
 
     /*
+        ~~~~~~~~~~~ CREAZIONE CENTROIDI INIZIALI ~~~~~~
     std::vector<City*> sortedP(cities);
     std::sort (sortedP.begin(), sortedP.end(), City::comparePtrToNode);
     std::vector<std::pair<double, double>> centers;
@@ -39,7 +40,7 @@ int main() {
     }
     */
 
-    PKmeans(cities, 50, 100);
+    PKmeans(cities, initial_centroids 50, 100);
     std::cout << std::endl;
     Kmeans(cities, 50, 100);
 }
