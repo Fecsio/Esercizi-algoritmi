@@ -26,8 +26,16 @@ int City::getPopulation() const {
 
 bool City::comparePtrToNode(City* c1, City* c2) { return (*c1 < *c2); }
 
+bool City::comparePtrToNodeMax(City* c1, City* c2) { return (*c1 > *c2); }
+
 bool City::operator<(const City& c) const {
   if(getPopulation() < c.getPopulation()) 
+    return true;
+  return false;
+}
+
+bool City::operator>(const City& c) const {
+  if(getPopulation() > c.getPopulation()) 
     return true;
   return false;
 }

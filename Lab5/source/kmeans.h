@@ -8,6 +8,6 @@ void Partition(const std::vector<City*>& cities, const std::vector<std::pair<dou
 
 std::pair<std::pair<double, double>, int> ReduceCluster(const std::vector<int>& cluster, const std::vector<City*>& cities, int h);
 
-std::pair<std::vector<int>, std::vector<std::pair<double, double>>> Kmeans(std::vector<City*>& cities, int k, int q);
+std::pair<std::vector<int>, std::vector<std::pair<double, double>>> Kmeans(std::vector<City*>& cities, std::vector<std::pair<double, double>> centers, int k, int q);
 
 #endif

@@ -18,7 +18,9 @@ class City {
     double getLongitude() const; 
     int getPopulation() const;
     static bool comparePtrToNode(City*, City*);
+    static bool comparePtrToNodeMax(City*, City*);
     bool operator<(const City&) const;
+    bool operator>(const City&) const;
 };
 
 #endif //CITY.H

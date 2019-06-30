@@ -84,22 +84,12 @@ std::pair<std::pair<double, double>, int> ReduceCluster(const std::vector<int>& 
  *     last iteraction of the algorithm.
  *  
  */
-std::pair<std::vector<int>, std::vector<std::pair<double, double>>> Kmeans(std::vector<City*> &cities, int k, int q) { // partition of cities, k clusters, q iteration 
-    std::vector<City*> sortedP(cities);
+std::pair<std::vector<int>, std::vector<std::pair<double, double>>> Kmeans(std::vector<City*> &cities, std::vector<std::pair<double, double>> centers, int k, int q) { // partition of cities, k clusters, q iteration 
     auto start = std::chrono::system_clock::now();
     
     unsigned int n = cities.size();
-    std::sort (sortedP.begin(), sortedP.end(), City::comparePtrToNode);
 
     std::vector<int> cluster(n, -1);
-
-    std::vector<std::pair<double, double>> centers;
-    centers.reserve(k);
-
-    // centers initialization
-    for(int i=0; i < k; ++i) {
-        centers.push_back(std::make_pair(sortedP[n-i-1]->getLatitude(), sortedP[n-i-1]->getLongitude()));
-    }
 
     int distance[k];
     int totDist = 0;
