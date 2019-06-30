@@ -3,6 +3,8 @@
 #include "city.h"
 #include "utils.h"
 
+#include <iostream>
+
 float convertRadians(float x) {
   int deg1 = int(x);
   float min1 = x - deg1;
@@ -28,4 +30,14 @@ float calc_distance(std::vector<City*> cities, std::vector<int> cluster, int cen
         if(cluster[i] == centerindex)
         res += geoDistance(cities[i]->getLatitude(), cities[i]->getLongitude(), center.first, center.second);
     return res;
+}
+
+float calc_distortion(std::vector<City*> cities, std::vector<int> cluster, std::vector<std::pair<float, float>> centers){
+    float sum = 0;
+    for(int i=0; i<cities.size(); ++i){
+      sum += pow(geoDistance(centers[cluster[i]].first, centers[cluster[i]].second, cities[i]->getLatitude(), cities[i]->getLongitude()), 2) * abs(cities[i]->getPopulation());
+    }
+
+  return sum;
+
 }

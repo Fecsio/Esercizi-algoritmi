@@ -11,4 +11,6 @@ float geoDistance(float dLat1, float dLong1, float dLat2, float dLong2);
 
 float calc_distance(std::vector<City*> cities, std::vector<int> cluster, int centerindex, std::pair<float, float> center);
 
+float calc_distortion(std::vector<City*> cities, std::vector<int> cluster, std::vector<std::pair<float, float>> centers);
+
 #endif

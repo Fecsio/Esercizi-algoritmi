@@ -119,9 +119,12 @@ std::pair<std::vector<int>, std::vector<std::pair<float, float>>> PKmeans(std::v
     std::time_t end_time = std::chrono::system_clock::to_time_t(end);
     std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
 
-    for(auto c: centers){
+    /*for(auto c: centers){
         std::cout << "(" << c.first << ", " << c.second << ")" << std::endl;
-    }
+    }*/
+
+    std::cout << calc_distortion(cities, cluster, centers) << std::endl;
+
     
     return std::make_pair(cluster, centers);
 

@@ -30,7 +30,7 @@ void Partition(const std::vector<City*>& cities, const std::vector<std::pair<flo
 }
 
 std::pair<std::pair<float, float>, int> ReduceCluster(const std::vector<int>& cluster, const std::vector<City*>& cities, int i, int j, int h){
-    if(i == j){
+   /*if(i == j){
         if(cluster[i] == h){
             return std::make_pair(std::make_pair(cities[i]->getLatitude(), cities[i]->getLongitude()), 1);
         }
@@ -42,6 +42,20 @@ std::pair<std::pair<float, float>, int> ReduceCluster(const std::vector<int>& cl
     auto left =  ReduceCluster(cluster, cities, i, mid, h);
     auto right = ReduceCluster(cluster, cities, mid + 1, j, h);
     return std::make_pair(std::make_pair(left.first.first + right.first.first, left.first.second + right.first.second), left.second + right.second);  
+*/
+    int n = cities.size();
+    float lat = 0;
+    float lon = 0;
+    int size = 0;
+    for(int z = 0; z < n; ++z){
+        if(cluster[z] == h){
+            lat += cities[z]->getLatitude();
+            lon += cities[z]->getLongitude();
+            size+=1;
+        }
+    }
+
+    return std::make_pair(std::make_pair(lat, lon), size);
 }
 
 
@@ -94,10 +108,12 @@ std::pair<std::vector<int>, std::vector<std::pair<float, float>>> Kmeans(std::ve
     std::cout << minDist << " - " << minIt << std::endl;
     std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
 
-    // stampo centroidi finali per confronto
+    /*// stampo centroidi finali per confronto
     for(auto c: centers){
         std::cout << "(" << c.first << ", " << c.second << ")" << std::endl;
-    }
+    }*/
+
+    std::cout << calc_distortion(cities, cluster, centers) << std::endl;
 
     return std::make_pair(cluster, centers);
 }
