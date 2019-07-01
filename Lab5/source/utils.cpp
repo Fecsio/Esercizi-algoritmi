@@ -22,6 +22,7 @@ double geoDistance(double dLat1, double dLong1, double dLat2, double dLong2) {
   return int(earthRadius * acos(0.5*((1.0 + q1)*q2 - (1.0 - q1)*q3)) + 1.0);
 }
 
+// ~~~~~~ used for tests
 double calc_distance(std::vector<City*> cities, std::vector<int> cluster, int centerindex, std::pair<double, double> center) {
     double res = 0;
     int n = cluster.size();
@@ -31,11 +32,12 @@ double calc_distance(std::vector<City*> cities, std::vector<int> cluster, int ce
     return res;
 }
 
+// ~~~~~~ used for tests
 double calc_distortion(std::vector<City*> cities, std::vector<int> cluster, std::vector<std::pair<double, double>> centers){
     double sum = 0;
     for(int i=0; i<cities.size(); ++i){
       int pop = cities[i]->getPopulation();
-      //if(pop < 0 ) pop = 0;
+      if(pop < 0 ) pop = 0;
       sum += pow(geoDistance(centers[cluster[i]].first, centers[cluster[i]].second, cities[i]->getLatitude(), cities[i]->getLongitude()), 2) * pop;
     }
 

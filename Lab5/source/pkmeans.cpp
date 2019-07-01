@@ -2,7 +2,6 @@
 #include <numeric>
 #include "pkmeans.h"
 #include "utils.h"
-
 /**
  * Auxiliar parallel function used to calculate new centroid for a cluster.
  * 
@@ -21,15 +20,7 @@
  * 
 */
 std::pair<std::pair<double, double>, int> PReduceCluster(const std::vector<int>& cluster, const std::vector<City*>& cities, int i, int j, int h, int cutoff){
-    if(i == j){
-        if(cluster[i] == h){
-            return std::make_pair(std::make_pair(cities[i]->getLatitude(), cities[i]->getLongitude()), 1);
-        }
-        
-        return std::make_pair(std::make_pair(0,0), 0);
-    }
-
-    if(j-i < cutoff){
+    if(j-i <= cutoff){
         double lat = 0;
         double lon = 0;
         int size = 0;
@@ -67,22 +58,30 @@ std::pair<std::pair<double, double>, int> PReduceCluster(const std::vector<int>&
  * 
  * 
  */
-void PPartition(const std::vector<City*>& cities, const std::vector<std::pair<double, double>>& centers, std::vector<int>& cluster, int k) {   
-    int n = cities.size();
-    cilk_for (int i = 0; i < n; ++i) { // parallel for
-        int best_c = 0;    // centroid for city of index i initialized to centers[0]
-        double best_dist = geoDistance(cities[i]->getLatitude(), cities[i]->getLongitude(), centers[0].first, centers[0].second);
-        for(unsigned int z = 1; z < k; ++z) {
-            double tmp_dist = geoDistance(cities[i]->getLatitude(), cities[i]->getLongitude(), centers[z].first, centers[z].second);
-            if(tmp_dist < best_dist) {
-                best_dist = tmp_dist;
-                best_c = z;
+void PPartition(const std::vector<City*>& cities, const std::vector<std::pair<double, double>>& centers, std::vector<int>& cluster, int i, int j, int k, int cutoff) {   
+    if(j-i <= cutoff){
+        for(int z = i; z <= j; ++z){
+            int best_c = 0;    // centroid for city of index i initialized to centers[0]
+            double best_dist = geoDistance(cities[z]->getLatitude(), cities[z]->getLongitude(), centers[0].first, centers[0].second);
+            for(int c = 1; c < k; ++c) {
+                double tmp_dist = geoDistance(cities[z]->getLatitude(), cities[z]->getLongitude(), centers[c].first, centers[c].second);
+                if(tmp_dist < best_dist) {
+                    best_dist = tmp_dist;
+                    best_c = c;
+                }
             }
-        }
 
-        cluster[i] = best_c;
+        cluster[z] = best_c;
+        }
+    }
+
+    else{
+        int mid = (i+j)/2;
+        cilk_spawn PPartition(cities, centers, cluster, i, mid, k, cutoff);
+        PPartition(cities, centers, cluster, mid + 1, j, k, cutoff);
     }
 }
+
 
 /**
  * Parallel k-means
@@ -108,7 +107,7 @@ std::pair<std::vector<int>, std::vector<std::pair<double, double>>> PKmeans(cons
 
     for(int i = 0; i<q; ++i){
 
-        PPartition(cities, centers, cluster, k); // side-effect on cluster
+        PPartition(cities, centers, cluster, 0, n-1, k, cutoff); // side-effect on cluster
 
         cilk_for(int f = 0; f < k; ++f){
             auto sumSize = PReduceCluster(cluster, cities, 0, n-1, f, cutoff);

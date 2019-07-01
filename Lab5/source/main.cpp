@@ -8,7 +8,7 @@
 
 int main() {
 
-    std::ofstream outputFile("../risultati2.csv");
+    std::ofstream outputFile("../risultati.csv");
     outputFile << "Algoritmo, numero di punti, cluster, iterazioni, popolazione, cutoff, tempo(ms)" << std::endl;
 
     // ~~~~~~~~~~~~~~~~ DOMANDA 1 ~~~~~~~~~~~~~~~~
@@ -98,11 +98,10 @@ int main() {
 
         
     }
-
     // ~~~~~~~~~~~~~~~~ DOMANDA 4 ~~~~~~~~~~~~~~~~
     outputFile << "DOMANDA" << std::endl;
-    int k = 50;
-    int q = 100;
+    k = 100;
+    q = 100;
 
     for(int cutoff = 10; cutoff <= 38183; cutoff += 647){
         auto cities = Parser("../cities-and-towns-of-usa.csv"); 
