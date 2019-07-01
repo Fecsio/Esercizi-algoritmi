@@ -60,7 +60,7 @@ def resultParser():
                 arrayX.append(int(line[5]))
                 arrayY1.append(int(line[6]))
         if line[0] == '':
-            OneCurvePrint(title, "Cutoff", 'Tempo Impiegato (ms)', arrayY1, arrayX)
+            OneCurvePrint(title, "Cutoff", 'Tempo Impiegato (ms)', arrayY1, arrayX, True)
             cond = False
 
 
