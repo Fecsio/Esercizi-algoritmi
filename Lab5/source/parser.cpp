@@ -36,13 +36,12 @@ std::istream& operator>>(std::istream& str, CSVRow& data) {
     return str;
 }   
 
-std::vector<City*> Parser(const std::string& filepath){
+std::vector<City*> Parser(const std::string& filepath, int minpop){
     std::ifstream file(filepath);
     std::vector<City*> cities;
     CSVRow row;
     int id, pop;
     double lat, lon;
-    int minpop = -999;    // DOMANDA 1
     std::string line;
 
     // skip the first line with the header
@@ -58,6 +57,5 @@ std::vector<City*> Parser(const std::string& filepath){
         }
     }
 
-    std::cout << cities.size() << std::endl;
     return cities;
 }

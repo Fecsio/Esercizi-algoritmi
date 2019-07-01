@@ -13,4 +13,6 @@ double calc_distance(std::vector<City*> cities, std::vector<int> cluster, int ce
 
 double calc_distortion(std::vector<City*> cities, std::vector<int> cluster, std::vector<std::pair<double, double>> centers);
 
+std::vector<std::pair<double, double>> calculate_initial_centroids(const std::vector<City *>& cities, int k);
+
 #endif

@@ -1,6 +1,4 @@
 #include <cilk/cilk.h>
-#include <chrono>
-#include <iostream> //~~~~~~~~~~~~ DA RIMUOVERE POI
 #include <numeric>
 #include "pkmeans.h"
 #include "utils.h"
@@ -70,7 +68,6 @@ std::pair<std::pair<double, double>, int> PReduceCluster(const std::vector<int>&
  * 
  */
 void PPartition(const std::vector<City*>& cities, const std::vector<std::pair<double, double>>& centers, std::vector<int>& cluster, int k) {   
-    //std::cout << "Partitioning start" << std::endl;
     int n = cities.size();
     cilk_for (int i = 0; i < n; ++i) { // parallel for
         int best_c = 0;    // centroid for city of index i initialized to centers[0]
@@ -104,23 +101,10 @@ void PPartition(const std::vector<City*>& cities, const std::vector<std::pair<do
  * 
 */
 std::pair<std::vector<int>, std::vector<std::pair<double, double>>> PKmeans(const std::vector<City*>& cities, const std::vector<std::pair<double, double>>& initial_centroids ,int k, int q, int cutoff){
-
     int n = cities.size();
-    std::vector<City*> sortedP(cities);
-
-    auto start = std::chrono::system_clock::now();
-
-    std::sort (sortedP.begin(), sortedP.end(), City::comparePtrToNode);
-
     std::vector<int> cluster(n, -1);
 
-    std::vector<std::pair<double, double>> centers;
-    centers.reserve(k);
-
-    // centers initialization
-    for(int i=0; i < k; ++i) {
-        centers.push_back(std::make_pair(sortedP[n-i-1]->getLatitude(), sortedP[n-i-1]->getLongitude()));
-    }
+    std::vector<std::pair<double, double>> centers(initial_centroids);
 
     for(int i = 0; i<q; ++i){
 
@@ -134,22 +118,7 @@ std::pair<std::vector<int>, std::vector<std::pair<double, double>>> PKmeans(cons
             centers[f] = std::make_pair(sumLat/size, sumLong/size);
         }
     }
-    
-   
 
-    auto end = std::chrono::system_clock::now();
-
-    std::chrono::duration<double> elapsed_seconds = end-start;
-    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
-    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
-
-    for(auto c: centers){
-        std::cout << "(" << c.first << ", " << c.second << ")" << std::endl;
-    }
-
-    std::cout << calc_distortion(cities, cluster, centers) << std::endl;
-
-    
     return std::make_pair(cluster, centers);
 
 }

@@ -2,8 +2,7 @@
 #include <utility>
 #include "city.h"
 #include "utils.h"
-
-#include <iostream>
+#include <algorithm>    // std::partial_sort_copy
 
 double convertRadians(double x) {
   int deg1 = int(x);
@@ -35,9 +34,28 @@ double calc_distance(std::vector<City*> cities, std::vector<int> cluster, int ce
 double calc_distortion(std::vector<City*> cities, std::vector<int> cluster, std::vector<std::pair<double, double>> centers){
     double sum = 0;
     for(int i=0; i<cities.size(); ++i){
-      sum += pow(geoDistance(centers[cluster[i]].first, centers[cluster[i]].second, cities[i]->getLatitude(), cities[i]->getLongitude()), 2) * abs(cities[i]->getPopulation());
+      int pop = cities[i]->getPopulation();
+      //if(pop < 0 ) pop = 0;
+      sum += pow(geoDistance(centers[cluster[i]].first, centers[cluster[i]].second, cities[i]->getLatitude(), cities[i]->getLongitude()), 2) * pop;
     }
 
   return sum;
 
+}
+
+std::vector<std::pair<double, double>> calculate_initial_centroids(const std::vector<City *>& cities, int k){
+  std::vector<City*> sortedP(k);
+    std::partial_sort_copy(
+        cities.begin(), cities.end(),
+        sortedP.begin(), sortedP.end(), 
+        City::comparePtrToNodeMax
+    );
+
+    std::vector<std::pair<double, double>> centroids;
+    centroids.reserve(k);
+    for(int i=0; i < k; ++i) {
+        centroids.push_back(std::make_pair(sortedP[i]->getLatitude(), sortedP[i]->getLongitude()));
+    }
+
+    return centroids;
 }

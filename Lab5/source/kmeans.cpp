@@ -1,9 +1,6 @@
-#include <iostream> // ~~~~~~~~~~~~~ DA RIMUOVERE POI
 #include <algorithm>    // std::sort
 #include <vector>
-#include <chrono>
 #include <utility>      // std::pair
-#include <limits>
 #include "kmeans.h"
 #include "utils.h"
 
@@ -22,7 +19,6 @@
  * 
  */
 void Partition(const std::vector<City*>& cities, const std::vector<std::pair<double, double>>& centers, std::vector<int>& cluster, int k) {   
-    //std::cout << "Partitioning start" << std::endl;
     int n = cities.size();
     for(int i = 0; i < n; ++i) { 
         int best_c = 0;    // centroid for city of index i initialized to centers[0]
@@ -84,51 +80,23 @@ std::pair<std::pair<double, double>, int> ReduceCluster(const std::vector<int>& 
  *     last iteraction of the algorithm.
  *  
  */
-std::pair<std::vector<int>, std::vector<std::pair<double, double>>> Kmeans(std::vector<City*> &cities, std::vector<std::pair<double, double>> centers, int k, int q) { // partition of cities, k clusters, q iteration 
-    auto start = std::chrono::system_clock::now();
-    
-    unsigned int n = cities.size();
-
+std::pair<std::vector<int>, std::vector<std::pair<double, double>>> Kmeans(std::vector<City*> &cities, const std::vector<std::pair<double, double>>& initial_centroids, int k, int q) {     
+    int n = cities.size();
     std::vector<int> cluster(n, -1);
 
-    int distance[k];
-    int totDist = 0;
-    int minDist = std::numeric_limits<int>::max();
-    int minIt;
+    std::vector<std::pair<double, double>> centers(initial_centroids);
 
     for(int i=0; i < q; ++i) {
         Partition(cities, centers, cluster, k);
 
-        totDist = 0;
         for(int j=0; j < k; ++j) {
             auto sumSize = ReduceCluster(cluster, cities, j);
             double sumLat = sumSize.first.first;
             double sumLong = sumSize.first.second;
             int size = sumSize.second;
             centers[j] = std::make_pair(sumLat/size, sumLong/size);
-            distance[j] = calc_distance(cities, cluster, j, centers[j]);
-            totDist += distance[j];
-        }
-
-        if(totDist < minDist) {
-            minDist = totDist;
-            minIt = i;
         }
     }
-
-    auto end = std::chrono::system_clock::now();
-
-    std::chrono::duration<double> elapsed_seconds = end-start;
-    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
-    std::cout << minDist << " - " << minIt << std::endl;
-    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
-
-    //stampo centroidi finali per confronto
-    for(auto c: centers){
-        std::cout << "(" << c.first << ", " << c.second << ")" << std::endl;
-    }
-
-    std::cout << calc_distortion(cities, cluster, centers) << std::endl;
 
     return std::make_pair(cluster, centers);
 }

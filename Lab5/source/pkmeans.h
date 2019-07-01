@@ -8,6 +8,6 @@ std::pair<std::pair<double, double>, int> PReduceCluster(const std::vector<int>&
 
 void PPartition(const std::vector<City*>& cities, const std::vector<std::pair<double, double>>& centers, std::vector<int>& cluster, int k);
 
-std::pair<std::vector<int>, std::vector<std::pair<double, double>>> PKmeans(const std::vector<City*>& cities, const std::vector<std::pair<double, double>>& initial_centroids ,int k, int q, int cutoff);
+std::pair<std::vector<int>, std::vector<std::pair<double, double>>> PKmeans(const std::vector<City*>& cities, const std::vector<std::pair<double, double>>& initial_centroids ,int k, int q, int cutoff = 0);
 
 #endif
