@@ -53,6 +53,9 @@ std::pair<std::pair<double, double>, int> PReduceCluster(const std::vector<int>&
  *  - centers = vector of k centers (as pairs(latitude, longitude));
  *  - cluster = vector of n int, that specify for each i which is the center of the cluster associated with city[i];
  *  - k = # of clusters.
+ *  - i = index of the first element of vector cities to process;
+ *  - j = index of the last element of vector cities to process;
+ *  - cutoff = int that identify the treshold below which the function utilizes a sequential iterative algorithm.
  *  
  * Returns: 
  *  Nothing because it changes values in param cluster (that is passed by reference).
@@ -91,6 +94,7 @@ void PPartition(const std::vector<City*>& cities, const std::vector<std::pair<do
  *  cities = std::vector of cities (points)
  *  q = # of iteractions
  *  k = # of clusters
+ *  cutoff = int that identify the treshold below which the function utilizes a sequential iterative algorithm.
  * 
  * Returns: 
  *  A pair made of: 
