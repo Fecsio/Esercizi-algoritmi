@@ -486,7 +486,7 @@ table td{
    </figcaption>
   </p>
   <p>
-   Il valore di cutoff che ci ha permesso di ottenere le prestazioni migliori è circa 5000: in generale vediamo che un valore di cutoff porta beneficio se non è troppo elevato, altrimenti il parallelismo non viene sfruttato a dovere; in particolare, osservando il valore della retta tratteggiata arancione (che indica il tempo d’esecuzione dell’algoritmo senza cutoff), notiamo che una soglia di cutoff minore della metà dei nodi ci permette di avere un miglioramento in termini di prestazioni: ciò è giustificato dal fatto che quando la versione parallela viene eseguita su un numero di nodi abbastanza basso, i costi aggiuntivi dati dallo scheduling dei processi paralleli eguagliano o superano i tempi effettivi di esecuzione dell’algoritmo.
+   Il valore di cutoff che ci ha permesso di ottenere le prestazioni migliori è circa 5000: in generale vediamo che un valore di cutoff porta beneficio se non è troppo elevato, altrimenti il parallelismo non viene sfruttato a dovere; in particolare, osservando il valore della retta tratteggiata arancione (che indica il tempo d’esecuzione dell’algoritmo senza cutoff), notiamo che una soglia di cutoff minore della metà dei nodi ci permette di avere un miglioramento in termini di prestazioni: ciò è giustificato dal fatto che quando la versione parallela viene eseguita su un numero di nodi abbastanza basso, l'overhead dovuto alla creazione e gestione dei processi paralleli eguaglia o supera i tempi effettivi di esecuzione dell’algoritmo.
   </p>
   <div style="page-break-after: always;"></div>
 
