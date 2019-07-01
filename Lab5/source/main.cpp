@@ -12,7 +12,7 @@ int main() {
     outputFile << "Algoritmo, numero di punti, cluster, iterazioni, popolazione, cutoff, tempo(ms)" << std::endl;
 
     // ~~~~~~~~~~~~~~~~ DOMANDA 1 ~~~~~~~~~~~~~~~~
-    /*outputFile << "DOMANDA" << std::endl;
+    outputFile << "DOMANDA" << std::endl;
     int k = 50;
     int q = 100;
     int min_pop[7] = {100000, 50000, 15000, 5000, 2000, 250, -999};
@@ -43,12 +43,11 @@ int main() {
 
     // ~~~~~~~~~~~~~~~~ DOMANDA 2 ~~~~~~~~~~~~~~~~
     outputFile << "DOMANDA" << std::endl;
-
+    auto cities = Parser("../cities-and-towns-of-usa.csv"); 
+    int n = cities.size();
     q = 100;
 
     for(k = 10; k<=100; k += 10){
-        auto cities = Parser("../cities-and-towns-of-usa.csv"); 
-        int n = cities.size();
         std::vector<std::pair<double, double>> initial_centroids = calculate_initial_centroids(cities, k);
 
         auto start = std::chrono::system_clock::now();
@@ -75,8 +74,6 @@ int main() {
     k = 50;
 
     for(q = 10; q<=1000; q += 90){
-        auto cities = Parser("../cities-and-towns-of-usa.csv"); 
-        int n = cities.size();
         std::vector<std::pair<double, double>> initial_centroids = calculate_initial_centroids(cities, k);
 
         auto start = std::chrono::system_clock::now();
@@ -97,15 +94,13 @@ int main() {
         outputFile << "Parallelo," << n << "," << k << "," << q << "," << 38183 << ",0," << millis << std::endl;
 
         
-    }*/
+    }
     // ~~~~~~~~~~~~~~~~ DOMANDA 4 ~~~~~~~~~~~~~~~~
     outputFile << "DOMANDA" << std::endl;
     int k = 50;
     int q = 100;
 
     for(int cutoff = 10; cutoff <= 38183; cutoff += 647){
-        auto cities = Parser("../cities-and-towns-of-usa.csv"); 
-        int n = cities.size();
         std::vector<std::pair<double, double>> initial_centroids = calculate_initial_centroids(cities, k);
 
         auto start = std::chrono::system_clock::now();
