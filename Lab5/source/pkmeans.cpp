@@ -2,6 +2,7 @@
 #include <numeric>
 #include "pkmeans.h"
 #include "utils.h"
+
 /**
  * Auxiliar parallel function used to calculate new centroid for a cluster.
  * 
@@ -106,7 +107,6 @@ std::pair<std::vector<int>, std::vector<std::pair<double, double>>> PKmeans(cons
     std::vector<std::pair<double, double>> centers(initial_centroids);
 
     for(int i = 0; i<q; ++i){
-
         PPartition(cities, centers, cluster, 0, n-1, k, cutoff); // side-effect on cluster
 
         cilk_for(int f = 0; f < k; ++f){
@@ -114,8 +114,10 @@ std::pair<std::vector<int>, std::vector<std::pair<double, double>>> PKmeans(cons
             double sumLat = sumSize.first.first;
             double sumLong = sumSize.first.second;
             int size = sumSize.second;
-            centers[f] = std::make_pair(sumLat/size, sumLong/size);
+            if(size != 0) centers[f] = std::make_pair(sumLat/size, sumLong/size); // check for empty clusters
         }
+
+
     }
 
     return std::make_pair(cluster, centers);

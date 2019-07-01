@@ -94,7 +94,7 @@ std::pair<std::vector<int>, std::vector<std::pair<double, double>>> Kmeans(std::
             double sumLat = sumSize.first.first;
             double sumLong = sumSize.first.second;
             int size = sumSize.second;
-            centers[j] = std::make_pair(sumLat/size, sumLong/size);
+            if(size != 0) centers[j] = std::make_pair(sumLat/size, sumLong/size); // check for empty clusters
         }
     }
 
