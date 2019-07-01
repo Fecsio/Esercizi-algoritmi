@@ -8,11 +8,11 @@
 
 int main() {
 
-    std::ofstream outputFile("../risultati.csv");
+    std::ofstream outputFile("../risultati2.csv");
     outputFile << "Algoritmo, numero di punti, cluster, iterazioni, popolazione, cutoff, tempo(ms)" << std::endl;
 
     // ~~~~~~~~~~~~~~~~ DOMANDA 1 ~~~~~~~~~~~~~~~~
-    outputFile << "DOMANDA" << std::endl;
+    /*outputFile << "DOMANDA" << std::endl;
     int k = 50;
     int q = 100;
     int min_pop[7] = {100000, 50000, 15000, 5000, 2000, 250, -999};
@@ -97,11 +97,11 @@ int main() {
         outputFile << "Parallelo," << n << "," << k << "," << q << "," << 38183 << ",0," << millis << std::endl;
 
         
-    }
+    }*/
     // ~~~~~~~~~~~~~~~~ DOMANDA 4 ~~~~~~~~~~~~~~~~
     outputFile << "DOMANDA" << std::endl;
-    k = 100;
-    q = 100;
+    int k = 50;
+    int q = 100;
 
     for(int cutoff = 10; cutoff <= 38183; cutoff += 647){
         auto cities = Parser("../cities-and-towns-of-usa.csv"); 
